@@ -19,7 +19,6 @@ const RolesScreen = observer(() => {
   //   const [roles, setRoles] = useState(playingRoles);
 
   useEffect(() => {
-    console.log({Roles: Roles[0]});
     setGameRoles(Roles);
   }, [Roles]);
 
@@ -35,10 +34,8 @@ const RolesScreen = observer(() => {
       if (item.title === 'شهروند ساده') {
         const fakeRole = [...playingRoles];
         return fakeRole?.map(el => {
-          console.log({el});
           if (el.title === item.title) {
             const ind = fakeRole.filter(item => item.title !== 'شهروند ساده');
-            console.log({ind});
             const arr = [...Roles];
             arr.map(item => {
               if (item.title === 'شهروند ساده') item.active = true;
@@ -65,20 +62,17 @@ const RolesScreen = observer(() => {
 
   const removeCitizen = () => {
     const lastIndex = playingRoles.length - 1;
-    console.log({lastIndex});
     setCitizen(citizen - 1);
     gameStore.roles.splice(lastIndex, 1);
   };
 
   useEffect(() => {
-    console.log({playingRolesLength: playingRoles});
     if (playingRoles.length === 0) {
       const arr = [...Roles];
       arr.map(item => {
         item.active = true;
       });
 
-      console.log({Roles: Roles[Roles.length - 1]});
       return setGameRoles(arr);
     }
 
@@ -86,7 +80,6 @@ const RolesScreen = observer(() => {
       let len = 0;
 
       playingRoles.map(item => {
-        console.log({playingRoles});
         if (item.title === 'شهروند ساده') {
           len += 1;
           setCitizen(len);
@@ -212,7 +205,6 @@ const RolesScreen = observer(() => {
                       </View>
                     </View>
                   ) : null}
-                  {console.log({item: item.image})}
                   <Image
                     source={item?.image}
                     resizeMode="contain"

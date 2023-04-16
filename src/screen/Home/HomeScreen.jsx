@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Pressable,
@@ -18,8 +18,17 @@ const HomeScreen = observer(() => {
   const {playerStore, gameStore} = useStore();
   const players = playerStore.players;
   const roles = gameStore.roles;
+  const rolePlayers = gameStore.rolePlayers;
   const [playersWithOutRoles, setPlayersWithOutRoles] = useState(0);
+  const [startDisable, setStartDisable] = useState(true);
 
+  useEffect(() => {
+    if (rolePlayers) {
+      if (rolePlayers[0]?.role?.title && rolePlayers[0]?.player?.name) {
+        setStartDisable(false);
+      }
+    }
+  }, [rolePlayers]);
   return (
     <SafeAreaView
       style={{
@@ -226,6 +235,7 @@ const HomeScreen = observer(() => {
             alignItems: 'center',
           }}>
           <Pressable
+            disabled={startDisable}
             onPress={() => nav.navigate('showcards')}
             style={{
               width: '100%',

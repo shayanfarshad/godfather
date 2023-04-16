@@ -20,7 +20,6 @@ const PlayersScreen = observer(() => {
   const {playerStore} = useStore();
   const allPlayers = playerStore.players;
   const nav = useNavigation();
-  console.log({allPlayers});
   const [players, setPlayers] = useState(allPlayers);
   const [playerName, setPlayerName] = useState('');
   const [formVisible, setFormVisible] = useState(false);

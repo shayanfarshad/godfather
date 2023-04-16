@@ -35,9 +35,9 @@ const ShowCards = () => {
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
           نمایش نقش ها
         </Text>
-        <Pressable onPress={() => nav.goBack()}>
+        {/* <Pressable onPress={() => nav.goBack()}>
           <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
+        </Pressable> */}
       </View>
       <FlatList
         data={gamers}
@@ -46,7 +46,7 @@ const ShowCards = () => {
         contentContainerStyle={{
           width: DWidth * 0.9,
           marginTop: 20,
-          marginHorizontal:DWidth * 0.05
+          marginHorizontal: DWidth * 0.05,
         }}
         ListEmptyComponent={() => {
           return (
@@ -67,7 +67,6 @@ const ShowCards = () => {
               style={styles.renderItem}
               key={index}
               onPress={() => {
-                console.log('select shod');
                 setDetailPlayer(item);
                 setShowModal(true);
               }}>
@@ -80,7 +79,25 @@ const ShowCards = () => {
           );
         }}
       />
-
+      <Pressable
+        style={{
+          width: 200,
+          height: 40,
+          borderRadius: 10,
+          backgroundColor: 'white',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          bottom: 30,
+          marginLeft: DWidth / 2 - 100,
+        }}
+        onPress={() => {
+          if (!gamers.length) {
+            nav.navigate('gameplay');
+          }
+        }}>
+        <Text style={{fontSize: 18}}>برو به بازی</Text>
+      </Pressable>
       <ReactNativeModal
         isVisible={showModal}
         deviceWidth={DWidth}

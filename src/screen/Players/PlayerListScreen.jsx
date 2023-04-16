@@ -18,12 +18,10 @@ const PlayerListScreen = observer(() => {
   useEffect(() => {
     getPlayers().then(res => {
       const _players = JSON.parse(res);
-      console.log({_players});
       const gamer = playerStore.getPlayers();
       _players.map(item => {
         if (gamer.some(el => el.name === item.name)) {
           const arr = _players.filter(el => el.name !== item.name);
-          console.log({arr});
           return setPlayers(arr);
         } else {
           if (_players) {
