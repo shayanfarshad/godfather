@@ -14,6 +14,10 @@ class GameStore {
     return this.roles;
   }
 
+  @action updateRolePlayers(items) {
+    this.rolePlayers = items;
+    return this.rolePlayers;
+  }
   @action addRoles(role) {
     const newRoles = [...this.roles];
     newRoles.push(role);

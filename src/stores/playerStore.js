@@ -19,8 +19,9 @@ class PlayerStore {
   }
   @action removePlayers(player) {
     const newPlayers = [...this.players];
-    newPlayers.filter(item => item === player);
-    this.players = newPlayers;
+    const newList = newPlayers.filter(item => item !== player);
+    console.log(newList);
+    this.players = newList;
     return this.players;
   }
 }

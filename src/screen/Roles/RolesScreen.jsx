@@ -19,6 +19,7 @@ const RolesScreen = observer(() => {
   //   const [roles, setRoles] = useState(playingRoles);
 
   useEffect(() => {
+    console.log({Roles: Roles[0]});
     setGameRoles(Roles);
   }, [Roles]);
 
@@ -70,7 +71,7 @@ const RolesScreen = observer(() => {
   };
 
   useEffect(() => {
-    console.log({playingRolesLength: playingRoles.length});
+    console.log({playingRolesLength: playingRoles});
     if (playingRoles.length === 0) {
       const arr = [...Roles];
       arr.map(item => {
@@ -98,17 +99,22 @@ const RolesScreen = observer(() => {
       style={{
         flex: 1,
         backgroundColor: backgroundColor,
-        paddingHorizontal: 10,
       }}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
           اضافه کردن نقش به این بازی
         </Text>
         <Pressable onPress={() => nav.goBack()}>
-          <Icon name="arrow-left" size={20} color={'white'} />
+          <Icon name="long-arrow-left" size={30} color={'white'} />
         </Pressable>
       </View>
-      <View style={{width: '100%', alignItems: 'flex-end', marginTop: 20}}>
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'flex-end',
+          marginVertical: 20,
+          paddingHorizontal: 20,
+        }}>
         <Text style={{fontSize: 22, color: 'white'}}>نقش های حاضر در بازی</Text>
       </View>
       {gameRoles?.length ? (
@@ -206,10 +212,11 @@ const RolesScreen = observer(() => {
                       </View>
                     </View>
                   ) : null}
+                  {console.log({item: item.image})}
                   <Image
                     source={item?.image}
                     resizeMode="contain"
-                    style={{width: '100%', height: '100%'}}
+                    style={{width: '100%', height: '100%', borderRadius: 10}}
                   />
                 </View>
                 <Text style={{fontSize: 16, color: 'white'}}>{item.title}</Text>
@@ -229,9 +236,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   flatContainer: {
-    borderRadius: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -240,7 +247,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
   },
   emptyList: {
     width: '100%',
@@ -253,12 +259,12 @@ const styles = StyleSheet.create({
     width: DWidth / 3.2,
     height: 200,
     marginBottom: 15,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
   },
   playerIcon: {
     width: 110,
-    height: 170,
+    height: 140,
     borderRadius: 5,
     overflow: 'hidden',
   },

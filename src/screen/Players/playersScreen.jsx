@@ -33,26 +33,43 @@ const PlayersScreen = observer(() => {
     arr.push({id: Date.now(), name: playerName});
     AsyncStorage.setItem('players', JSON.stringify(arr));
     setPlayers(arr);
-
     setPlayerName('');
   };
+
+  const removePlayer = item => {
+    // const arr = [...players];
+    // const newList = arr.filter(el => el.name !== item.name);
+    // setPlayers(newList);
+    playerStore.removePlayers(item);
+  };
+
+  useEffect(() => {
+    if (allPlayers) {
+      setPlayers(allPlayers);
+    }
+  }, [allPlayers]);
 
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: backgroundColor,
-        paddingHorizontal: 10,
       }}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
           اضافه کردن بازیکن به این بازی
         </Text>
         <Pressable onPress={() => nav.goBack()}>
-          <Icon name="arrow-left" size={20} color={'white'} />
+          <Icon name="long-arrow-left" size={30} color={'white'} />
         </Pressable>
       </View>
-      <View style={{width: '100%', alignItems: 'flex-end', marginTop: 20}}>
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'flex-end',
+          marginVertical: 20,
+          paddingHorizontal: 20,
+        }}>
         <Text style={{fontSize: 22, color: 'white'}}>
           بازیکنان حاضر در بازی
         </Text>
@@ -77,7 +94,9 @@ const PlayersScreen = observer(() => {
         }}
         renderItem={({item}) => {
           return (
-            <View style={styles.renderItem}>
+            <Pressable
+              onLongPress={() => removePlayer(item)}
+              style={styles.renderItem}>
               <View style={styles.playerIcon}>
                 <Image
                   source={require('../../assets/images/player2.png')}
@@ -85,7 +104,7 @@ const PlayersScreen = observer(() => {
                 />
               </View>
               <Text style={{fontSize: 16, color: 'white'}}>{item.name}</Text>
-            </View>
+            </Pressable>
           );
         }}
       />
@@ -108,6 +127,7 @@ const PlayersScreen = observer(() => {
             }}
             onPress={() => {
               nav.navigate('playerList');
+              setFabVisible(false);
             }}>
             <Text>بازیکن قدیمی</Text>
           </Pressable>
@@ -121,6 +141,7 @@ const PlayersScreen = observer(() => {
               borderRadius: 10,
             }}
             onPress={() => {
+              setFabVisible(false);
               setFormVisible(true);
             }}>
             <Text>بازیکن جدید</Text>
@@ -175,6 +196,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   flatContainer: {
     borderRadius: 20,
@@ -186,7 +208,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    // elevation: 5, 
   },
   emptyList: {
     width: '100%',

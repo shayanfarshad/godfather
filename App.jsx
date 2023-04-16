@@ -6,6 +6,8 @@ import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {PlayersScreen} from './src/screen/Players/playersScreen';
 import {RolesScreen} from './src/screen/Roles/RolesScreen';
 import {PlayerListScreen} from './src/screen/Players/PlayerListScreen';
+import {RoleUpScreen} from './src/screen/Roles/RoleUpScreen';
+import { ShowCards, showCards } from './src/screen/Game/showCards';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +39,16 @@ function App() {
             <Stack.Screen
               name="roles"
               component={RolesScreen}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="roleup"
+              component={RoleUpScreen}
+              options={{headerShown: false}}
+            />
+               <Stack.Screen
+              name="showcards"
+              component={ShowCards}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

@@ -24,7 +24,7 @@ const HomeScreen = observer(() => {
     <SafeAreaView
       style={{
         flex: 1,
-        // marginHorizontal: 10,
+        paddingHorizontal: 10,
         backgroundColor: '#232a36',
       }}>
       <View
@@ -206,7 +206,9 @@ const HomeScreen = observer(() => {
                     height: '100%',
                     justifyContent: 'center',
                   }}>
-                  <Pressable style={styles.addBtn}>
+                  <Pressable
+                    style={styles.addBtn}
+                    onPress={() => nav.navigate('roleup')}>
                     <Icon name="random" size={20} color="white" />
                   </Pressable>
                 </View>
@@ -224,6 +226,7 @@ const HomeScreen = observer(() => {
             alignItems: 'center',
           }}>
           <Pressable
+            onPress={() => nav.navigate('showcards')}
             style={{
               width: '100%',
               height: '100%',
