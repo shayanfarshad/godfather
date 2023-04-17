@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Alert,
+  BackHandler,
   FlatList,
   Image,
   Pressable,
@@ -11,12 +12,13 @@ import {Text} from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ReactNativeModal from 'react-native-modal';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {PlayerDetail} from './PlayerDetail';
 
 const GamePlay = () => {
   const nav = useNavigation();
+  const isFocused = useIsFocused();
   const {gameStore} = useStore();
   const players = gameStore.rolePlayers;
   const lastMoveCards = gameStore.lastMoveCards;
@@ -65,6 +67,18 @@ const GamePlay = () => {
     }
   };
 
+  const handleGoBack = () => {
+    return true;
+  };
+  useEffect(() => {
+    if (isFocused) {
+      BackHandler.addEventListener('hardwareBackPress', handleGoBack);
+    }
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleGoBack);
+    };
+  }, [isFocused]);
+
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <View style={styles.header}>
@@ -102,7 +116,9 @@ const GamePlay = () => {
                   },
                   {
                     text: 'بله',
-                    onPress: () => {nav.navigate('home')},
+                    onPress: () => {
+                      nav.navigate('home');
+                    },
                   },
                 ],
               )
