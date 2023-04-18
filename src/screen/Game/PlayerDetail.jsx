@@ -9,24 +9,16 @@ const PlayerDetail = ({
   setDetailPlayer,
   setShowModal,
   item,
+  setRemovePlayer,
   showRole,
 }) => {
   const [isSilent, setSilent] = useState(false);
   const [isShot, setShot] = useState(false);
   const [hasShield, setHasShield] = useState(item.role.shield);
   const [hasAbility, setHasAbility] = useState(true);
-  const [isDead, setDead] = useState(false);
+  // const [isDead, setDead] = useState(false);
   return (
-    <View
-      style={[
-        styles.renderItem,
-        isDead && {
-          backgroundColor: '#6b0438',
-          borderRadius: 10,
-          paddingHorizontal: 10,
-        },
-      ]}
-      key={index}>
+    <View style={[styles.renderItem]} key={index}>
       <Pressable
         onPress={() => {
           setDetailPlayer(item);
@@ -98,7 +90,8 @@ const PlayerDetail = ({
 
       <Pressable
         onPress={() => {
-          setDead(!isDead);
+          setRemovePlayer(item);
+          // setDead(!isDead);
         }}
         style={{
           justifyContent: 'center',
@@ -107,17 +100,6 @@ const PlayerDetail = ({
         }}>
         <Icon name={'trash'} color="white" size={30} />
       </Pressable>
-      {isDead ? (
-        <View
-          style={{
-            width: '90%',
-            marginRight: '10%',
-            height: 3,
-            backgroundColor: 'white',
-            position: 'absolute',
-          }}
-        />
-      ) : null}
     </View>
   );
 };

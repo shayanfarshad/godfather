@@ -9,9 +9,15 @@ import {
   View,
 } from 'react-native';
 import {Text} from '../../components/Text';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ReactNativeModal from 'react-native-modal';
-import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
+import {
+  DHeight,
+  DWidth,
+  backgroundColor,
+  getDayWord,
+} from '../../constants/Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {PlayerDetail} from './PlayerDetail';
@@ -22,14 +28,18 @@ const GamePlay = () => {
   const {gameStore} = useStore();
   const players = gameStore.rolePlayers;
   const lastMoveCards = gameStore.lastMoveCards;
+  const gameDay = gameStore.day;
+
   const [gamers, setGamers] = useState([]);
-  const [lastMoves, setLastMoves] = useState([]);
+  const [removedPlayers, setRemovedPlayers] = useState([]);
+  const [lastMoves, setLastMoves] = useState(lastMoveCards);
   const [showModal, setShowModal] = useState(false);
   const [showLastCard, setShowLastCard] = useState(false);
   const [showRole, setShowRole] = useState(false);
   const [clickedCard, setClickedCard] = useState();
   const [isSilent, setSilent] = useState(false);
   const [detailPlayer, setDetailPlayer] = useState();
+  const [day, setDay] = useState('');
   useEffect(() => {
     if (players) {
       setGamers(players);
@@ -37,8 +47,15 @@ const GamePlay = () => {
   }, [players]);
 
   useEffect(() => {
+    const word = getDayWord(gameDay);
+    console.log({word});
+    setDay(word);
+  }, [gameDay]);
+
+  useEffect(() => {
     if (lastMoveCards) {
-      let currentIndex = lastMoveCards.length,
+      const arr = [...lastMoveCards];
+      let currentIndex = arr.length,
         randomIndex;
 
       // While there remain elements to shuffle.
@@ -48,13 +65,13 @@ const GamePlay = () => {
         currentIndex--;
 
         // And swap it with the current element.
-        [lastMoveCards[currentIndex], lastMoveCards[randomIndex]] = [
-          lastMoveCards[randomIndex],
-          lastMoveCards[currentIndex],
+        [arr[currentIndex], arr[randomIndex]] = [
+          arr[randomIndex],
+          arr[currentIndex],
         ];
       }
-      console.log({lastMove: lastMoveCards[0]});
-      setLastMoves(lastMoveCards);
+      console.log({lastMove: arr[0]});
+      setLastMoves(arr);
     }
   }, [lastMoveCards]);
 
@@ -63,7 +80,7 @@ const GamePlay = () => {
     if (clickedCard) {
       const newCards = lastMoves.filter(el => el.id !== clickedCard.id);
       setLastMoves(newCards);
-      gameStore.updateLastCards(newCards);
+      // gameStore.updateLastCards(newCards);
     }
   };
 
@@ -79,29 +96,59 @@ const GamePlay = () => {
     };
   }, [isFocused]);
 
+  const removeDeadPlayer = p => {
+    const removed = [...removedPlayers];
+    removed.push(p);
+    const arr = gamers.filter(el => el?.player?.id !== p?.player?.id);
+    console.log({arr});
+    gameStore.updateRolePlayers(arr);
+    setRemovedPlayers(removed);
+  };
+
+  const returnPlayer = item => {
+    const arr = [...gamers];
+    arr.push(item);
+    const removed = removedPlayers.filter(
+      el => el?.player?.id !== item?.player?.id,
+    );
+    gameStore.updateRolePlayers(arr);
+    setRemovedPlayers(removed);
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          اطلاعات بازی
+          روز {day}
         </Text>
         <View
           style={{
             flexDirection: 'row-reverse',
-            width: 120,
+            width: '60%',
+            alignItems: 'center',
             justifyContent: 'space-between',
           }}>
           <Pressable
             onPress={() => {
               setShowLastCard(true);
+            }}
+            style={{
+              backgroundColor: 'white',
+              elevation: 2,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 8,
+              padding: 10,
             }}>
-            <Icon name="credit-card" size={30} color={'white'} />
+            <Text type="light" style={{fontSize: 20, color: 'black'}}>
+              حرکت آخر
+            </Text>
           </Pressable>
           <Pressable
             onPress={() => {
-              setShowRole(!showRole);
+              // nav.navigate('gamenight')
             }}>
-            <Icon name="eye" size={30} color={'white'} />
+            <IonIcon name="sunny-outline" size={30} color={'white'} />
           </Pressable>
           <Pressable
             onPress={() =>
@@ -133,30 +180,70 @@ const GamePlay = () => {
         contentContainerStyle={{
           width: DWidth * 0.9,
           marginTop: 20,
+          minHeight: DHeight * 0.6,
+          marginHorizontal: DWidth * 0.05,
+        }}
+        renderItem={({item, index}) => {
+          return (
+            <PlayerDetail
+              item={item}
+              setRemovePlayer={p => removeDeadPlayer(p)}
+              index={index}
+              setDetailPlayer={setDetailPlayer}
+              setShowModal={setShowModal}
+              showRole={showRole}
+            />
+          );
+        }}
+      />
+      <Text
+        type="bold"
+        style={{
+          color: 'white',
+          fontSize: 20,
+          textAlign: 'right',
+          marginRight: 20,
+          marginTop: 20,
+        }}>
+        حذف شده ها
+      </Text>
+      <FlatList
+        data={removedPlayers}
+        keyExtractor={(index, item) => index}
+        numColumns={3}
+        contentContainerStyle={{
+          width: DWidth * 0.9,
+          height: DHeight * 0.2,
+          // marginTop: 20,
           marginHorizontal: DWidth * 0.05,
         }}
         ListEmptyComponent={() => {
           return (
-            <View style={styles.emptyList}>
+            <View style={[styles.emptyList, {justifyContent: 'flex-start'}]}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 300}}
+                style={{width: '30%', height: 100}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
-                هیج بازیکنی برای پذیرفتن نقش نمانده!
+                هیچ بازیکنی از بازی خارج نشده
               </Text>
             </View>
           );
         }}
         renderItem={({item, index}) => {
           return (
-            <PlayerDetail
-              item={item}
-              index={index}
-              setDetailPlayer={setDetailPlayer}
-              setShowModal={setShowModal}
-              showRole={showRole}
-            />
+            <Pressable
+              style={[styles.renderItem, {flexDirection: 'column'}]}
+              key={index}
+              onPress={() => {
+                returnPlayer(item);
+              }}>
+              <Image
+                source={require('../../assets/images/player2.png')}
+                style={{width: 60, height: 60, borderRadius: 10}}
+              />
+              <Text style={{color: 'white'}}>{item.player.name}</Text>
+            </Pressable>
           );
         }}
       />
@@ -306,7 +393,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 50,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
@@ -316,14 +403,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    marginTop: 80,
+    marginTop: 40,
   },
   renderItem: {
-    width: DWidth * 0.9,
+    width: DWidth * 0.3,
     height: 80,
     marginBottom: 15,
     flexDirection: 'row-reverse',
-    borderWidth: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

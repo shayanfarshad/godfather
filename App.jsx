@@ -9,6 +9,7 @@ import {PlayerListScreen} from './src/screen/Players/PlayerListScreen';
 import {RoleUpScreen} from './src/screen/Roles/RoleUpScreen';
 import {ShowCards} from './src/screen/Game/ShowCards';
 import {GamePlay} from './src/screen/Game/GamePlay';
+import { GameNightPlay } from './src/screen/Game/GameNightPlay';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,11 @@ function App() {
             <Stack.Screen
               name="gameplay"
               component={GamePlay}
+              options={{headerShown: false}}
+            />
+              <Stack.Screen
+              name="gamenight"
+              component={GameNightPlay}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
