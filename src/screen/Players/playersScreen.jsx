@@ -1,26 +1,42 @@
-import React, {useEffect, useState} from 'react';
+/**
+ * @format
+ * @flow strict-local
+ */
+
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  BackHandler,
   FlatList,
   Image,
+  Keyboard,
+  PermissionsAndroid,
   Pressable,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
+import {Modal} from '../../components/Modal';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const PlayersScreen = observer(() => {
+  const player = require('../../assets/images/player2.png');
+
   const {playerStore} = useStore();
-  const allPlayers = playerStore.players;
+  const allPlayers = playerStore.getPlayers();
   const nav = useNavigation();
+  const addPlayerRef = useRef<BottomSheetModal>(null);
+  const cameraRef = useRef<BottomSheetModal>(null);
+
   const [players, setPlayers] = useState(allPlayers);
+  const [userPicture, setUserPicture] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [formVisible, setFormVisible] = useState(false);
   const [isFabVisible, setFabVisible] = useState(false);
@@ -36,18 +52,162 @@ const PlayersScreen = observer(() => {
   };
 
   const removePlayer = item => {
-    // const arr = [...players];
-    // const newList = arr.filter(el => el.name !== item.name);
-    // setPlayers(newList);
     playerStore.removePlayers(item);
   };
 
+  const addPicture = () => {
+    cameraRef?.current?.present();
+  };
   useEffect(() => {
     if (allPlayers) {
       setPlayers(allPlayers);
+      playerStore.setPlayerRole(allPlayers.length);
     }
   }, [allPlayers]);
+  const takePhoto = () => {
+    cameraRef.current.close();
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then(
+        () => {
+          launchCamera(
+            {
+              cameraType: 'back',
+              mediaType: 'photo',
+              maxHeight: 200,
+              maxWidth: 200,
+              quality: 0.3,
+              includeBase64: true,
+            },
+            response => {
+              if (response) {
+                if (!response.didCancel) {
+                  if (response?.assets[0]) {
+                    // console.log({response: response?.assets[0].uri});
+                    // setPlayerAvatar(response?.assets[0]?.uri)
+                    setUserPicture(response?.assets[0]?.uri);
+                    const file = {
+                      file: `data:image/jpeg;base64,${response.assets[0].base64}`,
+                    };
 
+                    // console.log({file});
+                    // this.changeAvatar(this.props.user.id, response.data).then(() =>
+                    // {
+                    // 	this.props.fetchUser();
+                    // });
+                  }
+                }
+              }
+            },
+          );
+        },
+      );
+    } else {
+      launchCamera(
+        {
+          cameraType: 'back',
+          mediaType: 'photo',
+          maxHeight: 200,
+          maxWidth: 200,
+          quality: 0.3,
+          includeBase64: true,
+        },
+
+        response => {
+          if (response) {
+            if (!response.didCancel) {
+              if (response?.assets[0]) {
+                const file = {
+                  file: `data:image/jpeg;base64,${response.assets[0].base64}`,
+                };
+                // this.changeAvatar(this.props.user.id, response.data).then(() =>
+                // {
+                // 	this.props.fetchUser();
+                // });
+              }
+            }
+          }
+        },
+      );
+    }
+  };
+
+  const selectFromDoc = () => {
+    cameraRef?.current?.close();
+    Keyboard.dismiss();
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ).then(() => {
+        launchImageLibrary(
+          {
+            title: 'انتخاب از گالری',
+            // maxWidth: 600,
+            // maxHeight: 600,
+            quality: 0.7,
+            mediaType: 'photo',
+            includeBase64: true,
+            // eslint-disable-next-line
+          },
+          response => {
+            if (response) {
+              if (!response.didCancel) {
+                if (response?.assets[0]) {
+                  const file = `data:image/jpeg;base64,${response.assets[0].base64}`;
+
+                  setUserPicture(file);
+
+                  // this.changeAvatar(this.props.user.id, response.data).then(() =>
+                  // {
+                  // 	this.props.fetchUser();
+                  // });
+                }
+              }
+            }
+          },
+        );
+      });
+    } else {
+      launchCamera(
+        {
+          title: 'دوربین',
+          // maxWidth: 600,
+          // maxHeight: 600,
+          quality: 0.7,
+          mediaType: 'photo',
+          includeBase64: true,
+          // eslint-disable-next-line
+        },
+        response => {
+          if (response) {
+            if (!response.didCancel) {
+              if (response?.assets[0]) {
+                const file = `data:image/jpeg;base64,${response.assets[0].base64}`;
+
+                setUserPicture(file);
+
+                // this.changeAvatar(this.props.user.id, response.data).then(
+                //   () => {
+                //     this.props.fetchUser();
+                //   },
+                // );
+              }
+            }
+          }
+        },
+      );
+    }
+  };
+
+  // useEffect(() => {
+  //   BackHandler.addEventListener('hardwareBackPress', handleBack);
+  //   return () => {
+  //     BackHandler.remove()
+  //   };
+  // }, []);
+
+  const handleBack = () => {
+    nav.goBack();
+  };
   return (
     <View
       style={{
@@ -83,7 +243,7 @@ const PlayersScreen = observer(() => {
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 300}}
+                style={{width: '50%', height: 200}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
                 هیج بازیکنی نداری!
@@ -98,7 +258,11 @@ const PlayersScreen = observer(() => {
               style={styles.renderItem}>
               <View style={styles.playerIcon}>
                 <Image
-                  source={require('../../assets/images/player2.png')}
+                  source={
+                    item?.avatar
+                      ? {uri: item?.avatar}
+                      : require('../../assets/images/player2.png')
+                  }
                   style={{width: 80, height: 80}}
                 />
               </View>
@@ -125,7 +289,9 @@ const PlayersScreen = observer(() => {
               borderRadius: 10,
             }}
             onPress={() => {
-              nav.navigate('playerList');
+              nav.navigate('playerList', {
+                gamePlayers: allPlayers,
+              });
               setFabVisible(false);
             }}>
             <Text>بازیکن قدیمی</Text>
@@ -141,7 +307,7 @@ const PlayersScreen = observer(() => {
             }}
             onPress={() => {
               setFabVisible(false);
-              setFormVisible(true);
+              addPlayerRef?.current?.present();
             }}>
             <Text>بازیکن جدید</Text>
           </Pressable>
@@ -156,31 +322,89 @@ const PlayersScreen = observer(() => {
           <Icon name="user-plus" size={20} color={'black'} />
         </Pressable>
       </View>
-
       <Modal
-        isVisible={formVisible}
-        onBackButtonPress={() => setFormVisible(false)}
-        onBackdropPress={() => setFormVisible(false)}
-        onRequestClose={() => setFormVisible(false)}
-        deviceWidth={DWidth}
-        deviceHeight={DHeight}
-        style={styles.modalContainer}>
-        <View style={styles.modalView}>
+        modalRef={addPlayerRef}
+        index={0}
+        onDismiss={() => {}}
+        snapPoints={[DHeight * 0.5]}
+        backgroundStyle={{backgroundColor: backgroundColor}}
+        onChange={e => {
+          // console.log('onchange', e);
+        }}>
+        <View
+          style={{
+            backgroundColor: backgroundColor,
+            height: '100%',
+            width: '100%',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <Pressable
+            onPress={() => {
+              addPicture();
+            }}
+            hitSlop={10}>
+            <View style={styles.userphoto}>
+              <Image
+                source={userPicture ? {uri: userPicture} : player}
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+            <Icon
+              name="camera"
+              size={25}
+              color={'white'}
+              style={{
+                position: 'absolute',
+                bottom: -10,
+                right: -10,
+                backgroundColor: '#2b60b5',
+                padding: 5,
+                borderRadius: 12.5,
+                overflow: 'hidden',
+                // borderWidth: 1,
+              }}
+            />
+          </Pressable>
           <TextInput
             value={playerName}
             onChangeText={text => {
               setPlayerName(text);
             }}
             style={styles.modalInput}
-            selectionColor={backgroundColor}
+            selectionColor={'white'}
             placeholder="نام بازیکن"
+            placeholderTextColor={'#e0e0e0'}
           />
           <Pressable
             onPress={() => {
               addPlayer();
             }}
             style={styles.modalBtn}>
-            <Text style={{color: 'white', fontSize: 18}}>ثبت</Text>
+            <Text style={{color: 'white', fontSize: 18}}>اضافه کن</Text>
+          </Pressable>
+        </View>
+      </Modal>
+      <Modal
+        modalRef={cameraRef}
+        index={0}
+        onDismiss={() => cameraRef?.current?.close()}
+        snapPoints={['20%']}
+        backgroundStyle={{
+          backgroundColor: backgroundColor,
+        }}>
+        <View style={styles.selectImageContainer}>
+          <Pressable onPress={takePhoto} style={styles.addImageBtnCard}>
+            <View style={styles.addPhotoCard}>
+              <Icon name="camera" size={50} color={'white'} />
+            </View>
+            <Text style={{color: 'white'}}>دوربین</Text>
+          </Pressable>
+          <Pressable onPress={selectFromDoc} style={styles.addImageBtnCard}>
+            <View style={styles.addPhotoCard}>
+              <Icon name="image" size={50} color={'white'} />
+            </View>
+            <Text style={{color: 'white'}}>گالری</Text>
           </Pressable>
         </View>
       </Modal>
@@ -207,14 +431,14 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    // elevation: 5, 
+    // elevation: 5,
   },
   emptyList: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    marginTop: 80,
+    height: DHeight * 0.7,
+    // marginTop: 80,
   },
   renderItem: {
     width: DWidth / 3.2,
@@ -288,8 +512,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
-    backgroundColor: backgroundColor,
+    backgroundColor: '#2b60b5',
   },
+  userphoto: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  addPhotoCard: {
+    borderWidth: 1,
+    padding: 15,
+    borderRadius: 15,
+    borderColor: 'white',
+  },
+  selectImageContainer: {
+    flexDirection: 'row-reverse',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  addImageBtnCard: {justifyContent: 'center', alignItems: 'center'},
 });
 
 export {PlayersScreen};

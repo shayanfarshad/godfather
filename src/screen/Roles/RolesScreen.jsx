@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import {remove} from 'mobx';
 
 const RolesScreen = observer(() => {
   const {roleStore, gameStore} = useStore();
   const nav = useNavigation();
   const Roles = roleStore.roles;
   const playingRoles = gameStore.roles;
-  const [disableds, setDisableds] = useState([]);
   const [gameRoles, setGameRoles] = useState([]);
   const [citizen, setCitizen] = useState(1);
   //   const [roles, setRoles] = useState(playingRoles);

@@ -33,7 +33,6 @@ const GameNightPlay = () => {
 
   const snapPoints = useMemo(() => [50, 500], []);
   const handleSheetChanges = useCallback(index => {
-    console.log('handleSheetChanges', index);
     setSheetIndex(index);
   }, []);
 
@@ -43,7 +42,6 @@ const GameNightPlay = () => {
   }, [night]);
 
   useEffect(() => {
-    console.log({nightStory, nightWord});
     if (nightStory && nightWord) {
       const t = nightStory.filter(el => el.name.includes(nightWord));
       // console.log({toNight});
@@ -125,7 +123,6 @@ const GameNightPlay = () => {
         index={0}
         backdropComponent={sheetIndex === 1 ? renderBackdrop : null}
         onDismiss={() => {
-          console.log('dismis shod');
           bottomSheetRef?.current?.snapToIndex(0);
         }}
         style={styles.shadow}

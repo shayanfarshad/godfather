@@ -1,38 +1,47 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 import {DWidth, backgroundColor} from '../../constants/Constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 
-const PlayerListScreen = observer(() => {
+const PlayerListScreen = observer(({route}) => {
   const [players, setPlayers] = useState([]);
   const nav = useNavigation();
+  const gamePlayers = route.params.gamePlayers;
   const {playerStore} = useStore();
   const getPlayers = async () => {
     return await AsyncStorage.getItem('players');
   };
   useEffect(() => {
+    console.log({gamePlayers: gamePlayers[0]});
     getPlayers().then(res => {
       const _players = JSON.parse(res);
-      const gamer = playerStore.getPlayers();
-      _players.map(item => {
-        if (gamer.some(el => el.name === item.name)) {
-          const arr = _players.filter(el => el.name !== item.name);
-          return setPlayers(arr);
-        } else {
-          if (_players) {
-            setPlayers(_players);
-          }
-        }
-      });
+      console.log({_players: _players});
+      const filteredArray = _players.filter(
+        item =>
+          !gamePlayers.some(s => JSON.stringify(s) === JSON.stringify(item)),
+      );
+      // _players.map(item => {
+      //   console.log({item: item.name});
+      //   if (gamePlayers.some(el => el.id === item.id)) {
+      //     arr = _players.filter(el => el.id !== item.id);
+      //     console.log({arr: arr.length})
+      //   } else {
+      //     if (_players) {
+      //       setPlayers(_players);
+      //     }
+      //   }
+      // });
+      setPlayers(filteredArray);
     });
   }, []);
 
   const selectPlayer = item => {
+    console.log({item});
     playerStore.addPlayers(item);
     const arr = [...players];
     const newList = arr.filter(el => el !== item);
@@ -78,7 +87,11 @@ const PlayerListScreen = observer(() => {
               key={item.id}
               onPress={() => selectPlayer(item)}>
               <Image
-                source={require('../../assets/images/player2.png')}
+                source={
+                  item?.avatar
+                    ? {uri: item.avatar}
+                    : require('../../assets/images/player2.png')
+                }
                 style={{width: 80, height: 80, borderRadius: 10}}
               />
               <Text style={{color: 'white'}}>{item.name}</Text>

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useStore} from '../../constants/useStore';
 import {DWidth, backgroundColor} from '../../constants/Constants';
@@ -10,9 +10,7 @@ const RoleUpScreen = () => {
   const nav = useNavigation();
   const {playerStore, gameStore} = useStore();
   const [rolePlayer, setRolePlayer] = useState([]);
-
   const players = playerStore.getPlayers();
-
   const roles = gameStore.roles;
 
   useEffect(() => {
@@ -50,8 +48,10 @@ const RoleUpScreen = () => {
       }
       gameStore.updateRolePlayers(joinedArray);
       setRolePlayer(joinedArray);
+      playerStore.setPlayerRole(0);
     } else {
       setRolePlayer(players);
+      playerStore.setPlayerRole(0);
     }
   };
   return (

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import {useStore} from '../../constants/useStore';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import ReactNativeModal from 'react-native-modal';

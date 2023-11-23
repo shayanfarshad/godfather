@@ -1,4 +1,8 @@
-import React, {useEffect, useState} from 'react';
+/**
+ * @format
+ * @flow strict-local
+ */
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
   BackHandler,
@@ -8,7 +12,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ReactNativeModal from 'react-native-modal';
@@ -21,14 +25,19 @@ import {
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {PlayerDetail} from './PlayerDetail';
+import {Modal} from '../../components/Modal';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+// import ZarinPalCheckout from 'zarinpal-checkout';
 
 const GamePlay = () => {
   const nav = useNavigation();
   const isFocused = useIsFocused();
-  const {gameStore} = useStore();
+  const {gameStore, playerStore} = useStore();
   const players = gameStore.rolePlayers;
   const lastMoveCards = gameStore.lastMoveCards;
   const gameDay = gameStore.day;
+  const exitRef = useRef<BottomSheetModal>(null);
+  const [showPayment, setShowPayment] = useState(true);
 
   const [gamers, setGamers] = useState([]);
   const [removedPlayers, setRemovedPlayers] = useState([]);
@@ -40,6 +49,16 @@ const GamePlay = () => {
   const [isSilent, setSilent] = useState(false);
   const [detailPlayer, setDetailPlayer] = useState();
   const [day, setDay] = useState('');
+  const [hasToken, setToken] = useState(false);
+  // const [isDead, setDead] = useState(false);
+
+  useEffect(() => {
+    if (!hasToken) {
+      setShowPayment(true);
+    } else {
+      setShowPayment(false);
+    }
+  }, [hasToken]);
   useEffect(() => {
     if (players) {
       setGamers(players);
@@ -48,7 +67,6 @@ const GamePlay = () => {
 
   useEffect(() => {
     const word = getDayWord(gameDay);
-    console.log({word});
     setDay(word);
   }, [gameDay]);
 
@@ -100,7 +118,6 @@ const GamePlay = () => {
     const removed = [...removedPlayers];
     removed.push(p);
     const arr = gamers.filter(el => el?.player?.id !== p?.player?.id);
-    console.log({arr});
     gameStore.updateRolePlayers(arr);
     setRemovedPlayers(removed);
   };
@@ -115,8 +132,32 @@ const GamePlay = () => {
     setRemovedPlayers(removed);
   };
 
+  // const payment = () => {
+  //   const zarinpal = ZarinPalCheckout.create(
+  //     '41a80d95-7a88-4fad-8ad8-40be0c654c62',
+  //     false,
+  //   );
+
+  //   zarinpal
+  //     .PaymentRequest({
+  //       Amount: '1000', // In Tomans
+  //       CallbackURL: 'https://your-safe-api/example/zarinpal/validate',
+  //       Description: 'A Payment from Godfather',
+  //       Email: 'farshad.shayan1996@gmail.com',
+  //       Mobile: '09190396649',
+  //     })
+  //     .then(response => {
+  //       if (response.status === 100) {
+  //         console.log(response.url);
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // };
+
   return (
-    <View style={{flex: 1, backgroundColor: backgroundColor}}>
+    <View style={{flex: 1, paddingTop: 10, backgroundColor: backgroundColor}}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
           روز {day}
@@ -150,33 +191,15 @@ const GamePlay = () => {
             }}>
             <IonIcon name="sunny-outline" size={30} color={'white'} />
           </Pressable>
-          <Pressable
-            onPress={() =>
-              Alert.alert(
-                'از بازی خارج می شوید ؟',
-                'در صورت تایید بازی کلا از بین خواهد رفت',
-                [
-                  {
-                    text: 'نه',
-                    onPress: () => {},
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'بله',
-                    onPress: () => {
-                      nav.navigate('home');
-                    },
-                  },
-                ],
-              )
-            }>
+          <Pressable onPress={() => exitRef?.current?.present()}>
             <Icon name="long-arrow-left" size={30} color={'white'} />
           </Pressable>
         </View>
       </View>
+
       <FlatList
         data={gamers}
-        keyExtractor={(index, item) => index}
+        keyExtractor={(index, item) => item.id}
         contentContainerStyle={{
           width: DWidth * 0.9,
           marginTop: 20,
@@ -186,6 +209,7 @@ const GamePlay = () => {
         renderItem={({item, index}) => {
           return (
             <PlayerDetail
+              key={item.id}
               item={item}
               setRemovePlayer={p => removeDeadPlayer(p)}
               index={index}
@@ -209,11 +233,11 @@ const GamePlay = () => {
       </Text>
       <FlatList
         data={removedPlayers}
-        keyExtractor={(index, item) => index}
+        keyExtractor={(index, item) => item.id}
         numColumns={3}
         contentContainerStyle={{
           width: DWidth * 0.9,
-          height: DHeight * 0.2,
+          height: DHeight * 0.3,
           // marginTop: 20,
           marginHorizontal: DWidth * 0.05,
         }}
@@ -333,12 +357,93 @@ const GamePlay = () => {
                   item={item}
                   setClickedCard={setClickedCard}
                   index={index}
+                  key={item.id}
                 />
               );
             }}
           />
         </View>
       </ReactNativeModal>
+      <ReactNativeModal
+        isVisible={showPayment}
+        deviceWidth={DWidth}
+        deviceHeight={DHeight}
+        onBackButtonPress={() => {
+          setShowLastCard(!showPayment);
+        }}
+        onBackdropPress={() => {
+          setShowLastCard(!showPayment);
+        }}>
+        <View style={styles.selectImageContainer}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
+              برای ادامه بازی و گردانندگی بازی بدون نیاز به یادداشت و ... تنها
+              کافی است برای یکبار اشتراک برنامه رو بخری و برای همیشه از بازی به
+              صورت کامل لذت ببری
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '80%',
+              justifyContent: 'space-around',
+            }}>
+            <Pressable
+              onPress={() => {
+                // payment();
+              }}
+              style={[styles.addImageBtnCard, {backgroundColor: 'green'}]}>
+              <Text style={{color: 'white'}}>همین الان پرداخت میکنم</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                // exitRef?.current?.close();
+              }}
+              style={[styles.addImageBtnCard, {backgroundColor: 'red'}]}>
+              <Text style={{color: 'white'}}>نه بیخیال تا همینجاش کافیه</Text>
+            </Pressable>
+          </View>
+        </View>
+      </ReactNativeModal>
+      <Modal
+        modalRef={exitRef}
+        index={0}
+        onDismiss={() => exitRef?.current?.close()}
+        snapPoints={['20%']}
+        backgroundStyle={{
+          backgroundColor: backgroundColor,
+        }}>
+        <View style={styles.selectImageContainer}>
+          <View>
+            <Text style={{color: 'white', fontSize: 20}}>
+              از بازی خارج می شوید؟
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '80%',
+              justifyContent: 'space-around',
+            }}>
+            <Pressable
+              onPress={() => {
+                nav.navigate('home');
+                gameStore.gameReset();
+                playerStore.resetPlayers();
+              }}
+              style={styles.addImageBtnCard}>
+              <Text style={{color: 'black'}}>خارج شو</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                exitRef?.current?.close();
+              }}
+              style={styles.addImageBtnCard}>
+              <Text style={{color: 'black'}}>نه</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -438,6 +543,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     elevation: 10,
+  },
+  selectImageContainer: {
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  addImageBtnCard: {
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '100%',
+    height: 40,
+    marginBottom: 15,
   },
 });
 

@@ -131,5 +131,12 @@ class GameStore {
     this.players = newPlayers;
     return this.players;
   }
+  @action gameReset() {
+    this.roles = [];
+    this.players = [];
+    this.rolePlayers = [];
+    this.night = 0;
+    this.day = 0;
+  }
 }
 export default new GameStore();

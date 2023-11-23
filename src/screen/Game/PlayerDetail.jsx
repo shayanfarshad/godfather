@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {DWidth} from '../../constants/Constants';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PlayerDetail = ({
@@ -16,7 +16,7 @@ const PlayerDetail = ({
   const [isShot, setShot] = useState(false);
   const [hasShield, setHasShield] = useState(item.role.shield);
   const [hasAbility, setHasAbility] = useState(true);
-  // const [isDead, setDead] = useState(false);
+
   return (
     <View style={[styles.renderItem]} key={index}>
       <Pressable

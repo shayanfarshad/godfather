@@ -7,34 +7,39 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Text} from '../../components/Text';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Text from '../../components/Text';
 import {useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {observer} from 'mobx-react';
+import {colors} from '../../theme';
 
 const HomeScreen = observer(() => {
   const nav = useNavigation();
   const {playerStore, gameStore} = useStore();
   const players = playerStore.players;
+  const playersWithOutRoles = playerStore.playersWithoutRole;
   const roles = gameStore.roles;
   const rolePlayers = gameStore.rolePlayers;
-  const [playersWithOutRoles, setPlayersWithOutRoles] = useState(0);
+  // const [playersWithOutRoles, setPlayersWithOutRoles] = useState(0);
   const [startDisable, setStartDisable] = useState(true);
 
   useEffect(() => {
-    if (rolePlayers) {
+    if (rolePlayers.length) {
+      console.log({rolePlayers});
       if (rolePlayers[0]?.role?.title && rolePlayers[0]?.player?.name) {
         setStartDisable(false);
       }
+    } else {
+      setStartDisable(true);
     }
   }, [rolePlayers]);
+
   return (
     <SafeAreaView
       style={{
         flex: 1,
         paddingHorizontal: 10,
-        backgroundColor: '#232a36',
+        backgroundColor: colors.background,
       }}>
       <View
         style={{
@@ -67,7 +72,7 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(256,256,256,0.4)',
+                  backgroundColor: 'rgba(173, 209, 243,0.4)',
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
@@ -105,7 +110,7 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(256,256,256,0.4)',
+                  backgroundColor: 'rgba(173, 209, 243,0.4)',
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
@@ -140,7 +145,7 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(256,256,256,0.4)',
+                  backgroundColor: 'rgba(173, 209, 243,0.4)',
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
@@ -163,6 +168,7 @@ const HomeScreen = observer(() => {
                     تعیین نقش برای بازیکن ها
                   </Text>
                   <View style={{flexDirection: 'row-reverse', height: 40}}>
+                    <Text>شهروند : </Text>
                     <View
                       style={{
                         width: 30,
@@ -170,11 +176,12 @@ const HomeScreen = observer(() => {
                         borderRadius: 5,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: 'red',
+                        backgroundColor: colors.cardBackground,
                         marginLeft: 10,
                       }}>
                       <Text>{roles.length}</Text>
                     </View>
+                    <Text>مافیا : </Text>
                     <View
                       style={{
                         width: 30,
@@ -182,27 +189,7 @@ const HomeScreen = observer(() => {
                         borderRadius: 5,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: '#16a5f7',
-                      }}>
-                      <Text>{players.length}</Text>
-                    </View>
-                    <View
-                      style={{
-                        marginRight: 15,
-                        height: 30,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text style={{fontSize: 18}}>باقی مانده</Text>
-                    </View>
-                    <View
-                      style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#f5d716',
+                        backgroundColor: colors.modalBackground,
                         marginRight: 10,
                       }}>
                       <Text>{playersWithOutRoles}</Text>
@@ -229,14 +216,17 @@ const HomeScreen = observer(() => {
           style={{
             width: '100%',
             height: 50,
-            backgroundColor: 'white',
+            backgroundColor: colors.modalBackground,
             borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           <Pressable
             disabled={startDisable}
-            onPress={() => nav.navigate('showcards')}
+            onPress={() => {
+              console.log({startDisable});
+              nav.navigate('showcards');
+            }}
             style={{
               width: '100%',
               height: '100%',
@@ -270,7 +260,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginLeft: 20,
-    backgroundColor: '#253959',
+    backgroundColor: colors.background,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
