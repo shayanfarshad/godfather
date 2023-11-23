@@ -29,7 +29,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {colors} from '../../theme';
 import {translate} from '../../i18n';
 // import player from '../../assets/images/player2.png';
-const AllPlayers = () => {
+const AllPlayers = observer(() => {
   const player = require('../../assets/images/player2.png');
   const [players, setPlayers] = useState([]);
   const nav = useNavigation();
@@ -332,7 +332,7 @@ const AllPlayers = () => {
       </Modal>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   addBtn: {

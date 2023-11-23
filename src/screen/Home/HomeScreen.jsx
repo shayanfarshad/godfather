@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {observer} from 'mobx-react';
 import {colors} from '../../theme';
+import { translate } from '../../i18n';
 
 const HomeScreen = observer(() => {
   const nav = useNavigation();
@@ -54,7 +55,7 @@ const HomeScreen = observer(() => {
             alignItems: 'center',
           }}>
           <Text type="bold" style={{fontSize: 30, color: 'white'}}>
-            پدرخوانده
+            {translate("game.godfather")}
           </Text>
         </View>
         <View
@@ -79,10 +80,10 @@ const HomeScreen = observer(() => {
                 },
               ]}>
               <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>بازیکن ها</Text>
+                <Text style={{fontSize: 25, lineHeight: 40}}>{translate('game.players')}</Text>
                 <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
                   {' '}
-                  {players?.length} بازیکن
+                  {players?.length} {translate('game.player')}
                 </Text>
               </View>
               <Pressable
@@ -117,9 +118,9 @@ const HomeScreen = observer(() => {
                 },
               ]}>
               <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>نقش ها</Text>
+                <Text style={{fontSize: 25, lineHeight: 40}}>{translate('game.roles')}</Text>
                 <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
-                  {roles.length} نقش
+                  {roles.length} {translate('game.role')}
                 </Text>
               </View>
               <Pressable
@@ -165,10 +166,9 @@ const HomeScreen = observer(() => {
                     alignItems: 'flex-end',
                   }}>
                   <Text style={{fontSize: 20, lineHeight: 40}}>
-                    تعیین نقش برای بازیکن ها
-                  </Text>
+                    {translate('game.chooseRoleForPlayers')}                  </Text>
                   <View style={{flexDirection: 'row-reverse', height: 40}}>
-                    <Text>شهروند : </Text>
+                    <Text>{translate('game.citizen')} : </Text>
                     <View
                       style={{
                         width: 30,
@@ -181,7 +181,7 @@ const HomeScreen = observer(() => {
                       }}>
                       <Text>{roles.length}</Text>
                     </View>
-                    <Text>مافیا : </Text>
+                    <Text>{translate('game.mafia')} : </Text>
                     <View
                       style={{
                         width: 30,
@@ -233,7 +233,7 @@ const HomeScreen = observer(() => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 20}}>شروع بازی</Text>
+            <Text style={{fontSize: 20}}>{translate('game.startGame')}</Text>
           </Pressable>
         </View>
       </View>

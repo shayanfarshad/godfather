@@ -2,6 +2,8 @@ import React from 'react';
 import {Text as T} from 'react-native';
 import {colors} from '../theme';
 import I18n from 'i18n-js';
+import {useStore} from '../constants/useStore';
+import {observer} from 'mobx-react';
 
 // export const Text = ({type = 'medium', children, style, ...restProps}) => {
 //   return (
@@ -11,30 +13,34 @@ import I18n from 'i18n-js';
 //   );
 // };
 
-const Text = ({style, type = 'medium', numberOfLines, ...restProps}) => {
-  // Define your custom styles here, you can use style prop as well
-  const customStyles = {
-    fontSize: 16,
-    // color: 'blue',
-    // Add any other custom styles you need
-  };
+const Text = observer(
+  ({style, type = 'medium', numberOfLines, ...restProps}) => {
+    // Define your custom styles here, you can use style prop as well
+    const customStyles = {
+      fontSize: 16,
+      // color: 'blue',
+      // Add any other custom styles you need
+    };
 
-  // Combine the standard style prop and the custom styles
-  const combinedStyles = [customStyles, style];
+    // Combine the standard style prop and the custom styles
+    const combinedStyles = [customStyles, style];
 
-  return (
-    <T
-      ellipsizeMode="tail"
-      numberOfLines={numberOfLines || 0}
-      style={[combinedStyles, {fontFamily: font(type), color: colors.text}]}
-      {...restProps}>
-      {restProps.children}
-    </T>
-  );
-};
+    return (
+      <T
+        ellipsizeMode="tail"
+        numberOfLines={numberOfLines || 0}
+        style={[
+          combinedStyles,
+          {fontFamily: font(type), color: colors.text, lineHeight: 40},
+        ]}
+        {...restProps}>
+        {restProps.children}
+      </T>
+    );
+  },
+);
 
 export const font = type => {
-  console.log({locale: I18n.locale});
   if (I18n.locale === 'en-US') {
     switch (type) {
       case 'bold':
@@ -47,11 +53,11 @@ export const font = type => {
   } else {
     switch (type) {
       case 'bold':
-        return 'Nofar';
+        return 'Digi Nofar Bold';
       case 'light':
-        return 'Nofar';
+        return 'Digi Nofar Bold';
       default:
-        return 'Nofar';
+        return 'Digi Nofar Bold';
     }
   }
 };

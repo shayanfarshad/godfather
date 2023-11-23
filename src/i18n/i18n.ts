@@ -8,6 +8,10 @@ import en, {Translations} from './en';
 import fa from './fa';
 
 i18n.fallbacks = true;
+// i18next.init({
+//   fallbackLng: ['en', 'fa', 'en-IR', 'en-US'],
+// });
+
 /**
  * we need always include "*-US" for some valid language codes because when you change the system language,
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
@@ -36,13 +40,29 @@ i18n.translations = {fa, 'en-IR': fa, en, 'en-US': en};
 //     }
 //   }
 // };
+const locales = localization.getLocales();
 
 i18n.locale = localization.getLocales()[0].languageTag;
 
+export const changeLang = (lang: string) => {
+  if (lang === 'en-US') {
+    // I18nManager.allowRTL(false);
+    I18nManager.forceRTL(true);
+  } else {
+    // I18nManager.allowRTL(true);
+    I18nManager.forceRTL(false);
+  }
+  if (lang) {
+    i18n.locale = lang;
+  } else if (Array.isArray(locales)) {
+    i18n.locale = locales[0].languageTag;
+  }
+};
 // handle RTL languages
-export const isRTL = localization.getLocales()[0].isRTL;
-I18nManager.allowRTL(isRTL);
-I18nManager.forceRTL(isRTL);
+// export const isRTL = localization.getLocales()[0].languageTag;
+// console.log({isRTL})
+// I18nManager.allowRTL(isRTL === 'en-IR');
+// I18nManager.forceRTL(isRTL === 'en-IR');
 
 /**
  * Builds up valid keypaths for translations.

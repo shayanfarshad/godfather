@@ -129,7 +129,7 @@ const darkColors = {
    * The default text color in many components.
    */
   text: palette.neutral200,
-  bottomActiveTint: '0D98BA',
+  bottomActiveTint: '#0D98BA',
   bottomInactiveTint: palette.neutral200,
   /**
    * Secondary text information.

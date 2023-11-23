@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import Text from './Text';
 
 export const Radio = ({ label, onPress, selected }) => {
   return (
@@ -14,7 +15,7 @@ export const Radio = ({ label, onPress, selected }) => {
 
 const styles = StyleSheet.create({
     radioButton: {
-      flexDirection: 'row',
+      flexDirection: 'row-reverse',
       alignItems: 'center',
       marginVertical: 8,
     },
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
       borderColor: 'black',
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: 8,
+      marginLeft: 8,
     },
     radioOuterCircleSelected: {
       borderColor: 'blue', // Change the color when selected
@@ -38,6 +39,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'blue', // Change the color when selected
     },
     radioLabel: {
-      fontSize: 16,
+      fontSize: 20,
     },
   });

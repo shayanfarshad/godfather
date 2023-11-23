@@ -27,6 +27,7 @@ import {useStore} from '../../constants/useStore';
 import {PlayerDetail} from './PlayerDetail';
 import {Modal} from '../../components/Modal';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {translate} from '../../i18n';
 // import ZarinPalCheckout from 'zarinpal-checkout';
 
 const GamePlay = () => {
@@ -50,7 +51,6 @@ const GamePlay = () => {
   const [detailPlayer, setDetailPlayer] = useState();
   const [day, setDay] = useState('');
   const [hasToken, setToken] = useState(false);
-  // const [isDead, setDead] = useState(false);
 
   useEffect(() => {
     if (!hasToken) {
@@ -160,7 +160,7 @@ const GamePlay = () => {
     <View style={{flex: 1, paddingTop: 10, backgroundColor: backgroundColor}}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          روز {day}
+          {translate('game.day')} {day}
         </Text>
         <View
           style={{
@@ -182,7 +182,7 @@ const GamePlay = () => {
               padding: 10,
             }}>
             <Text type="light" style={{fontSize: 20, color: 'black'}}>
-              حرکت آخر
+              {translate('game.lastMove')}
             </Text>
           </Pressable>
           <Pressable
@@ -229,7 +229,7 @@ const GamePlay = () => {
           marginRight: 20,
           marginTop: 20,
         }}>
-        حذف شده ها
+        {translate('game.deleted')}
       </Text>
       <FlatList
         data={removedPlayers}
@@ -249,7 +249,7 @@ const GamePlay = () => {
                 style={{width: '30%', height: 100}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
-                هیچ بازیکنی از بازی خارج نشده
+                {translate('game.noBodyRemovedFromGame')}{' '}
               </Text>
             </View>
           );
@@ -416,7 +416,7 @@ const GamePlay = () => {
         <View style={styles.selectImageContainer}>
           <View>
             <Text style={{color: 'white', fontSize: 20}}>
-              از بازی خارج می شوید؟
+              {translate('game.doYouWantToCloseGame')}
             </Text>
           </View>
           <View
@@ -432,14 +432,14 @@ const GamePlay = () => {
                 playerStore.resetPlayers();
               }}
               style={styles.addImageBtnCard}>
-              <Text style={{color: 'black'}}>خارج شو</Text>
+              <Text style={{color: 'black'}}>{translate('game.closeIt')}</Text>
             </Pressable>
             <Pressable
               onPress={() => {
                 exitRef?.current?.close();
               }}
               style={styles.addImageBtnCard}>
-              <Text style={{color: 'black'}}>نه</Text>
+              <Text style={{color: 'black'}}>{translate('common.cancel')}</Text>
             </Pressable>
           </View>
         </View>

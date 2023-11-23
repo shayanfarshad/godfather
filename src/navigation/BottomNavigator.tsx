@@ -5,7 +5,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import {CompositeScreenProps} from '@react-navigation/native';
-import {TextStyle, ViewStyle} from 'react-native';
+import {I18nManager, TextStyle, ViewStyle} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, spacing} from '../theme';
 import {AppStackParamList, AppStackScreenProps} from './AppNavigator';
@@ -19,6 +19,7 @@ import {useStore} from '../constants/useStore';
 import {AllPlayers} from '../screen/Players/AllPlayers';
 import SettingScreen from '../screen/Settings/SettingScreen';
 import I18n from 'i18n-js';
+import * as storage from '../utils/storage';
 
 // import { useStores } from "app/models"
 
@@ -50,12 +51,23 @@ export const BottomNavigator = observer(function BottomNavigator() {
     themeStore: {isDark},
   } = useStore();
   const [fontFamily, setFontFamily] = useState('Nofar');
+  const getLang = async () => {
+    await storage.load('language').then(res => {
+      console.log({resBottom: res});
+      if (res === 'en-US') {
+        I18nManager.forceRTL(true);
+      } else {
+        I18nManager.forceRTL(false);
+      }
+    });
+  };
 
   useEffect(() => {
+    getLang();
     if (I18n.locale === 'en-US') {
       setFontFamily('Wizard World');
     } else {
-      setFontFamily('Nofar');
+      setFontFamily('Digi Nofar Bold');
     }
   }, []);
 
@@ -75,7 +87,11 @@ export const BottomNavigator = observer(function BottomNavigator() {
         component={ProfileScreen}
         options={{
           tabBarLabel: translate('bottomNavigator.profile'),
-          tabBarLabelStyle: {fontFamily: fontFamily, fontSize: 12},
+          tabBarLabelStyle: {
+            fontFamily: fontFamily,
+            fontSize: 16,
+            lineHeight: 32,
+          },
 
           tabBarIcon: ({focused}) => (
             <Icon
@@ -83,7 +99,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
               color={
                 focused ? colors.bottomActiveTint : colors.bottomInactiveTint
               }
-              size={20}
+              size={16}
               style={undefined}
             />
           ),
@@ -94,7 +110,11 @@ export const BottomNavigator = observer(function BottomNavigator() {
         component={LearningScreen}
         options={{
           tabBarLabel: translate('bottomNavigator.learning'),
-          tabBarLabelStyle: {fontFamily: fontFamily, fontSize: 12},
+          tabBarLabelStyle: {
+            fontFamily: fontFamily,
+            fontSize: 16,
+            lineHeight: 32,
+          },
           tabBarIcon: ({focused}) => (
             <Icon
               name="leanpub"
@@ -102,7 +122,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
               color={
                 focused ? colors.bottomActiveTint : colors.bottomInactiveTint
               }
-              size={20}
+              size={16}
               style={undefined}
             />
           ),
@@ -142,7 +162,11 @@ export const BottomNavigator = observer(function BottomNavigator() {
         component={AllPlayers}
         options={{
           tabBarLabel: translate('bottomNavigator.players'),
-          tabBarLabelStyle: {fontFamily: fontFamily, fontSize: 12},
+          tabBarLabelStyle: {
+            fontFamily: fontFamily,
+            fontSize: 16,
+            lineHeight: 32,
+          },
 
           tabBarIcon: ({focused}) => (
             <Icon
@@ -150,7 +174,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
               color={
                 focused ? colors.bottomActiveTint : colors.bottomInactiveTint
               }
-              size={20}
+              size={16}
               style={undefined}
             />
           ),
@@ -161,7 +185,11 @@ export const BottomNavigator = observer(function BottomNavigator() {
         component={SettingScreen}
         options={{
           tabBarLabel: translate('bottomNavigator.settings'),
-          tabBarLabelStyle: {fontFamily: fontFamily, fontSize: 12},
+          tabBarLabelStyle: {
+            fontFamily: fontFamily,
+            fontSize: 16,
+            lineHeight: 32,
+          },
 
           tabBarIcon: ({focused}) => (
             <Icon
@@ -169,7 +197,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
               color={
                 focused ? colors.bottomActiveTint : colors.bottomInactiveTint
               }
-              size={20}
+              size={16}
               style={undefined}
             />
           ),

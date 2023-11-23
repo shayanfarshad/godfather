@@ -26,18 +26,21 @@ import {LearningScreen} from '../screen/Rules/LearningScreen';
 import {RoleLearning} from '../screen/Rules/RoleLearning';
 import {GameRules} from '../screen/Rules/GameRules';
 import {LastMoves} from '../screen/Rules/LastMoves';
-import {Appearance, useColorScheme} from 'react-native';
+import {Appearance, ColorSchemeName, useColorScheme} from 'react-native';
 import {useStore} from '../constants/useStore';
 import {observer} from 'mobx-react';
-import {colors} from '../theme';
+import {colors, setColorMode} from '../theme';
 import {navigationRef, useBackButtonHandler} from './navigationUtilities';
 import Config from '../config';
 import {BottomNavigator, TabParamList} from './BottomNavigator';
 import {HomeScreen} from '../screen/Home/HomeScreen';
+import * as storage from '../utils/storage';
+import SplashScreen from '../screen/Splash/SplashScreen';
 
 // import {SafeAreaView} from 'react-native-safe-area-context';
 export type AppStackParamList = {
   // 🔥 Your screens go here
+  splash: undefined;
   RPM: NavigatorScreenParams<TabParamList>;
   main: undefined;
   home: undefined;
@@ -87,10 +90,12 @@ const AppStack = observer(function AppStack() {
   const [initialRoute, setInitialRoute] = useState('main');
   return (
     <Stack.Navigator
+      initialRouteName="RPM"
       screenOptions={{
         headerShown: false,
         navigationBarColor: colors.background,
       }}>
+      {/* <Stack.Screen name="splash" component={SplashScreen} /> */}
       <Stack.Screen name="RPM" component={BottomNavigator} />
       <Stack.Screen
         name="main"
@@ -176,9 +181,18 @@ export const AppNavigator = observer(function AppNavigator(
     themeStore: {setTheme, isDark},
   } = useStore();
   const colorScheme = useColorScheme();
-  setTheme(colorScheme === 'dark');
   useBackButtonHandler(routeName => exitRoutes.includes(routeName));
-
+  const getAppTheme = async () => {
+    await storage.load('theme').then(res => {
+      if (res) {
+        Appearance.setColorScheme(res as ColorSchemeName);
+        setTheme('dark' === res);
+      }
+    });
+  };
+  useEffect(() => {
+    getAppTheme();
+  }, []);
   return (
     <NavigationContainer
       ref={navigationRef}

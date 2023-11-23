@@ -1,36 +1,60 @@
-import React, {useEffect, useState} from 'react';
-import Text from '../../components/Text';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import {Appearance, View, useColorScheme} from 'react-native';
 import {colors} from '../../theme';
-import {loadLocale, translate} from '../../i18n';
+import {changeLang, translate} from '../../i18n';
 import {Radio} from '../../components/Radio';
 import I18n from 'i18n-js';
 import Header from '../../components/Header';
-import fa from '../../i18n/fa';
-import en from '../../i18n/en';
+import {useNavigation} from '@react-navigation/native';
+import {observer} from 'mobx-react';
+import * as storage from '../../utils/storage';
+import RNRestart from 'react-native-restart';
+import Text from '../../components/Text';
+import {useStore} from '../../constants/useStore';
 
-const SettingScreen = () => {
-  const [selectedLang, setSelectedLang] = useState(null);
+const SettingScreen = observer(() => {
+  const nav = useNavigation();
+  const {
+    themeStore: {setTheme, isDark},
+  } = useStore();
+  const colorScheme = useColorScheme();
+
+  const [selectedLang, setSelectedLang] = useState(
+    I18n.locale === 'en-IR' ? 'fa' : 'en',
+  );
+  const [selectedMode, setSelectedMode] = useState(
+    isDark ? 'active' : 'deactive',
+  );
+
   const handlePress = option => {
-    console.log({option, locale: I18n.locale});
-
-    // setSelectedLang(option);
-    if (option === 'persian') {
-      I18n.locale = 'en-IR';
+    if (option === 'Persian') {
+      storage.save('language', 'en-IR');
+      setSelectedLang('fa');
+      changeLang('en-IR');
+      RNRestart.Restart();
     } else {
-      I18n.locale = 'en-US';
+      storage.save('language', 'en-US');
+      setSelectedLang('en');
+      changeLang('en-US');
+      RNRestart.Restart();
     }
   };
-  // const getLocales = () => {
-  //   loadLocale()
-  //     .then(res => console.log({res}))
-  //     .catch(err => console.log({err}));
-  // };
-  // useEffect(() => {
-  //   getLocales();
 
-  //   // console.log(I18n.currentLocale());
-  // }, []);
+  const handleNight = mode => {
+    if (mode === 'active') {
+      storage.save('theme', 'dark');
+      Appearance.setColorScheme('dark');
+      setTheme(true);
+      setSelectedMode(mode);
+      RNRestart.Restart();
+    } else {
+      storage.save('theme', 'light');
+      Appearance.setColorScheme('light');
+      setTheme(false);
+      setSelectedMode(mode);
+      RNRestart.Restart();
+    }
+  };
 
   return (
     <View
@@ -38,25 +62,44 @@ const SettingScreen = () => {
         flex: 1,
         paddingTop: 20,
         paddingBottom: 40,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         backgroundColor: colors.background,
       }}>
       <Header title={translate('settings.title')} />
-      <Text>{translate('settings.language')}</Text>
+      <View style={{flexDirection: 'row-reverse'}}>
+        <Text style={{fontSize: 24}}>{translate('settings.language')}</Text>
+      </View>
+
       <View style={{paddingHorizontal: 20}}>
         <Radio
           label={translate('settings.persian')}
           onPress={() => handlePress(translate('settings.persian'))}
-          selected={selectedLang === translate('settings.persian')}
+          selected={selectedLang === 'fa'}
         />
         <Radio
           label={translate('settings.english')}
           onPress={() => handlePress(translate('settings.english'))}
-          selected={selectedLang === translate('settings.english')}
+          selected={selectedLang === 'en'}
+        />
+      </View>
+      <View style={{flexDirection: 'row-reverse'}}>
+        <Text style={{fontSize: 24}}>{translate('settings.nightMode')}</Text>
+      </View>
+
+      <View style={{paddingHorizontal: 20}}>
+        <Radio
+          label={translate('settings.active')}
+          onPress={() => handleNight('active')}
+          selected={selectedMode === 'active'}
+        />
+        <Radio
+          label={translate('settings.deactive')}
+          onPress={() => handleNight('deactive')}
+          selected={selectedMode === 'deactive'}
         />
       </View>
     </View>
   );
-};
+});
 
 export default SettingScreen;

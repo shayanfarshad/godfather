@@ -18,15 +18,13 @@
 // }
 import './src/i18n';
 import './src/utils/ignoreWarnings';
-import React from 'react';
-import {
-  initialWindowMetrics,
-  SafeAreaProvider,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import React, {useEffect} from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AppNavigator, useNavigationPersistence} from './src/navigation';
 
 import * as storage from './src/utils/storage';
+import {changeLang} from './src/i18n';
+import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -47,6 +45,13 @@ function App(props: AppProps) {
   const {initialNavigationState, onNavigationStateChange} =
     useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
 
+  useEffect(() => {
+    const setLanguage = async () => {
+      const language = await storage.load('language');
+      changeLang(language as string);
+    };
+    setLanguage();
+  }, []);
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.

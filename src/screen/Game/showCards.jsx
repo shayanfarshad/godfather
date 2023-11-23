@@ -6,6 +6,7 @@ import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import ReactNativeModal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import { translate } from '../../i18n';
 
 const ShowCards = () => {
   const {gameStore} = useStore();
@@ -33,7 +34,7 @@ const ShowCards = () => {
     <View style={{flex: 1, backgroundColor: backgroundColor}}>
       <View style={styles.header}>
         <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          نمایش نقش ها
+         {translate('game.showRoles')}
         </Text>
         {/* <Pressable onPress={() => nav.goBack()}>
           <Icon name="long-arrow-left" size={30} color={'white'} />
