@@ -6,6 +6,7 @@ import {I18nManager} from 'react-native';
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, {Translations} from './en';
 import fa from './fa';
+import I18n from 'i18n-js';
 
 i18n.fallbacks = true;
 // i18next.init({
@@ -58,6 +59,8 @@ export const changeLang = (lang: string) => {
     i18n.locale = locales[0].languageTag;
   }
 };
+
+export const isFarsi = I18n.locale === 'en-IR';
 // handle RTL languages
 // export const isRTL = localization.getLocales()[0].languageTag;
 // console.log({isRTL})

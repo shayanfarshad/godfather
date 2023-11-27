@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
-import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
+import {Pressable, StyleSheet, View} from 'react-native';
+import {DWidth} from '../../constants/Constants';
 import {useStore} from '../../constants/useStore';
 import Text from '../../components/Text';
-import {CardItem} from './CardItem';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
-import {colors} from '../../theme';
+import {colors, spacing} from '../../theme';
 import {translate} from '../../i18n';
 
 const LearningScreen = observer(() => {
-  const {roleStore} = useStore();
+  const {
+    themeStore: {isDark},
+    langStore: {language},
+  } = useStore();
   const nav = useNavigation();
-  const roles = roleStore.getRoles();
+
+  useEffect(() => {
+    console.log({language});
+  }, []);
   return (
     <View
       style={{
@@ -24,29 +29,51 @@ const LearningScreen = observer(() => {
       }}>
       <Header
         title={translate('learn.title')}
-        backIcon={'chevron-left'}
-        backPress={() => {
-          nav.goBack();
-        }}
+        // backIcon={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+        // backPress={() => {
+        //   nav.goBack();
+        // }}
       />
-      <Pressable style={styles.card} onPress={() => nav.navigate('roleCards')}>
-        <Text type="bold" style={{fontSize: 20, color: 'white'}}>
+      <Pressable
+        style={[
+          styles.card,
+          {
+            backgroundColor: colors.cardBackground,
+          },
+        ]}
+        onPress={() => nav.navigate('roleCards')}>
+        <Text type="bold" style={{fontSize: spacing.xl}}>
           {translate('game.roles')}
         </Text>
       </Pressable>
-      <Pressable style={styles.card} onPress={() => nav.navigate('lastMoves')}>
-        <Text type="bold" style={{fontSize: 20, color: 'white'}}>
+      <Pressable
+        style={[
+          styles.card,
+          {
+            backgroundColor: colors.cardBackground,
+          },
+        ]}
+        onPress={() => nav.navigate('lastMoves')}>
+        <Text type="bold" style={{fontSize: spacing.xl}}>
           {translate('game.lastMoveCards')}
         </Text>
       </Pressable>
-      <Pressable style={styles.card} onPress={() => nav.navigate('rules')}>
-        <Text type="bold" style={{fontSize: 20, color: 'white'}}>
+      <Pressable
+        style={[
+          styles.card,
+          {
+            backgroundColor: colors.cardBackground,
+          },
+        ]}
+        onPress={() => nav.navigate('rules')}>
+        <Text type="bold" style={{fontSize: spacing.xl}}>
           {translate('game.senario')}
         </Text>
       </Pressable>
     </View>
   );
 });
+
 const styles = StyleSheet.create({
   emptyList: {
     width: '100%',
@@ -69,7 +96,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.cardBackground,
     marginBottom: 15,
     marginTop: 5,
   },

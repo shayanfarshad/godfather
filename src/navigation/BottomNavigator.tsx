@@ -3,9 +3,21 @@ import React, {useEffect, useState} from 'react';
 import {
   BottomTabScreenProps,
   createBottomTabNavigator,
+  useBottomTabBarHeight,
 } from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {I18nManager, TextStyle, ViewStyle} from 'react-native';
+import {
+  CompositeScreenProps,
+  Route,
+  useNavigation,
+} from '@react-navigation/native';
+import {
+  AppState,
+  I18nManager,
+  Pressable,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, spacing} from '../theme';
 import {AppStackParamList, AppStackScreenProps} from './AppNavigator';
@@ -20,6 +32,9 @@ import {AllPlayers} from '../screen/Players/AllPlayers';
 import SettingScreen from '../screen/Settings/SettingScreen';
 import I18n from 'i18n-js';
 import * as storage from '../utils/storage';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Header from '../components/Header';
+import {navigate} from './navigationUtilities';
 
 // import { useStores } from "app/models"
 
@@ -27,7 +42,7 @@ export type TabParamList = {
   profile: undefined;
   learning: undefined;
   playGame: undefined;
-  players: undefined;
+  myPlayers: undefined;
   settings: undefined;
 };
 
@@ -49,7 +64,9 @@ export const BottomNavigator = observer(function BottomNavigator() {
   const {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     themeStore: {isDark},
+    langStore: {language},
   } = useStore();
+  const nav = useNavigation();
   const [fontFamily, setFontFamily] = useState('Nofar');
   const getLang = async () => {
     await storage.load('language').then(res => {
@@ -73,7 +90,9 @@ export const BottomNavigator = observer(function BottomNavigator() {
 
   return (
     <Tab.Navigator
+      initialRouteName="myPlayers"
       screenOptions={{
+        unmountOnBlur: true,
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: [$tabBar(colors), {height: bottom + 65}],
@@ -133,8 +152,45 @@ export const BottomNavigator = observer(function BottomNavigator() {
         name="playGame"
         component={HomeScreen}
         options={{
+          headerShown: true,
+          headerBackgroundContainerStyle: {backgroundColor: colors.background},
+          headerStyle: {backgroundColor: colors.background},
+          headerRightContainerStyle: {display: 'none'},
+          headerTitleContainerStyle: {display: 'none'},
+          headerTransparent: true,
+          headerLeft: () => (
+            <View
+              style={{
+                width: 50,
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Pressable
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  nav.reset({
+                    index: 0,
+                    routes: [{name: 'RPM' as never}],
+                  });
+                }}>
+                <Icon
+                  name={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+                  size={25}
+                  style={{}}
+                  color={colors.text}
+                />
+              </Pressable>
+            </View>
+          ),
           // tabBarAccessibilityLabel: translate("bottomNavigator.browseTab"),
-          tabBarLabel: '', // translate("bottomNavigator.thirdTab"),
+          tabBarLabel: '',
+          tabBarStyle: {display: 'none'}, // translate("bottomNavigator.thirdTab"),
           tabBarIcon: () => (
             <Icon
               name="gamepad"
@@ -158,7 +214,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
       />
 
       <Tab.Screen
-        name="players"
+        name="myPlayers"
         component={AllPlayers}
         options={{
           tabBarLabel: translate('bottomNavigator.players'),

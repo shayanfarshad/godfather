@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import Text from '../../components/Text';
 import {DWidth} from '../../constants/Constants';
+import {colors, spacing} from '../../theme';
 
 const CardItem = ({item, index}) => {
   const [numberOfLines, setNumberOfLine] = useState(2);
@@ -9,18 +10,22 @@ const CardItem = ({item, index}) => {
   return (
     <Pressable
       style={[styles.renderItem, {flexDirection: 'column'}]}
-      key={index}
+      key={item.id}
       onPress={() => {
+        console.log({index});
         //   returnPlayer(item);
       }}>
-      <View>
-        <Image
-          source={item.image}
-          style={{width: 60, height: 60, borderRadius: 10}}
-        />
-        <Text style={{color: 'white',fontSize:16}}>{item.title}</Text>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        {item?.image && (
+          <Image
+            source={item.image}
+            resizeMode="cover"
+            style={{width: 80, height: 130, borderRadius: 10}}
+          />
+        )}
+        <Text style={{fontSize: spacing.lg}}>{item.title}</Text>
       </View>
-      <View>
+      <View style={{}}>
         <Text
           onPress={e => {
             if (numberOfLines === 2) {
@@ -29,9 +34,9 @@ const CardItem = ({item, index}) => {
               setNumberOfLine(2);
             }
           }}
+          type="iran"
           numberOfLines={numberOfLines}
-          type='light'
-          style={{color: 'white',fontSize:14}}>
+          style={{fontSize: 18}}>
           {item.description}
         </Text>
       </View>
@@ -48,11 +53,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   renderItem: {
-    width: DWidth * 0.9,
-    // height: 80,
     marginBottom: 15,
-    flexDirection: 'row-reverse',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

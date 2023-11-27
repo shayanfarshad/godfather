@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text as T} from 'react-native';
 import {colors} from '../theme';
 import I18n from 'i18n-js';
@@ -17,7 +17,8 @@ const Text = observer(
   ({style, type = 'medium', numberOfLines, ...restProps}) => {
     // Define your custom styles here, you can use style prop as well
     const customStyles = {
-      fontSize: 16,
+      fontSize: I18n.locale === 'en-IR' ? 24 : 16,
+      color: restProps?.color || colors.text,
       // color: 'blue',
       // Add any other custom styles you need
     };
@@ -31,7 +32,11 @@ const Text = observer(
         numberOfLines={numberOfLines || 0}
         style={[
           combinedStyles,
-          {fontFamily: font(type), color: colors.text, lineHeight: 40},
+          {
+            fontFamily: font(type),
+            textAlign: 'right',
+            padding: 12,
+          },
         ]}
         {...restProps}>
         {restProps.children}
@@ -56,6 +61,8 @@ export const font = type => {
         return 'Digi Nofar Bold';
       case 'light':
         return 'Digi Nofar Bold';
+      case 'iran':
+        return 'IRANSansXNoEn-Medium';
       default:
         return 'Digi Nofar Bold';
     }

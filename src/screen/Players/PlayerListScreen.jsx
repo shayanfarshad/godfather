@@ -7,6 +7,10 @@ import {useStore} from '../../constants/useStore';
 import {DWidth, backgroundColor} from '../../constants/Constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/Header';
+import {translate} from '../../i18n';
+import {colors} from '../../theme';
+import * as storage from '../../utils/storage';
 
 const PlayerListScreen = observer(({route}) => {
   const [players, setPlayers] = useState([]);
@@ -14,34 +18,21 @@ const PlayerListScreen = observer(({route}) => {
   const gamePlayers = route.params.gamePlayers;
   const {playerStore} = useStore();
   const getPlayers = async () => {
-    return await AsyncStorage.getItem('players');
+    return await storage.load('players');
   };
   useEffect(() => {
-    console.log({gamePlayers: gamePlayers[0]});
     getPlayers().then(res => {
-      const _players = JSON.parse(res);
-      console.log({_players: _players});
+      const _players = res;
+
       const filteredArray = _players.filter(
         item =>
           !gamePlayers.some(s => JSON.stringify(s) === JSON.stringify(item)),
       );
-      // _players.map(item => {
-      //   console.log({item: item.name});
-      //   if (gamePlayers.some(el => el.id === item.id)) {
-      //     arr = _players.filter(el => el.id !== item.id);
-      //     console.log({arr: arr.length})
-      //   } else {
-      //     if (_players) {
-      //       setPlayers(_players);
-      //     }
-      //   }
-      // });
       setPlayers(filteredArray);
     });
   }, []);
 
   const selectPlayer = item => {
-    console.log({item});
     playerStore.addPlayers(item);
     const arr = [...players];
     const newList = arr.filter(el => el !== item);
@@ -52,16 +43,15 @@ const PlayerListScreen = observer(({route}) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
+        paddingTop: 20,
+        // paddingBottom: 60,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          اضافه کردن بازیکن به این بازی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
+      <Header
+        backPress={() => nav.goBack()}
+        title={translate('game.addPlayerToThisGame')}
+      />
+
       <FlatList
         data={players}
         keyExtractor={item => item.id}
@@ -75,7 +65,7 @@ const PlayerListScreen = observer(({route}) => {
                 style={{width: '50%', height: 300}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
-                هیج بازیکنی نداری!
+                {translate('game.anyPlayerExist')}
               </Text>
             </View>
           );
@@ -94,7 +84,7 @@ const PlayerListScreen = observer(({route}) => {
                 }
                 style={{width: 80, height: 80, borderRadius: 10}}
               />
-              <Text style={{color: 'white'}}>{item.name}</Text>
+              <Text>{item.name}</Text>
             </Pressable>
           );
         }}

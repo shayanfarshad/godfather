@@ -32,7 +32,7 @@ const PlayerRow = ({item, removeItem}) => {
           />
         </View>
         <View style={{marginRight: 10}}>
-          <Text style={{color: 'white'}}>{item?.name}</Text>
+          <Text style={{}}>{item?.name}</Text>
         </View>
       </View>
       <View>
@@ -44,7 +44,7 @@ const PlayerRow = ({item, removeItem}) => {
             alignItems: 'center',
           }}
           onPress={removeItem}>
-          <Icon name="trash" size={30} color={'white'} />
+          <Icon name="trash" size={30} color={colors.text} />
         </Pressable>
       </View>
     </View>

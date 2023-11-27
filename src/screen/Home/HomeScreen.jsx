@@ -12,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {observer} from 'mobx-react';
 import {colors} from '../../theme';
-import { translate } from '../../i18n';
+import {translate} from '../../i18n';
 
 const HomeScreen = observer(() => {
   const nav = useNavigation();
@@ -35,6 +35,12 @@ const HomeScreen = observer(() => {
     }
   }, [rolePlayers]);
 
+  useEffect(() => {
+    return () => {
+      playerStore.resetPlayers();
+    };
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -55,15 +61,10 @@ const HomeScreen = observer(() => {
             alignItems: 'center',
           }}>
           <Text type="bold" style={{fontSize: 30, color: 'white'}}>
-            {translate("game.godfather")}
+            {translate('game.godfather')}
           </Text>
         </View>
-        <View
-          style={{
-            overflow: 'hidden',
-            height: 110,
-            borderRadius: 10,
-          }}>
+        <View style={styles.viewCard}>
           <ImageBackground
             source={require('../../assets/images/bg1.jpeg')}
             resizeMode="cover"
@@ -73,21 +74,27 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(173, 209, 243,0.4)',
+                  backgroundColor: colors.overlayBackground,
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
                 },
               ]}>
               <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>{translate('game.players')}</Text>
+                <Text style={{fontSize: 25, lineHeight: 40}}>
+                  {translate('game.players')}
+                </Text>
                 <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
-                  {' '}
                   {players?.length} {translate('game.player')}
                 </Text>
               </View>
               <Pressable
-                style={styles.addBtn}
+                style={[
+                  styles.addBtn,
+                  {
+                    backgroundColor: colors.modalBackground,
+                  },
+                ]}
                 onPress={() => {
                   nav.navigate('players');
                 }}>
@@ -96,12 +103,7 @@ const HomeScreen = observer(() => {
             </View>
           </ImageBackground>
         </View>
-        <View
-          style={{
-            overflow: 'hidden',
-            height: 110,
-            borderRadius: 10,
-          }}>
+        <View style={styles.viewCard}>
           <ImageBackground
             source={require('../../assets/images/bg2.jpeg')}
             resizeMode="cover"
@@ -111,32 +113,34 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(173, 209, 243,0.4)',
+                  backgroundColor: colors.overlayBackground,
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
                 },
               ]}>
               <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>{translate('game.roles')}</Text>
+                <Text style={{fontSize: 25, lineHeight: 40}}>
+                  {translate('game.roles')}
+                </Text>
                 <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
                   {roles.length} {translate('game.role')}
                 </Text>
               </View>
               <Pressable
-                style={styles.addBtn}
+                style={[
+                  styles.addBtn,
+                  {
+                    backgroundColor: colors.modalBackground,
+                  },
+                ]}
                 onPress={() => nav.navigate('roles')}>
                 <Icon name="plus" size={20} color="white" />
               </Pressable>
             </View>
           </ImageBackground>
         </View>
-        <View
-          style={{
-            overflow: 'hidden',
-            height: 110,
-            borderRadius: 10,
-          }}>
+        <View style={styles.viewCard}>
           <ImageBackground
             source={require('../../assets/images/bg4.webp')}
             resizeMode="cover"
@@ -146,7 +150,7 @@ const HomeScreen = observer(() => {
               style={[
                 styles.playersCard,
                 {
-                  backgroundColor: 'rgba(173, 209, 243,0.4)',
+                  backgroundColor: colors.overlayBackground,
                   elevation: 3,
                   padding: 10,
                   justifyContent: 'space-between',
@@ -166,7 +170,8 @@ const HomeScreen = observer(() => {
                     alignItems: 'flex-end',
                   }}>
                   <Text style={{fontSize: 20, lineHeight: 40}}>
-                    {translate('game.chooseRoleForPlayers')}                  </Text>
+                    {translate('game.chooseRoleForPlayers')}{' '}
+                  </Text>
                   <View style={{flexDirection: 'row-reverse', height: 40}}>
                     <Text>{translate('game.citizen')} : </Text>
                     <View
@@ -203,7 +208,12 @@ const HomeScreen = observer(() => {
                     justifyContent: 'center',
                   }}>
                   <Pressable
-                    style={styles.addBtn}
+                    style={[
+                      styles.addBtn,
+                      {
+                        backgroundColor: colors.modalBackground,
+                      },
+                    ]}
                     onPress={() => nav.navigate('roleup')}>
                     <Icon name="random" size={20} color="white" />
                   </Pressable>
@@ -260,10 +270,14 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginLeft: 20,
-    backgroundColor: colors.background,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  viewCard: {
+    overflow: 'hidden',
+    height: 110,
+    borderRadius: 10,
   },
 });
 

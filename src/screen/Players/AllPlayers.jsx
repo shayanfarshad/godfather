@@ -26,12 +26,17 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {Modal} from '../../components/Modal';
 import Text from '../../components/Text';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {colors} from '../../theme';
+import {colors, spacing} from '../../theme';
 import {translate} from '../../i18n';
+import * as storage from '../../utils/storage';
+
 // import player from '../../assets/images/player2.png';
 const AllPlayers = observer(() => {
   const player = require('../../assets/images/player2.png');
   const [players, setPlayers] = useState([]);
+  const {
+    langStore: {language},
+  } = useStore();
   const nav = useNavigation();
   const addRef = useRef<BottomSheetModal>(null);
   const cameraModal = useRef<BottomSheetModal>(null);
@@ -39,16 +44,13 @@ const AllPlayers = observer(() => {
   const [userPicture, setUserPicture] = useState('');
   const [playerName, setPlayerName] = useState('');
   const getPlayers = async () => {
-    return await AsyncStorage.getItem('players');
+    return await storage.load('players');
   };
   useEffect(() => {
-    getPlayers().then(res => {
-      console.log({res});
-      if (res) {
-        const _players = JSON.parse(res);
-        console.log({_players});
-
-        setPlayers(_players);
+    getPlayers().then(myPlayer => {
+      console.log({myPlayer});
+      if (myPlayer) {
+        setPlayers(myPlayer);
       }
     });
   }, []);
@@ -194,7 +196,7 @@ const AllPlayers = observer(() => {
     addRef?.current?.close();
     const arr = [...players];
     arr.push({id: Date.now(), name: playerName, avatar: userPicture});
-    AsyncStorage.setItem('players', JSON.stringify(arr));
+    storage.save('players', arr);
     console.log({arr});
     setPlayers(arr);
     setPlayerName('');
@@ -233,13 +235,13 @@ const AllPlayers = observer(() => {
           }}
         />
       ) : null}
-      <View style={styles.addBtn}>
+      <View style={[styles.addBtn, {backgroundColor: colors.modalBackground}]}>
         <Pressable
           onPress={() => {
             addRef?.current?.present();
           }}
           style={styles.addBtnIcon}>
-          <Icon name="user-plus" size={20} color={'black'} />
+          <Icon name="user-plus" size={20} color={colors.text} />
         </Pressable>
       </View>
       <Modal
@@ -248,12 +250,9 @@ const AllPlayers = observer(() => {
         onDismiss={() => {}}
         snapPoints={[DHeight * 0.5]}
         backgroundStyle={{backgroundColor: colors.modalBackground}}
-        onChange={e => {
-          // console.log('onchange', e);
-        }}>
+        onChange={e => {}}>
         <View
           style={{
-            // backgroundColor: backgroundColor,
             height: '100%',
             width: '100%',
             justifyContent: 'space-around',
@@ -291,19 +290,31 @@ const AllPlayers = observer(() => {
             onChangeText={text => {
               setPlayerName(text);
             }}
-            style={styles.modalInput}
+            style={[
+              styles.modalInput,
+              {
+                backgroundColor: colors.background,
+                color: colors.text,
+                fontSize: language === 'fa' ? 22 : 16,
+                fontFamily:
+                  language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
+              },
+            ]}
             selectionColor={colors.text}
             placeholder={translate('game.playerName')}
-            placeholderTextColor={colors.palette.primary200}
+            placeholderTextColor={colors.textDim}
           />
           <Pressable
             onPress={() => {
               addPlayer();
             }}
-            style={styles.modalBtn}>
-            <Text style={{color: 'white', fontSize: 18}}>
-              {translate('common.addBtn')}
-            </Text>
+            style={[
+              styles.modalBtn,
+              {
+                backgroundColor: colors.background,
+              },
+            ]}>
+            <Text>{translate('common.addBtn')}</Text>
           </Pressable>
         </View>
       </Modal>
@@ -367,8 +378,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     textAlign: 'right',
     color: colors.text,
+    fontSize: 20,
     backgroundColor: colors.inputBackground,
-    fontFamily: 'IRANSansXNoEn-Medium',
+    // fontFamily: 'IRANSansXNoEn-Medium',
   },
   modalBtn: {
     width: '90%',
@@ -377,7 +389,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
-    backgroundColor: colors.buttonBackground,
   },
   addPhotoCard: {
     borderWidth: 1,

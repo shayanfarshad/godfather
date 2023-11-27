@@ -14,10 +14,7 @@ class PlayerStore {
   @action addPlayers(player) {
     const newPlayers = [...this.players];
     newPlayers.push(player);
-    console.log({newPlayers});
     this.players = newPlayers;
-    console.log({thisplayers: toJS(this.players)});
-    return this.players;
   }
   @action removePlayers(player) {
     const newPlayers = [...this.players];

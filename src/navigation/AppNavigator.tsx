@@ -23,9 +23,8 @@ import {GameNightPlay} from '../screen/Game/GameNightPlay';
 import {MainScreen} from '../screen/Home/MainScreen';
 import {AllPlayers} from '../screen/Players/AllPlayers';
 import {LearningScreen} from '../screen/Rules/LearningScreen';
-import {RoleLearning} from '../screen/Rules/RoleLearning';
-import {GameRules} from '../screen/Rules/GameRules';
-import {LastMoves} from '../screen/Rules/LastMoves';
+import {RoleLearning} from '../screen/Rules/cards/RoleLearning';
+import {GameRules} from '../screen/Rules/gameRules/GameRules';
 import {Appearance, ColorSchemeName, useColorScheme} from 'react-native';
 import {useStore} from '../constants/useStore';
 import {observer} from 'mobx-react';
@@ -36,6 +35,7 @@ import {BottomNavigator, TabParamList} from './BottomNavigator';
 import {HomeScreen} from '../screen/Home/HomeScreen';
 import * as storage from '../utils/storage';
 import SplashScreen from '../screen/Splash/SplashScreen';
+import {LastMoves} from '../screen/Rules/lastmove/LastMoves';
 
 // import {SafeAreaView} from 'react-native-safe-area-context';
 export type AppStackParamList = {
@@ -84,18 +84,18 @@ const AppStack = observer(function AppStack() {
   const {
     themeStore: {isDark},
   } = useStore();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigation>();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [initialRoute, setInitialRoute] = useState('main');
   return (
     <Stack.Navigator
-      initialRouteName="RPM"
+      initialRouteName="splash"
       screenOptions={{
         headerShown: false,
         navigationBarColor: colors.background,
       }}>
-      {/* <Stack.Screen name="splash" component={SplashScreen} /> */}
+      <Stack.Screen name="splash" component={SplashScreen} />
       <Stack.Screen name="RPM" component={BottomNavigator} />
       <Stack.Screen
         name="main"

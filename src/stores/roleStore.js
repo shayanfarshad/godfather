@@ -1,10 +1,11 @@
 import {observable, action, makeAutoObservable} from 'mobx';
+import {translate} from '../i18n';
 
 class RoleStore {
-  @observable roles = [
+  @observable nustraRoles = [
     {
       id: 0,
-      title: 'پدرخوانده',
+      title: translate('game.rolecards.godfather'),
       image: require('../assets/images/roles/nustraType/godfather.jpeg'),
       active: true,
       shield: true,
@@ -12,12 +13,11 @@ class RoleStore {
       duty: {
         sixthSense: true,
       },
-      description:
-        'او از یک بار شلیک شب لئون مصون است.یک جلیقه دارد.تعیین شلیک شب از طرف گروه به عهده پدرخوانده است و اگر از بازی خارج شود دیگر اعضا به جای او شلیک می کنند.پدرخوانده دارای توانایی حس ششم است و اگر در شب تصمیم بگیرد به جای شلیک از حس ششم استفاده کند باید نقش بازیکنی را درست حدس بزند و توسط گرداننده تائید شود.بازیکنی که پدرخوانده نقش او را درست حدس زده است سلاخی می شود یعنی اگر سپر داشته باشد یا دکتر او را سیو کرده باشد بازهم از بازی خارج می شود و آن شب توانایی وی اعمال نخواهد شد و پس از خروج از بازی توسط کنستانتین قابل احضار نمی باشد.استعلام پدرخوانده برای نوستراداموس شهروندی بوده ولی برای همشهری کین مافیایی و مثبت خواهد بود.',
+      description: translate('game.rolecards.nustraTypeDesc.godfatherDesc'),
     },
     {
       id: 1,
-      title: 'ساول گودمن',
+      title: translate('game.rolecards.saul'),
       active: true,
       shield: false,
       side: 'mafia',
@@ -25,12 +25,11 @@ class RoleStore {
         buyCitizen: true,
       },
       image: require('../assets/images/roles/nustraType/SaulGoodman.jpeg'),
-      description:
-        'اگر فردی از گروه مافیا خارج شود ساول می تواند جای شلیک شب معامله و خریداری انجام دهد.ساول گودمن فقط یکبار می تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند.با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می کند و وی را بیدار می کند تا هم تیمی های خود را بشناسد.اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی کند.توانمندی ساول و شلیک آن شب مافیا نیز از بین می رود',
+      description: translate('game.rolecards.nustraTypeDesc.saulDesc'),
     },
     {
       id: 2,
-      title: 'ماتادور',
+      title: translate('game.rolecards.matador'),
       active: true,
       shield: false,
       side: 'mafia',
@@ -38,12 +37,11 @@ class RoleStore {
         getAbility: true,
       },
       image: require('../assets/images/roles/nustraType/Matador.jpeg'),
-      description:
-        'شب ها با تیم مافیا بیدار می شود و هر شب از توانایی خود استفاده می کند.در شب هر بازیکنی را نشان دهد توانایی شب او را آن شب از وی خواهد گرفت و فرد نشان شده اگر بیدار شود با ضربدر گرداننده مواجه می شود اما فردا مجدد می تواند از توانایی اش استفاده کند.ماتادور دو شب متوالی نمی تواند یک بازیکن را نشان کند',
+      description: translate('game.rolecards.nustraTypeDesc.matadorDesc'),
     },
     {
       id: 3,
-      title: 'نوستراداموس',
+      title: translate('game.rolecards.nustradamus'),
       active: true,
       shield: true,
       side: 'free',
@@ -51,12 +49,11 @@ class RoleStore {
         guess: true,
       },
       image: require('../assets/images/roles/nustraType/Nostradamoos.jpeg'),
-      description:
-        'در شب معارفه گرداننده او را بیدار می کند.نوستراداموس به انتخاب خود سه بازیکن را به گرداننده نشان می دهد.سپس گرداننده به او تعداد مافیا های موجود در میان این سه را اعلام می کند و پیش بینی او مبنی بر پیروزی یکی از دو ساید را از او می پرسد.نوستراداموس پیش بینی می کند شهروندان برنده خواهند شد یا مافیا ها.از این پس او برای برنده شدن سایدی که انتخاب کرده است تلاش می کند.بدون آنکه دیگر افراد بدانند وی به چه سایدی پیوسته است.اگر ساید مورد انتخابش برنده شد او نیز برنده است و اگر ساید مورد انتخابش بازنده شد او نیز بازنده خواهد شد.شلیک هیچ یک از دو ساید بر او موثر نخواهد بود و در شب کشته نخواهد شد.مگر با حس ششم پدرخوانده اما در روز با رای گیری از بازی خارج خواهد شد.استعلام پدرخوانده برای وی شهروندی خواهد بود',
+      description: translate('game.rolecards.nustraTypeDesc.nustraDesc'),
     },
     {
       id: 4,
-      title: 'دکتر واتسون',
+      title: translate('game.rolecards.doctor'),
       active: true,
       shield: false,
       side: 'city',
@@ -65,12 +62,11 @@ class RoleStore {
         savePeople: true,
       },
       image: require('../assets/images/roles/nustraType/DrWatson.jpeg'),
-      description:
-        'هرشب می تواند جان یک نفر چه عضو مافیا و چه عضو شهروندی را نجات دهد.جان خودش را یکبار می تواند در طول بازی نجات دهد ولی در نجات جان دیگران محدودیتی ندارد',
+      description: translate('game.rolecards.nustraTypeDesc.doctorDesc'),
     },
     {
       id: 5,
-      title: 'لئون حرفه ای',
+      title: translate('game.rolecards.leon'),
       active: true,
       side: 'city',
       shield: true,
@@ -78,12 +74,11 @@ class RoleStore {
         nightShot: 2,
       },
       image: require('../assets/images/roles/nustraType/Leon.jpeg'),
-      description:
-        'طرف بازی تیم شهروند هرشبی که بخواهد می تواند به یکی از اعضای تیم مافیا شلیک کند.اما با شلیک اشتباه به شهروندان به مجازات خودش کشته می شود و دکتر نمی تواند او را نجات دهد.لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می کند.حداکثر دو شلیک دارد',
+      description: translate('game.rolecards.nustraTypeDesc.leonDesc'),
     },
     {
       id: 6,
-      title: 'همشهری کین',
+      title: translate('game.rolecards.ckane'),
       side: 'city',
       active: true,
       shield: false,
@@ -91,12 +86,11 @@ class RoleStore {
         inquiry: true,
       },
       image: require('../assets/images/roles/nustraType/Kin.jpeg'),
-      description:
-        'شهروندی است که در یکی از شب ها به انتخاب خود به دعوت گرداننده یکی از بازیکنان را نشان می دهد.اگر یک مافیا را درست نشان کرده باشد صبح روز بعد گرداننده ساید مافیای نشان شده را در جمع افشا می کند.و همشهری کین شب بعد کشته می شود.دکتر توانایی نجات او را ندارد.اما اگر نشانش از ساید مافیا نبود گرداننده هیچ چیزی اعلام نخواهد کرد و همشهری کین در بازی خواهد ماند و استعلامش از بین خواهد رفت.اگر او یا نشانش کشته شوند عملیات شب وی اجرا نشده و از بین نمی رود و همچنان باقی می ماند.استعلام پدرخوانده برای همشهری کین مافیایی است',
+      description: translate('game.rolecards.nustraTypeDesc.ckaneDesc'),
     },
     {
       id: 7,
-      title: 'کنستانتین',
+      title: translate('game.rolecards.constantine'),
       active: true,
       side: 'city',
       shield: false,
@@ -104,18 +98,124 @@ class RoleStore {
         returns: true,
       },
       image: require('../assets/images/roles/nustraType/Constantine.jpeg'),
-      description:
-        'گرداننده کنستانتین را بیدار می کند تا او به انتخاب خود و تنها یک بار یک نفر از بازیکنان اخراجی اعم از مافیا شهروند و یا مستقل را به بازی برگرداند.غیر از نقش های افشا شده.توانایی های بازیکن احضار شده ادامه پیدا می کند و از بین نمی رود و از نو نمی شود',
+      description: translate('game.rolecards.nustraTypeDesc.constantineDesc'),
     },
     {
       id: 8,
-      title: 'شهروند ساده',
+      title: translate('game.rolecards.citizen'),
       active: true,
       side: 'city',
       shield: false,
       image: require('../assets/images/roles/nustraType/City.jpeg'),
-      description:
-        'نقش شهروند ساده کمک به هم تیمی های خود در تشخیص مافیا به درستی است و رای دادن با زرنگی به اعضای مافیاست. او در شب نقش خاصی را ایفا نمی کند و بیشتر به روند بازی و تیم شهروندی در پیروز شدن است. شهروند ساده میبایست سعی کند در روز مافیا ها را با دقت شناسایی کند و به آن ها رای دهد و در شب عمل خاصی را انجام نمی دهد',
+      description: translate('game.rolecards.nustraTypeDesc.citizenDesk'),
+    },
+  ];
+  @observable jackRoles = [
+    {
+      id: 0,
+      title: translate('game.rolecards.godfather'),
+      image: require('../assets/images/roles/jackType/JGodfather.webp'),
+      active: true,
+      shield: true,
+      side: 'mafia',
+      duty: {
+        sixthSense: true,
+      },
+      description: translate('game.rolecards.jackTypeDesc.godfatherDesc')
+    },
+    {
+      id: 1,
+      title: translate('game.rolecards.saul'),
+      active: true,
+      shield: false,
+      side: 'mafia',
+      duty: {
+        buyCitizen: true,
+      },
+      image: require('../assets/images/roles/jackType/JGoodman.webp'),
+      description:translate('game.rolecards.jackTypeDesc.saulDesc')
+    },
+    {
+      id: 2,
+      title: translate('game.rolecards.matador'),
+      active: true,
+      shield: false,
+      side: 'mafia',
+      duty: {
+        getAbility: true,
+      },
+      image: require('../assets/images/roles/jackType/JMatador.webp'),
+      description:translate('game.rolecards.jackTypeDesc.matadorDesc')
+    },
+    {
+      id: 3,
+      title: translate('game.rolecards.jack'),
+      active: true,
+      shield: true,
+      side: 'free',
+      duty: {
+        guess: true,
+      },
+      image: require('../assets/images/roles/jackType/Jack.webp'),
+      description:translate('game.rolecards.jackTypeDesc.jackDesc')
+    },
+    {
+      id: 4,
+      title: translate('game.rolecards.doctor'),
+      active: true,
+      shield: false,
+      side: 'city',
+      duty: {
+        saveOwn: 1,
+        savePeople: true,
+      },
+      image: require('../assets/images/roles/jackType/JWatson.webp'),
+      description: translate('game.rolecards.jackTypeDesc.doctorDesc')
+    },
+    {
+      id: 5,
+      title: translate('game.rolecards.leon'),
+      active: true,
+      side: 'city',
+      shield: true,
+      duty: {
+        nightShot: 2,
+      },
+      image: require('../assets/images/roles/jackType/JLeon.webp'),
+      description: translate('game.rolecards.jackTypeDesc.leonDesc')
+    },
+    {
+      id: 6,
+      title: translate('game.rolecards.ckane'),
+      side: 'city',
+      active: true,
+      shield: false,
+      duty: {
+        inquiry: true,
+      },
+      image: require('../assets/images/roles/jackType/JKane.webp'),
+      description: translate('game.rolecards.jackTypeDesc.ckaneDesc')
+    },
+    {
+      id: 7,
+      title: translate('game.rolecards.constantine'),
+      active: true,
+      side: 'city',
+      shield: false,
+      duty: {
+        returns: true,
+      },
+      image: require('../assets/images/roles/jackType/JConstantine.webp'),
+      description: translate('game.rolecards.jackTypeDesc.constantineDesc')
+    },
+    {
+      id: 8,
+      title: translate('game.rolecards.citizen'),
+      active: true,
+      side: 'city',
+      shield: false,
+      image: require('../assets/images/roles/jackType/JCity.webp'),
+      description: translate('game.rolecards.jackTypeDesc.citizenDesk')
     },
   ];
 
@@ -123,8 +223,11 @@ class RoleStore {
     makeAutoObservable(this);
   }
 
-  @action getRoles() {
-    return this.roles;
+  @action getJackRoles() {
+    return this.jackRoles;
+  }
+  @action getNustraRoles() {
+    return this.nustraRoles;
   }
 }
 export default new RoleStore();

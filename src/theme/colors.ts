@@ -45,8 +45,8 @@ const palette = {
   nuetral500: '#3403c0',
   nuetral900: '#2f1d6f',
 
-  overlay20: 'rgba(25, 16, 21, 0.2)',
-  overlay50: 'rgba(25, 16, 21, 0.5)',
+  overlay40: 'rgba(173, 209, 243,0.4)',
+  overlay20: 'rgba(1, 11, 43,0.6)',
 } as const;
 
 const lightColors = {
@@ -76,6 +76,7 @@ const lightColors = {
    */
   background: palette.secondary100,
   cardBackground: palette.secondary200,
+  overlayBackground: palette.overlay40,
 
   modalBackground: palette.happy100,
 
@@ -141,7 +142,9 @@ const darkColors = {
   background: palette.primary200, // palette.neutral800,
 
   cardBackground: palette.primary300,
-  modalBackground: palette.happy100,
+  modalBackground: palette.primary300,
+  overlayBackground: palette.overlay20,
+
 
   /**
    * The default border color.

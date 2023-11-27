@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {Appearance, View, useColorScheme} from 'react-native';
-import {colors} from '../../theme';
+import React, {useEffect, useState} from 'react';
+import {Appearance, View} from 'react-native';
+import {colors, spacing} from '../../theme';
 import {changeLang, translate} from '../../i18n';
 import {Radio} from '../../components/Radio';
 import I18n from 'i18n-js';
@@ -17,8 +17,18 @@ const SettingScreen = observer(() => {
   const {
     themeStore: {setTheme, isDark},
   } = useStore();
-  const colorScheme = useColorScheme();
-
+  const getStoreTheme = async () => {
+    await storage.load('theme').then(res => {
+      if (res === 'light') {
+        setSelectedMode('deactive');
+      } else {
+        setSelectedMode('active');
+      }
+    });
+  };
+  useEffect(() => {
+    getStoreTheme();
+  }, []);
   const [selectedLang, setSelectedLang] = useState(
     I18n.locale === 'en-IR' ? 'fa' : 'en',
   );
@@ -41,6 +51,7 @@ const SettingScreen = observer(() => {
   };
 
   const handleNight = mode => {
+    console.log({mode});
     if (mode === 'active') {
       storage.save('theme', 'dark');
       Appearance.setColorScheme('dark');
@@ -67,7 +78,7 @@ const SettingScreen = observer(() => {
       }}>
       <Header title={translate('settings.title')} />
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: 24}}>{translate('settings.language')}</Text>
+        <Text style={{fontSize: spacing.xl}}>{translate('settings.language')}</Text>
       </View>
 
       <View style={{paddingHorizontal: 20}}>
@@ -83,7 +94,7 @@ const SettingScreen = observer(() => {
         />
       </View>
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: 24}}>{translate('settings.nightMode')}</Text>
+        <Text style={{fontSize: spacing.xl}}>{translate('settings.nightMode')}</Text>
       </View>
 
       <View style={{paddingHorizontal: 20}}>

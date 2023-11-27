@@ -25,11 +25,18 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {translate} from '../../i18n';
+import {colors} from '../../theme';
+import Header from '../../components/Header';
+import * as storage from '../../utils/storage';
 
 const PlayersScreen = observer(() => {
   const player = require('../../assets/images/player2.png');
 
-  const {playerStore} = useStore();
+  const {
+    playerStore,
+    langStore: {language},
+  } = useStore();
   const allPlayers = playerStore.getPlayers();
   const nav = useNavigation();
   const addPlayerRef = useRef<BottomSheetModal>(null);
@@ -41,14 +48,29 @@ const PlayersScreen = observer(() => {
   const [formVisible, setFormVisible] = useState(false);
   const [isFabVisible, setFabVisible] = useState(false);
 
-  const addPlayer = () => {
+  // useEffect(() => {
+  //   if (allPlayers) {
+  //     setPlayers(allPlayers);
+  //   }
+  // }, [allPlayers]);
+
+  const addPlayer = async () => {
+    const newPlayer = {
+      id: Date.now(),
+      name: playerName,
+      avatar: userPicture,
+    };
+    await storage.load('players').then(players => {
+      const arr = players;
+      arr.push(newPlayer);
+      storage.save('players', arr);
+      playerStore.addPlayers(newPlayer);
+      // setPlayers();
+      setPlayerName('');
+      setUserPicture('');
+    });
+
     setFormVisible(false);
-    const arr = [...players];
-    playerStore.addPlayers({id: Date.now(), name: playerName});
-    arr.push({id: Date.now(), name: playerName});
-    AsyncStorage.setItem('players', JSON.stringify(arr));
-    setPlayers(arr);
-    setPlayerName('');
   };
 
   const removePlayer = item => {
@@ -82,18 +104,10 @@ const PlayersScreen = observer(() => {
               if (response) {
                 if (!response.didCancel) {
                   if (response?.assets[0]) {
-                    // console.log({response: response?.assets[0].uri});
-                    // setPlayerAvatar(response?.assets[0]?.uri)
                     setUserPicture(response?.assets[0]?.uri);
                     const file = {
                       file: `data:image/jpeg;base64,${response.assets[0].base64}`,
                     };
-
-                    // console.log({file});
-                    // this.changeAvatar(this.props.user.id, response.data).then(() =>
-                    // {
-                    // 	this.props.fetchUser();
-                    // });
                   }
                 }
               }
@@ -205,32 +219,31 @@ const PlayersScreen = observer(() => {
   //   };
   // }, []);
 
-  const handleBack = () => {
-    nav.goBack();
-  };
+  // const handleBack = () => {
+  //   nav.goBack();
+  // };
   return (
     <View
+      // onTouchStart={() => setFabVisible(false)}
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
+        paddingTop: 20,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          اضافه کردن بازیکن به این بازی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
+      <Header
+        backPress={() => nav.goBack()}
+        title={translate('game.addPlayerToThisGame')}
+      />
+
       <View
         style={{
           width: '100%',
           alignItems: 'flex-end',
-          marginVertical: 20,
+          // marginVertical: 20,
           paddingHorizontal: 20,
         }}>
         <Text style={{fontSize: 22, color: 'white'}}>
-          بازیکنان حاضر در بازی
+          {translate('game.playersChoosen')}
         </Text>
       </View>
       <FlatList
@@ -246,7 +259,7 @@ const PlayersScreen = observer(() => {
                 style={{width: '50%', height: 200}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
-                هیج بازیکنی نداری!
+                {translate('game.anyPlayerExist')}
               </Text>
             </View>
           );
@@ -266,7 +279,7 @@ const PlayersScreen = observer(() => {
                   style={{width: 80, height: 80}}
                 />
               </View>
-              <Text style={{fontSize: 16, color: 'white'}}>{item.name}</Text>
+              <Text>{item.name}</Text>
             </Pressable>
           );
         }}
@@ -274,7 +287,7 @@ const PlayersScreen = observer(() => {
       {isFabVisible ? (
         <View
           style={{
-            width: 100,
+            width: 120,
             height: 150,
             position: 'absolute',
             bottom: 50,
@@ -282,7 +295,7 @@ const PlayersScreen = observer(() => {
           }}>
           <Pressable
             style={{
-              backgroundColor: 'white',
+              backgroundColor: colors.modalBackground,
               height: 40,
               justifyContent: 'center',
               alignItems: 'center',
@@ -294,12 +307,12 @@ const PlayersScreen = observer(() => {
               });
               setFabVisible(false);
             }}>
-            <Text>بازیکن قدیمی</Text>
+            <Text>{translate('game.oldPlayer')}</Text>
           </Pressable>
           <Pressable
             style={{
               marginTop: 20,
-              backgroundColor: 'white',
+              backgroundColor: colors.modalBackground,
               height: 40,
               justifyContent: 'center',
               alignItems: 'center',
@@ -309,17 +322,17 @@ const PlayersScreen = observer(() => {
               setFabVisible(false);
               addPlayerRef?.current?.present();
             }}>
-            <Text>بازیکن جدید</Text>
+            <Text>{translate('game.newPlayer')}</Text>
           </Pressable>
         </View>
       ) : null}
-      <View style={styles.addBtn}>
+      <View style={[styles.addBtn, {backgroundColor: colors.modalBackground}]}>
         <Pressable
           onPress={() => {
             setFabVisible(!isFabVisible);
           }}
           style={styles.addBtnIcon}>
-          <Icon name="user-plus" size={20} color={'black'} />
+          <Icon name="user-plus" size={20} color={colors.text} />
         </Pressable>
       </View>
       <Modal
@@ -327,13 +340,12 @@ const PlayersScreen = observer(() => {
         index={0}
         onDismiss={() => {}}
         snapPoints={[DHeight * 0.5]}
-        backgroundStyle={{backgroundColor: backgroundColor}}
+        backgroundStyle={{backgroundColor: colors.modalBackground}}
         onChange={e => {
-          // console.log('onchange', e);
         }}>
         <View
           style={{
-            backgroundColor: backgroundColor,
+            backgroundColor: colors.modalBackground,
             height: '100%',
             width: '100%',
             justifyContent: 'space-around',
@@ -371,17 +383,31 @@ const PlayersScreen = observer(() => {
             onChangeText={text => {
               setPlayerName(text);
             }}
-            style={styles.modalInput}
-            selectionColor={'white'}
-            placeholder="نام بازیکن"
-            placeholderTextColor={'#e0e0e0'}
+            style={[
+              styles.modalInput,
+              {
+                backgroundColor: colors.background,
+                color: colors.text,
+                fontSize: language === 'fa' ? 22 : 16,
+                fontFamily:
+                  language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
+              },
+            ]}
+            selectionColor={colors.text}
+            placeholder={translate('game.playerName')}
+            placeholderTextColor={colors.text}
           />
           <Pressable
             onPress={() => {
               addPlayer();
             }}
-            style={styles.modalBtn}>
-            <Text style={{color: 'white', fontSize: 18}}>اضافه کن</Text>
+            style={[
+              styles.modalBtn,
+              {
+                backgroundColor: colors.background,
+              },
+            ]}>
+            <Text>{translate('common.addBtn')}</Text>
           </Pressable>
         </View>
       </Modal>
@@ -398,13 +424,13 @@ const PlayersScreen = observer(() => {
             <View style={styles.addPhotoCard}>
               <Icon name="camera" size={50} color={'white'} />
             </View>
-            <Text style={{color: 'white'}}>دوربین</Text>
+            <Text style={{color: 'white'}}>{translate('common.camera')}</Text>
           </Pressable>
           <Pressable onPress={selectFromDoc} style={styles.addImageBtnCard}>
             <View style={styles.addPhotoCard}>
               <Icon name="image" size={50} color={'white'} />
             </View>
-            <Text style={{color: 'white'}}>گالری</Text>
+            <Text style={{color: 'white'}}>{translate('common.gallery')}</Text>
           </Pressable>
         </View>
       </Modal>
@@ -462,7 +488,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: 'white',
   },
   addBtnIcon: {
     width: '100%',
@@ -503,7 +528,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 4,
     textAlign: 'right',
-    fontFamily: 'IRANSansXNoEn-Medium',
   },
   modalBtn: {
     width: '90%',
