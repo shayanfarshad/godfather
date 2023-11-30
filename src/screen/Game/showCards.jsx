@@ -6,10 +6,15 @@ import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import ReactNativeModal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import { translate } from '../../i18n';
+import {translate} from '../../i18n';
+import Header from '../../components/Header';
+import {colors, spacing} from '../../theme';
 
 const ShowCards = () => {
-  const {gameStore} = useStore();
+  const {
+    gameStore,
+    langStore: {language},
+  } = useStore();
   const nav = useNavigation();
   const rolePlayers = gameStore.rolePlayers;
   const [gamers, setGamers] = useState([]);
@@ -31,23 +36,16 @@ const ShowCards = () => {
     setDetailPlayer(null);
   };
   return (
-    <View style={{flex: 1, backgroundColor: backgroundColor}}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-         {translate('game.showRoles')}
-        </Text>
-        {/* <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable> */}
-      </View>
+    <View style={{flex: 1, backgroundColor: colors.background}}>
+      <Header title={translate('game.showRoles')} />
       <FlatList
         data={gamers}
-        keyExtractor={(index, item) => index}
+        keyExtractor={item => item.id}
         numColumns={3}
         contentContainerStyle={{
-          width: DWidth * 0.9,
+          // width: DWidth * 0.9,
           marginTop: 20,
-          marginHorizontal: DWidth * 0.05,
+          // marginHorizontal: DWidth * 0.05,
         }}
         ListEmptyComponent={() => {
           return (
@@ -57,16 +55,21 @@ const ShowCards = () => {
                 style={{width: '50%', height: 300}}
               />
               <Text style={{fontSize: 20, color: 'white'}}>
-                هیج بازیکنی برای پذیرفتن نقش نمانده!
+                {translate('game.allPlayersSeenTheirRoles')}
               </Text>
             </View>
           );
         }}
-        renderItem={({item, index}) => {
+        renderItem={({item}) => {
           return (
             <Pressable
-              style={styles.renderItem}
-              key={index}
+              style={[
+                styles.renderItem,
+                {
+                  marginBottom: language === 'fa' ? 15 : 45,
+                },
+              ]}
+              key={item.id}
               onPress={() => {
                 setDetailPlayer(item);
                 setShowModal(true);
@@ -85,7 +88,7 @@ const ShowCards = () => {
           width: 200,
           height: 40,
           borderRadius: 10,
-          backgroundColor: 'white',
+          backgroundColor: colors.cardBackground,
           justifyContent: 'center',
           alignItems: 'center',
           position: 'absolute',
@@ -97,7 +100,7 @@ const ShowCards = () => {
             nav.navigate('gameplay');
           }
         }}>
-        <Text style={{fontSize: 18}}>برو به بازی</Text>
+        <Text style={{fontSize: 18}}>{translate('game.goToTheGame')}</Text>
       </Pressable>
       <ReactNativeModal
         isVisible={showModal}
@@ -110,7 +113,13 @@ const ShowCards = () => {
           endShowCard();
         }}
         style={styles.modalContainer}>
-        <View style={styles.modalView}>
+        <View
+          style={[
+            styles.modalView,
+            {
+              backgroundColor: colors.cardBackground,
+            },
+          ]}>
           <View
             style={{
               width: DWidth / 2,
@@ -131,10 +140,10 @@ const ShowCards = () => {
               justifyContent: 'space-around',
               alignItems: 'center',
             }}>
-            <Text type="bold" style={{fontSize: 26}}>
+            <Text style={{fontSize: spacing.lg}}>
               {detailPlayer?.role.title}
             </Text>
-            <Text type="bold" style={{fontSize: 24}}>
+            <Text style={{fontSize: spacing.md}}>
               {detailPlayer?.player.name}
             </Text>
           </View>
@@ -173,9 +182,8 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   renderItem: {
-    width: DWidth / 3.4,
+    width: DWidth / 3,
     height: 105,
-    marginBottom: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -199,7 +207,6 @@ const styles = StyleSheet.create({
   modalView: {
     width: DWidth / 1.5,
     height: DHeight / 2.2,
-    backgroundColor: 'white',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,

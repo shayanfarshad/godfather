@@ -16,11 +16,18 @@ import {translate} from '../../i18n';
 
 const HomeScreen = observer(() => {
   const nav = useNavigation();
-  const {playerStore, gameStore} = useStore();
+  const {
+    playerStore,
+    gameStore,
+    langStore: {language},
+  } = useStore();
   const players = playerStore.players;
   const playersWithOutRoles = playerStore.playersWithoutRole;
   const roles = gameStore.roles;
   const rolePlayers = gameStore.rolePlayers;
+
+  const Mafia = roles.filter(el => el.side === 'mafia');
+  const Free = roles.filter(el => el.side === 'free');
   // const [playersWithOutRoles, setPlayersWithOutRoles] = useState(0);
   const [startDisable, setStartDisable] = useState(true);
 
@@ -34,6 +41,10 @@ const HomeScreen = observer(() => {
       setStartDisable(true);
     }
   }, [rolePlayers]);
+
+  useEffect(() => {
+    console.log({Mafia});
+  }, [roles]);
 
   useEffect(() => {
     return () => {
@@ -124,7 +135,7 @@ const HomeScreen = observer(() => {
                   {translate('game.roles')}
                 </Text>
                 <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
-                  {roles.length} {translate('game.role')}
+                  {roles?.length} {translate('game.role')}
                 </Text>
               </View>
               <Pressable
@@ -140,12 +151,16 @@ const HomeScreen = observer(() => {
             </View>
           </ImageBackground>
         </View>
-        <View style={styles.viewCard}>
+        <View
+          style={[styles.viewCard, {height: language === 'fa' ? 150 : 180}]}>
           <ImageBackground
             source={require('../../assets/images/bg4.webp')}
             resizeMode="cover"
             imageStyle={{width: '100%'}}
-            style={[styles.playersCard, {elevation: 3}]}>
+            style={[
+              styles.playersCard,
+              {elevation: 3, height: language === 'fa' ? 150 : 180},
+            ]}>
             <View
               style={[
                 styles.playersCard,
@@ -153,6 +168,7 @@ const HomeScreen = observer(() => {
                   backgroundColor: colors.overlayBackground,
                   elevation: 3,
                   padding: 10,
+                  height: '100%',
                   justifyContent: 'space-between',
                 },
               ]}>
@@ -170,34 +186,47 @@ const HomeScreen = observer(() => {
                     alignItems: 'flex-end',
                   }}>
                   <Text style={{fontSize: 20, lineHeight: 40}}>
-                    {translate('game.chooseRoleForPlayers')}{' '}
+                    {translate('game.chooseRoleForPlayers')}
                   </Text>
                   <View style={{flexDirection: 'row-reverse', height: 40}}>
                     <Text>{translate('game.citizen')} : </Text>
                     <View
-                      style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: colors.cardBackground,
-                        marginLeft: 10,
-                      }}>
-                      <Text>{roles.length}</Text>
+                      style={[
+                        styles.roleCounter,
+                        {
+                          backgroundColor: colors.cardBackground,
+                        },
+                      ]}>
+                      <Text>
+                        {roles?.length - Mafia?.length - Free?.length}
+                      </Text>
                     </View>
                     <Text>{translate('game.mafia')} : </Text>
                     <View
-                      style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: colors.modalBackground,
-                        marginRight: 10,
-                      }}>
-                      <Text>{playersWithOutRoles}</Text>
+                      style={[
+                        styles.roleCounter,
+                        {
+                          backgroundColor: colors.cardBackground,
+                        },
+                      ]}>
+                      <Text>{Mafia?.length}</Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row-reverse',
+                      height: 40,
+                      marginTop: 30,
+                    }}>
+                    <Text>{translate('game.free')} : </Text>
+                    <View
+                      style={[
+                        styles.roleCounter,
+                        {
+                          backgroundColor: colors.cardBackground,
+                        },
+                      ]}>
+                      <Text>{Free?.length}</Text>
                     </View>
                   </View>
                 </View>
@@ -278,6 +307,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: 110,
     borderRadius: 10,
+  },
+  roleCounter: {
+    // width: 30,
+    // height: 30,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginLeft: 10,
   },
 });
 

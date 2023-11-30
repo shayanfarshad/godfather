@@ -109,6 +109,7 @@ class GameStore {
   ];
   constructor() {
     makeAutoObservable(this);
+    this.roles = [];
   }
   @action addDay() {
     this.day = this.day + 1;
@@ -131,10 +132,18 @@ class GameStore {
     this.rolePlayers = items;
     return this.rolePlayers;
   }
+  @action getRoles() {
+    return this.roles;
+  }
   @action addRoles(role) {
+    if (!this.roles) {
+      this.roles = []; // Initialize if undefined
+    }
     const newRoles = [...this.roles];
     newRoles.push(role);
     this.roles = newRoles;
+
+    // this.roles.push(role);
     return this.roles;
   }
   @action removeRoles(role) {

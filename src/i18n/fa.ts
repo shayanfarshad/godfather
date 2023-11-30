@@ -127,8 +127,8 @@ const fa: Translations = {
     player: 'بازیکن',
     players: 'بازیکن ها',
     godfather: 'پدرخوانده',
-    jackRoles: 'کارت های جک گنجشکه',
-    nustraRoles: 'کارت های نوستراداموس',
+    jackLastCards: 'کارت های جک گنجشکه',
+    nustraLastCards: 'کارت های نوستراداموس',
     jackLast: 'کارت های جک',
     nustraLast: 'کارت های نوستراداموس',
     jackSenario: 'سناریو  جک گنجیشکه',
@@ -162,6 +162,17 @@ const fa: Translations = {
       seventh:
         'اگر کسی سلاخی پدرخوانده شود قابلیت استفاده توانایی در همان شب را هم ندارد.',
     },
+    jackRoles: 'نقش های جک گنجیشکه',
+    nustraRoles: 'نقش های نوستراداموس',
+    chooseRoleProblem: 'فقط از یک نوع بازی میتونی کارت انتخاب کنی',
+    cardChoosingDescription:
+      'شما فقط میتونید از یک سبک بازی کارت انتخاب کنید درصورت تایید این اخطارانتخاب های شما حذف میشوند و به سبک دیگه ی بازی منتقل میشوید',
+    areYouAgree: 'موافقی؟',
+    addRoletoThisGame: 'اضافه کردن نقش به بازی',
+    free: 'مستقل',
+    roleAssignment: 'تعیین نقش',
+    allPlayersSeenTheirRoles: 'تمام یازیکنان کار های خود را دیدن',
+    goToTheGame: 'برو به بازی',
   },
 };
 

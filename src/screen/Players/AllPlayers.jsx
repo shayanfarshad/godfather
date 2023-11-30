@@ -223,7 +223,11 @@ const AllPlayers = observer(() => {
           data={players}
           keyExtractor={item => item.id}
           style={{flex: 0.7, maxHeight: DHeight * 0.8}}
-          contentContainerStyle={{marginTop: 20, paddingBottom: 20}}
+          contentContainerStyle={{
+            marginTop: 20,
+            paddingBottom: 50,
+            // marginBottom: 40,
+          }}
           renderItem={({item}) => {
             return (
               <PlayerRow

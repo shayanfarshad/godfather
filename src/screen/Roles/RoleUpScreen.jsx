@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useStore} from '../../constants/useStore';
 import {DWidth, backgroundColor} from '../../constants/Constants';
 import {useNavigation} from '@react-navigation/native';
+import {colors} from '../../theme';
+import {translate} from '../../i18n';
+import Header from '../../components/Header';
 
 const RoleUpScreen = () => {
   const nav = useNavigation();
@@ -58,21 +61,19 @@ const RoleUpScreen = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
         paddingHorizontal: 15,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          تعیین نقش تصادفی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
+      <Header
+        backPress={() => {
+          nav.goBack();
+        }}
+        title={translate('game.roleAssignment')}
+      />
       {rolePlayer.length ? (
         <FlatList
           data={rolePlayer}
-          keyExtractor={(index, item) => index}
+          keyExtractor={item => item.id + Date.now()}
           numColumns={3}
           contentContainerStyle={{
             justifyContent: 'space-around',
@@ -86,7 +87,7 @@ const RoleUpScreen = () => {
                   style={{width: '50%', height: 300}}
                 />
                 <Text style={{fontSize: 20, color: 'white'}}>
-                  هیج بازیکنی نداری!
+                  {translate('game.anyPlayerExist')}
                 </Text>
               </View>
             );
@@ -103,7 +104,7 @@ const RoleUpScreen = () => {
                       ? item.role.image
                       : require('../../assets/images/player2.png')
                   }
-                  style={{width: 100, height: 100, borderRadius: 10}}
+                  style={{width: 100, height: 140, borderRadius: 10}}
                 />
                 <Text style={{color: 'white'}}>
                   {item?.player?.name ? item.player.name : item.name}
@@ -113,14 +114,20 @@ const RoleUpScreen = () => {
           }}
         />
       ) : null}
-      <View style={styles.addBtn}>
+      <View
+        style={[
+          styles.addBtn,
+          {
+            backgroundColor: colors.cardBackground,
+          },
+        ]}>
         <Pressable
           onPress={() => {
             roleup();
             // setFabVisible(!isFabVisible);
           }}
           style={styles.addBtnIcon}>
-          <Icon name="random" size={20} color={'black'} />
+          <Icon name="random" size={20} color={colors.text} />
         </Pressable>
       </View>
     </View>
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
   },
   playerIcon: {
     width: DWidth / 3.2,
-    height: 135,
+    height: 160,
     marginBottom: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -154,12 +161,11 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    bottom: 20,
-    right: 30,
+    bottom: 40,
+    right: 40,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    backgroundColor: 'white',
   },
   addBtnIcon: {
     width: '100%',
