@@ -448,5 +448,14 @@ class RoleStore {
       },
     ];
   }
+
+  @action setJackRoles(roles) {
+    this.jackRoles = roles;
+    return this.jackRoles;
+  }
+  @action setNustraRoles() {
+    this.nustraRoles = roles;
+    return this.nustraRoles;
+  }
 }
 export default new RoleStore();

@@ -12,9 +12,11 @@ import {useStore} from '../../constants/useStore';
 import {DWidth} from '../../constants/Constants';
 import {Icon} from '../../components/Icon';
 import Text from '../../components/Text';
+import {spacing} from '../../theme';
 
 const NustraRolesScreen = observer(() => {
   const {
+    langStore: {language},
     roleStore: {nustraRoles},
     gameStore,
   } = useStore();
@@ -28,9 +30,9 @@ const NustraRolesScreen = observer(() => {
   }, [nustraRoles]);
 
   const addRole = item => {
+    gameStore.setGameType('nustra');
     const existItem = roles.findIndex(el => el === item);
     if (existItem === -1) {
-      console.log({item});
       gameStore.addRoles(item);
       const fakeRole = [...gameRoles];
       const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
@@ -42,7 +44,7 @@ const NustraRolesScreen = observer(() => {
         return fakeRole?.map(el => {
           if (el.title === item.title) {
             const ind = fakeRole.filter(item => item.title !== 'شهروند ساده');
-            const arr = [...jackRoles];
+            const arr = [...nustraRoles];
             arr.map(item => {
               if (item.title === 'شهروند ساده') item.active = true;
             });
@@ -84,9 +86,7 @@ const NustraRolesScreen = observer(() => {
         return (
           <Pressable
             key={item.id}
-            // disabled={!item.active}
             onPress={() => {
-              //   console.log({item});
               addRole(item);
             }}
             style={styles.renderItem}>
@@ -177,7 +177,10 @@ const NustraRolesScreen = observer(() => {
                 style={{width: '100%', height: '100%', borderRadius: 10}}
               />
             </View>
-            <Text style={{fontSize: 16, color: 'white'}}>{item.title}</Text>
+            <Text
+              style={{fontSize: language === 'fa' ? spacing.lg : 14}}>
+              {item.title}
+            </Text>
           </Pressable>
         );
       }}

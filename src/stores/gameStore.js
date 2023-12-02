@@ -5,8 +5,10 @@ class GameStore {
   @observable roles = [];
   @observable players = [];
   @observable rolePlayers = [];
+  @observable removedPlayers = [];
   @observable night = 0;
   @observable day = 0;
+  @observable gameType = '';
   @observable nightStory = [
     {
       id: 0,
@@ -165,9 +167,85 @@ class GameStore {
     this.players = newPlayers;
     return this.players;
   }
+  @action getRemovedPlayers() {
+    return this.removedPlayers;
+  }
+
+  @action updateRemovedPlayers(newArr) {
+    this.removedPlayers = newArr;
+    return this.removedPlayers;
+  }
+
+  @action setGameType(type) {
+    this.gameType = type;
+    return this.gameType;
+  }
+
+  @action resetLastMoves() {
+    this.jackLastMove = [
+      {
+        id: 1,
+        title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+        description: translate('game.rolecards.lastMoveCards.lambDesc'),
+      },
+      {
+        id: 2,
+        title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+        description: translate('game.rolecards.lastMoveCards.identityDesc'),
+      },
+      {
+        id: 3,
+        title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+        description: translate(
+          'game.rolecards.lastMoveCards.beautifalJackDesc',
+        ),
+      },
+      {
+        id: 4,
+        title: translate('game.rolecards.lastMoveCards.bracelet'),
+        description: translate('game.rolecards.lastMoveCards.braceletDesc'),
+      },
+      {
+        id: 5,
+        title: translate('game.rolecards.lastMoveCards.faceoff'),
+        description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
+      },
+    ];
+
+    this.nustraLastMove = [
+      {
+        id: 1,
+        title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+        description: translate('game.rolecards.lastMoveCards.lambDesc'),
+      },
+      {
+        id: 2,
+        title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+        description: translate('game.rolecards.lastMoveCards.identityDesc'),
+      },
+      {
+        id: 3,
+        title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+        description: translate(
+          'game.rolecards.lastMoveCards.beautifalNustraDesc',
+        ),
+      },
+      {
+        id: 4,
+        title: translate('game.rolecards.lastMoveCards.bracelet'),
+        description: translate('game.rolecards.lastMoveCards.braceletDesc'),
+      },
+      {
+        id: 5,
+        title: translate('game.rolecards.lastMoveCards.faceoff'),
+        description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
+      },
+    ];
+  }
   @action gameReset() {
     this.roles = [];
     this.players = [];
+    this.gameType = '';
     this.rolePlayers = [];
     this.night = 0;
     this.day = 0;

@@ -166,6 +166,7 @@ const RolesScreen = observer(() => {
                 return (
                   <TouchableOpacity
                     style={styles.tabItem}
+                    key={route.key}
                     onPress={() => {
                       if (roles.length) {
                         checkRef?.current?.present();
@@ -199,7 +200,7 @@ const RolesScreen = observer(() => {
         modalRef={checkRef}
         index={0}
         onDismiss={() => {}}
-        snapPoints={[DHeight * 0.5]}
+        snapPoints={[DHeight * 0.6]}
         backgroundStyle={{backgroundColor: colors.modalBackground}}>
         <View
           style={{

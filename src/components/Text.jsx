@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text as T} from 'react-native';
+import {Platform, Text as T, useColorScheme} from 'react-native';
 import {colors} from '../theme';
 import I18n from 'i18n-js';
 import {useStore} from '../constants/useStore';
@@ -15,10 +15,14 @@ import {observer} from 'mobx-react';
 
 const Text = observer(
   ({style, type = 'medium', numberOfLines, ...restProps}) => {
+    const {
+      langStore: {language},
+    } = useStore();
+    const colorScheme = useColorScheme() === 'dark';
     // Define your custom styles here, you can use style prop as well
     const customStyles = {
-      fontSize: I18n.locale === 'en-IR' ? 24 : 16,
-      color: restProps?.color || colors.text,
+      fontSize: I18n.locale === 'en-IR' ? 20 : 16,
+      color: restProps?.color || colorScheme ? colors.text : colors.text,
       // color: 'blue',
       // Add any other custom styles you need
     };
@@ -33,9 +37,12 @@ const Text = observer(
         style={[
           combinedStyles,
           {
-            fontFamily: font(type),
+            fontFamily: font(type, language),
             textAlign: 'right',
-            padding: 12,
+            paddingTop: Platform.OS === 'ios' ? 12 : 0,
+            paddingBottom: Platform.OS === 'ios' ? 12 : 0,
+            paddingHorizontal: Platform.OS === 'ios' ? 12 : 0,
+            // padding: Platform.OS === 'ios' ? 12 : 0,
           },
         ]}
         {...restProps}>
@@ -45,8 +52,8 @@ const Text = observer(
   },
 );
 
-export const font = type => {
-  if (I18n.locale === 'en-US') {
+export const font = (type, language) => {
+  if (language === 'en') {
     switch (type) {
       case 'bold':
         return 'Wizard World';

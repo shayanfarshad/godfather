@@ -173,6 +173,11 @@ const en = {
     roleAssignment: 'Role Assignment',
     allPlayersSeenTheirRoles: 'All players see their cards',
     goToTheGame: 'go to the game',
+    insideGame: 'Inside Players',
+    sitoutGame: 'Sitout Players',
+    silent: 'Silent',
+    speak: 'Speak',
+    disability: 'Disability',
   },
 };
 

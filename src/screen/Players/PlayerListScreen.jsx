@@ -62,9 +62,9 @@ const PlayerListScreen = observer(({route}) => {
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 300}}
+                style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20, color: 'white'}}>
+              <Text style={{fontSize: 20}}>
                 {translate('game.anyPlayerExist')}
               </Text>
             </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    marginTop: 80,
+    // marginTop: 80,
   },
   playerIcon: {
     width: DWidth / 3,

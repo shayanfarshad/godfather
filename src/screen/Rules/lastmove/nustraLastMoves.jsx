@@ -20,7 +20,8 @@ const NustraLastMove = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         contentContainerStyle={{
-          width: DWidth,
+          width: DWidth * 0.95,
+          marginHorizontal: DWidth * 0.025,
         }}
         renderItem={({item, index}) => {
           return <CardItem item={item} index={index} key={item.id} />;

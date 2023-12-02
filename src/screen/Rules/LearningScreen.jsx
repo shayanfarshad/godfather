@@ -16,9 +16,6 @@ const LearningScreen = observer(() => {
   } = useStore();
   const nav = useNavigation();
 
-  useEffect(() => {
-    console.log({language});
-  }, []);
   return (
     <View
       style={{
@@ -54,7 +51,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('lastMoves')}>
-        <Text type="bold" style={{fontSize: spacing.xl}}>
+        <Text style={{fontSize: spacing.xl}}>
           {translate('game.lastMoveCards')}
         </Text>
       </Pressable>
@@ -66,9 +63,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('rules')}>
-        <Text type="bold" style={{fontSize: spacing.xl}}>
-          {translate('game.senario')}
-        </Text>
+        <Text style={{fontSize: spacing.xl}}>{translate('game.senario')}</Text>
       </Pressable>
     </View>
   );
@@ -92,7 +87,7 @@ const styles = StyleSheet.create({
   card: {
     width: '90%',
     marginLeft: '5%',
-    height: 80,
+    height: 100,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',

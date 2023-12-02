@@ -22,13 +22,14 @@ import {DHeight, backgroundColor} from '../../constants/Constants';
 import Header from '../../components/Header';
 import {PlayerRow} from './PlayerRow';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {BottomSheetModal, BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import {Modal} from '../../components/Modal';
 import Text from '../../components/Text';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {colors, spacing} from '../../theme';
 import {translate} from '../../i18n';
 import * as storage from '../../utils/storage';
+import I18n from 'i18n-js';
 
 // import player from '../../assets/images/player2.png';
 const AllPlayers = observer(() => {
@@ -48,7 +49,6 @@ const AllPlayers = observer(() => {
   };
   useEffect(() => {
     getPlayers().then(myPlayer => {
-      console.log({myPlayer});
       if (myPlayer) {
         setPlayers(myPlayer);
       }
@@ -76,18 +76,10 @@ const AllPlayers = observer(() => {
               if (response) {
                 if (!response.didCancel) {
                   if (response?.assets[0]) {
-                    // console.log({response: response?.assets[0].uri});
-                    // setPlayerAvatar(response?.assets[0]?.uri)
                     setUserPicture(response?.assets[0]?.uri);
                     const file = {
                       file: `data:image/jpeg;base64,${response.assets[0].base64}`,
                     };
-
-                    // console.log({file});
-                    // this.changeAvatar(this.props.user.id, response.data).then(() =>
-                    // {
-                    // 	this.props.fetchUser();
-                    // });
                   }
                 }
               }
@@ -197,7 +189,6 @@ const AllPlayers = observer(() => {
     const arr = [...players];
     arr.push({id: Date.now(), name: playerName, avatar: userPicture});
     storage.save('players', arr);
-    console.log({arr});
     setPlayers(arr);
     setPlayerName('');
     setUserPicture('');
@@ -289,7 +280,7 @@ const AllPlayers = observer(() => {
               }}
             />
           </Pressable>
-          <TextInput
+          <BottomSheetTextInput
             value={playerName}
             onChangeText={text => {
               setPlayerName(text);
@@ -299,7 +290,7 @@ const AllPlayers = observer(() => {
               {
                 backgroundColor: colors.background,
                 color: colors.text,
-                fontSize: language === 'fa' ? 22 : 16,
+                fontSize: language === 'fa' ? spacing.lg : 16,
                 fontFamily:
                   language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
               },
@@ -377,10 +368,12 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     width: '90%',
-    height: 50,
+    height: 60,
+    // paddingTop: 10,
     paddingHorizontal: 5,
     borderRadius: 8,
-    textAlign: 'right',
+    textAlign: I18n.locale === 'en-IR' ? 'right' : 'left',
+    textAlignVertical: 'center',
     color: colors.text,
     fontSize: 20,
     backgroundColor: colors.inputBackground,

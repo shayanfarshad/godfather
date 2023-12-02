@@ -11,7 +11,7 @@ const fa: Translations = {
   },
   bottomNavigator: {
     profile: 'پروفایل',
-    learning: 'آموزش',
+    learning: ' آموزش ',
     playGame: 'بازی',
     players: 'بازیکن ها',
     settings: 'تنظیمات',
@@ -171,8 +171,13 @@ const fa: Translations = {
     addRoletoThisGame: 'اضافه کردن نقش به بازی',
     free: 'مستقل',
     roleAssignment: 'تعیین نقش',
-    allPlayersSeenTheirRoles: 'تمام یازیکنان کار های خود را دیدن',
+    allPlayersSeenTheirRoles: 'تمام بازیکنان کارت های خود را دیدن',
     goToTheGame: 'برو به بازی',
+    insideGame: 'داخل بازی',
+    sitoutGame: 'حذف شده ها',
+    silent: 'سکوت',
+    speak: 'حرف بزن',
+    disability: 'بی خاصیت',
   },
 };
 

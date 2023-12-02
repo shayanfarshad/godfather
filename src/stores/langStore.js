@@ -1,7 +1,7 @@
 import {observable, action, makeAutoObservable} from 'mobx';
 
 class LangStore {
-  @observable language = 'en';
+  @observable language = 'fa';
   constructor() {
     makeAutoObservable(this);
   }
@@ -11,7 +11,9 @@ class LangStore {
   }
 
   @action changeLanguage(lang) {
-    return (this.language = lang);
+    this.language = lang;
+    return this.language;
   }
 }
+
 export default new LangStore();

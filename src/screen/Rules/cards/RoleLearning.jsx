@@ -73,6 +73,7 @@ const RoleLearning = observer(() => {
 
                 return (
                   <TouchableOpacity
+                    key={route.key}
                     style={styles.tabItem}
                     onPress={() => setIndex(i)}>
                     <Animated.Text
@@ -81,9 +82,10 @@ const RoleLearning = observer(() => {
                         color: colors.text,
                         fontSize: language === 'fa' ? spacing.lg : spacing.md,
                         lineHeight: 32,
-                        fontFamily: language === 'fa'
-                          ? 'Digi Nofar Bold'
-                          : 'Wizard World',
+                        fontFamily:
+                          language === 'fa'
+                            ? 'Digi Nofar Bold'
+                            : 'Wizard World',
                       }}>
                       {route.title}
                     </Animated.Text>

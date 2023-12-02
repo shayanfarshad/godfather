@@ -41,9 +41,9 @@ i18n.translations = {fa, 'en-IR': fa, en, 'en-US': en};
 //     }
 //   }
 // };
-const locales = localization.getLocales();
+// const locales = localization.getLocales();
 
-i18n.locale = localization.getLocales()[0].languageTag;
+// i18n.locale = localization.getLocales()[0].languageTag;
 
 export const changeLang = (lang: string) => {
   if (lang === 'en-US') {
@@ -55,8 +55,8 @@ export const changeLang = (lang: string) => {
   }
   if (lang) {
     i18n.locale = lang;
-  } else if (Array.isArray(locales)) {
-    i18n.locale = locales[0].languageTag;
+  } else {
+    i18n.locale = 'en-IR';
   }
 };
 

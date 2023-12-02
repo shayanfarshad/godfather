@@ -14,12 +14,14 @@ const JackCards = () => {
         data={jackRoles}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{
-        //   width: DWidth,
-        // }}
+        contentContainerStyle={{
+          width: DWidth * 0.95,
+          marginHorizontal: DWidth * 0.025,
+        }}
         renderItem={({item, index}) => {
-          console.log({item});
-          return <CardItem item={item} index={index} key={item.id} />;
+          return (
+            <CardItem item={item} index={index} key={item.id} type={'jack'} />
+          );
         }}
       />
     </View>

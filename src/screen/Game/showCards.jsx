@@ -35,12 +35,22 @@ const ShowCards = () => {
     setGamers(arr);
     setDetailPlayer(null);
   };
+
+  useEffect(() => {
+    console.log('Image Source:', detailPlayer?.role?.image);
+  }, [detailPlayer]);
   return (
-    <View style={{flex: 1, backgroundColor: colors.background}}>
+    <View
+      style={{
+        flex: 1,
+        paddingVertical: 20,
+        marginBottom: 20,
+        backgroundColor: colors.background,
+      }}>
       <Header title={translate('game.showRoles')} />
       <FlatList
         data={gamers}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.player.id}
         numColumns={3}
         contentContainerStyle={{
           // width: DWidth * 0.9,
@@ -52,9 +62,9 @@ const ShowCards = () => {
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 300}}
+                style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20, color: 'white'}}>
+              <Text style={{fontSize: 20, marginTop: 40}}>
                 {translate('game.allPlayersSeenTheirRoles')}
               </Text>
             </View>
@@ -66,10 +76,10 @@ const ShowCards = () => {
               style={[
                 styles.renderItem,
                 {
-                  marginBottom: language === 'fa' ? 15 : 45,
+                  marginBottom: language === 'fa' ? 30 : 45,
                 },
               ]}
-              key={item.id}
+              key={item.player.id}
               onPress={() => {
                 setDetailPlayer(item);
                 setShowModal(true);
@@ -78,7 +88,7 @@ const ShowCards = () => {
                 source={require('../../assets/images/player2.png')}
                 style={{width: 100, height: 100, borderRadius: 10}}
               />
-              <Text style={{color: 'white'}}>{item.player.name}</Text>
+              <Text>{item.player.name}</Text>
             </Pressable>
           );
         }}
@@ -88,7 +98,7 @@ const ShowCards = () => {
           width: 200,
           height: 40,
           borderRadius: 10,
-          backgroundColor: colors.cardBackground,
+          backgroundColor: colors.modalBackground,
           justifyContent: 'center',
           alignItems: 'center',
           position: 'absolute',
@@ -120,20 +130,22 @@ const ShowCards = () => {
               backgroundColor: colors.cardBackground,
             },
           ]}>
-          <View
-            style={{
-              width: DWidth / 2,
-              height: 230,
-              justifyContent: 'center',
-              alignItems: 'center',
-              overflow: 'hidden',
-              borderRadius: 10,
-            }}>
-            <Image
-              source={detailPlayer?.role.image}
-              style={{width: '100%', height: '100%'}}
-            />
-          </View>
+          {detailPlayer && (
+            <View
+              style={{
+                width: DWidth / 2,
+                height: 280,
+                justifyContent: 'center',
+                alignItems: 'center',
+                overflow: 'hidden',
+                borderRadius: 10,
+              }}>
+              <Image
+                source={detailPlayer?.role?.image}
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+          )}
           <View
             style={{
               width: DWidth / 2,
@@ -179,7 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    marginTop: 80,
+    // marginTop: 80,
   },
   renderItem: {
     width: DWidth / 3,
@@ -206,7 +218,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: DWidth / 1.5,
-    height: DHeight / 2.2,
+    height: DHeight / 2,
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,

@@ -79,6 +79,7 @@ const lightColors = {
   overlayBackground: palette.overlay40,
 
   modalBackground: palette.happy100,
+  special: palette.happy100,
 
   /**
    * The default border color.
@@ -90,7 +91,7 @@ const lightColors = {
   // tint: palette.primary500,
   tint: palette.primary100,
 
-  bottomCenterColor:palette.secondary400,
+  bottomCenterColor: palette.secondary400,
   /**
    * A subtle color used for lines.
    */
@@ -112,8 +113,7 @@ const lightColors = {
    */
   buttonBackground: palette.neutral200,
   buttonText: palette.neutral200,
-  inputBackground: palette.neutral200
-
+  inputBackground: palette.neutral200,
 };
 const darkColors = {
   /**
@@ -135,7 +135,7 @@ const darkColors = {
   /**
    * Secondary text information.
    */
-  textDim: palette.neutral200,
+  textDim: palette.neutral600,
   /**
    * The default color of the screen background.
    */
@@ -144,8 +144,7 @@ const darkColors = {
   cardBackground: palette.primary300,
   modalBackground: palette.primary300,
   overlayBackground: palette.overlay20,
-
-
+  special: palette.happy100,
   /**
    * The default border color.
    */
@@ -156,7 +155,7 @@ const darkColors = {
   // tint: palette.primary500,
   tint: '#0D98BA',
 
-  bottomCenterColor:'#485e73',
+  bottomCenterColor: '#485e73',
 
   /**
    * A subtle color used for lines.
@@ -179,7 +178,7 @@ const darkColors = {
    */
   buttonBackground: palette.neutral200,
   buttonText: palette.neutral800,
-  inputBackground: palette.neutral200
+  inputBackground: palette.neutral200,
 };
 
 let colors: typeof lightColors | typeof darkColors = lightColors;

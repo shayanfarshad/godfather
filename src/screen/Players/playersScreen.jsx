@@ -23,12 +23,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Modal} from '../../components/Modal';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {BottomSheetModal, BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {translate} from '../../i18n';
 import {colors} from '../../theme';
 import Header from '../../components/Header';
 import * as storage from '../../utils/storage';
+import I18n from 'i18n-js';
 
 const PlayersScreen = observer(() => {
   const player = require('../../assets/images/player2.png');
@@ -240,11 +241,10 @@ const PlayersScreen = observer(() => {
           width: '100%',
           alignItems: 'flex-end',
           // marginVertical: 20,
+          marginBottom: 20,
           paddingHorizontal: 20,
         }}>
-        <Text style={{fontSize: 22, color: 'white'}}>
-          {translate('game.playersChoosen')}
-        </Text>
+        <Text style={{fontSize: 22}}>{translate('game.playersChoosen')}</Text>
       </View>
       <FlatList
         data={players}
@@ -258,7 +258,7 @@ const PlayersScreen = observer(() => {
                 source={require('../../assets/images/empty1.png')}
                 style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20, color: 'white'}}>
+              <Text style={{fontSize: 20}}>
                 {translate('game.anyPlayerExist')}
               </Text>
             </View>
@@ -287,8 +287,8 @@ const PlayersScreen = observer(() => {
       {isFabVisible ? (
         <View
           style={{
-            width: 120,
-            height: 150,
+            width: 110,
+            height: 170,
             position: 'absolute',
             bottom: 50,
             right: 20,
@@ -296,7 +296,7 @@ const PlayersScreen = observer(() => {
           <Pressable
             style={{
               backgroundColor: colors.modalBackground,
-              height: 40,
+              height: 45,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 10,
@@ -313,7 +313,7 @@ const PlayersScreen = observer(() => {
             style={{
               marginTop: 20,
               backgroundColor: colors.modalBackground,
-              height: 40,
+              height: 45,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 10,
@@ -339,10 +339,9 @@ const PlayersScreen = observer(() => {
         modalRef={addPlayerRef}
         index={0}
         onDismiss={() => {}}
-        snapPoints={[DHeight * 0.5]}
+        snapPoints={[DHeight * 0.6]}
         backgroundStyle={{backgroundColor: colors.modalBackground}}
-        onChange={e => {
-        }}>
+        onChange={e => {}}>
         <View
           style={{
             backgroundColor: colors.modalBackground,
@@ -378,7 +377,7 @@ const PlayersScreen = observer(() => {
               }}
             />
           </Pressable>
-          <TextInput
+          <BottomSheetTextInput
             value={playerName}
             onChangeText={text => {
               setPlayerName(text);
@@ -388,7 +387,7 @@ const PlayersScreen = observer(() => {
               {
                 backgroundColor: colors.background,
                 color: colors.text,
-                fontSize: language === 'fa' ? 22 : 16,
+                fontSize: language === 'fa' ? 20 : 16,
                 fontFamily:
                   language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
               },
@@ -397,6 +396,7 @@ const PlayersScreen = observer(() => {
             placeholder={translate('game.playerName')}
             placeholderTextColor={colors.text}
           />
+
           <Pressable
             onPress={() => {
               addPlayer();
@@ -523,11 +523,11 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     width: '90%',
-    height: 50,
+    height: 60,
     borderWidth: 0.2,
     paddingHorizontal: 5,
     borderRadius: 4,
-    textAlign: 'right',
+    textAlign: I18n.locale === 'en-IR' ? 'right' : 'left',
   },
   modalBtn: {
     width: '90%',

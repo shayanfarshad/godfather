@@ -19,6 +19,7 @@ const SettingScreen = observer(() => {
   } = useStore();
   const getStoreTheme = async () => {
     await storage.load('theme').then(res => {
+      console.log({resOftheme: res});
       if (res === 'light') {
         setSelectedMode('deactive');
       } else {
@@ -51,19 +52,16 @@ const SettingScreen = observer(() => {
   };
 
   const handleNight = mode => {
-    console.log({mode});
     if (mode === 'active') {
       storage.save('theme', 'dark');
       Appearance.setColorScheme('dark');
       setTheme(true);
       setSelectedMode(mode);
-      RNRestart.Restart();
     } else {
       storage.save('theme', 'light');
       Appearance.setColorScheme('light');
       setTheme(false);
       setSelectedMode(mode);
-      RNRestart.Restart();
     }
   };
 
@@ -78,7 +76,9 @@ const SettingScreen = observer(() => {
       }}>
       <Header title={translate('settings.title')} />
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: spacing.xl}}>{translate('settings.language')}</Text>
+        <Text style={{fontSize: spacing.xl}}>
+          {translate('settings.language')}
+        </Text>
       </View>
 
       <View style={{paddingHorizontal: 20}}>
@@ -94,7 +94,9 @@ const SettingScreen = observer(() => {
         />
       </View>
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: spacing.xl}}>{translate('settings.nightMode')}</Text>
+        <Text style={{fontSize: spacing.xl}}>
+          {translate('settings.nightMode')}
+        </Text>
       </View>
 
       <View style={{paddingHorizontal: 20}}>

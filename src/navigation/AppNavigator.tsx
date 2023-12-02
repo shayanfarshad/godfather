@@ -34,8 +34,9 @@ import Config from '../config';
 import {BottomNavigator, TabParamList} from './BottomNavigator';
 import {HomeScreen} from '../screen/Home/HomeScreen';
 import * as storage from '../utils/storage';
-import SplashScreen from '../screen/Splash/SplashScreen';
 import {LastMoves} from '../screen/Rules/lastmove/LastMoves';
+import BootSplash from 'react-native-bootsplash';
+import NavigationWrapper from './navigationWrapper';
 
 // import {SafeAreaView} from 'react-native-safe-area-context';
 export type AppStackParamList = {
@@ -85,17 +86,18 @@ const AppStack = observer(function AppStack() {
     themeStore: {isDark},
   } = useStore();
   const navigation = useNavigation<StackNavigation>();
+  const colorScheme = useColorScheme() === 'dark';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [initialRoute, setInitialRoute] = useState('main');
   return (
     <Stack.Navigator
-      initialRouteName="splash"
+      initialRouteName="RPM"
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.background,
+        navigationBarColor: colorScheme ? colors.background : colors.background,
       }}>
-      <Stack.Screen name="splash" component={SplashScreen} />
+      {/* <Stack.Screen name="splash" component={SplashScreen} /> */}
       <Stack.Screen name="RPM" component={BottomNavigator} />
       <Stack.Screen
         name="main"
@@ -180,11 +182,12 @@ export const AppNavigator = observer(function AppNavigator(
   const {
     themeStore: {setTheme, isDark},
   } = useStore();
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() === 'dark';
   useBackButtonHandler(routeName => exitRoutes.includes(routeName));
   const getAppTheme = async () => {
     await storage.load('theme').then(res => {
       if (res) {
+        console.log({res});
         Appearance.setColorScheme(res as ColorSchemeName);
         setTheme('dark' === res);
       }
@@ -192,13 +195,18 @@ export const AppNavigator = observer(function AppNavigator(
   };
   useEffect(() => {
     getAppTheme();
-  }, []);
+  }, [isDark]);
   return (
     <NavigationContainer
       ref={navigationRef}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      theme={colorScheme ? DarkTheme : DefaultTheme}
+      onReady={() => {
+        BootSplash.hide();
+      }}
       {...props}>
-      <AppStack />
+      <NavigationWrapper>
+        <AppStack />
+      </NavigationWrapper>
     </NavigationContainer>
   );
 });

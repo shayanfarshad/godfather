@@ -13,10 +13,12 @@ import {
 import {
   AppState,
   I18nManager,
+  Platform,
   Pressable,
   TextStyle,
   View,
   ViewStyle,
+  useColorScheme,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {colors, spacing} from '../theme';
@@ -67,10 +69,11 @@ export const BottomNavigator = observer(function BottomNavigator() {
     langStore: {language},
   } = useStore();
   const nav = useNavigation();
-  const [fontFamily, setFontFamily] = useState('Nofar');
+  const colorScheme = useColorScheme() === 'dark';
+
+  const [fontFamily, setFontFamily] = useState<string>();
   const getLang = async () => {
     await storage.load('language').then(res => {
-      console.log({resBottom: res});
       if (res === 'en-US') {
         I18nManager.forceRTL(true);
       } else {
@@ -79,9 +82,13 @@ export const BottomNavigator = observer(function BottomNavigator() {
     });
   };
 
+  // useEffect(() => {
+  //   console.log({language});
+  // }, [language]);
+
   useEffect(() => {
     getLang();
-    if (I18n.locale === 'en-US') {
+    if (language === 'en') {
       setFontFamily('Wizard World');
     } else {
       setFontFamily('Digi Nofar Bold');
@@ -91,12 +98,15 @@ export const BottomNavigator = observer(function BottomNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="myPlayers"
+      backBehavior="initialRoute"
       screenOptions={{
         unmountOnBlur: true,
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: [$tabBar(colors), {height: bottom + 65}],
-        tabBarActiveTintColor: colors.bottomActiveTint,
+        tabBarActiveTintColor: colorScheme
+          ? colors.bottomActiveTint
+          : colors.bottomActiveTint,
         tabBarInactiveTintColor: colors.bottomInactiveTint,
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
@@ -108,20 +118,21 @@ export const BottomNavigator = observer(function BottomNavigator() {
           tabBarLabel: translate('bottomNavigator.profile'),
           tabBarLabelStyle: {
             fontFamily: fontFamily,
-            fontSize: 16,
+            fontSize: language === 'fa' ? 16 : 12,
             lineHeight: 32,
           },
 
-          tabBarIcon: ({focused}) => (
-            <Icon
-              name="user"
-              color={
-                focused ? colors.bottomActiveTint : colors.bottomInactiveTint
-              }
-              size={16}
-              style={undefined}
-            />
-          ),
+          tabBarButton: props => <Pressable aria-disabled />,
+          // tabBarIcon: ({focused}) => (
+          //   <Icon
+          //     name="user"
+          //     color={
+          //       focused ? colors.bottomActiveTint : colors.bottomInactiveTint
+          //     }
+          //     size={16}
+          //     style={undefined}
+          //   />
+          // ),
         }}
       />
       <Tab.Screen
@@ -131,7 +142,8 @@ export const BottomNavigator = observer(function BottomNavigator() {
           tabBarLabel: translate('bottomNavigator.learning'),
           tabBarLabelStyle: {
             fontFamily: fontFamily,
-            fontSize: 16,
+            fontSize: language === 'fa' ? 16 : 12,
+
             lineHeight: 32,
           },
           tabBarIcon: ({focused}) => (
@@ -220,7 +232,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
           tabBarLabel: translate('bottomNavigator.players'),
           tabBarLabelStyle: {
             fontFamily: fontFamily,
-            fontSize: 16,
+            fontSize: language === 'fa' ? 16 : 12,
             lineHeight: 32,
           },
 
@@ -243,7 +255,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
           tabBarLabel: translate('bottomNavigator.settings'),
           tabBarLabelStyle: {
             fontFamily: fontFamily,
-            fontSize: 16,
+            fontSize: language === 'fa' ? 16 : 12,
             lineHeight: 32,
           },
 

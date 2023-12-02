@@ -10,6 +10,7 @@ import {Modal} from '../components/Modal';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {backgroundColor} from '../constants/Constants';
 import Text from '../components/Text';
+import {colors} from '../theme';
 
 const NavigationWrapper = ({children}) => {
   const [isBackHandled, setIsBackHandled] = useState(false);
@@ -28,7 +29,6 @@ const NavigationWrapper = ({children}) => {
   const handleBackPress = () => {
     if (!isBackHandled) {
       setIsBackHandled(true);
-      console.log({lastNavName: nav.canGoBack()});
       if (nav.canGoBack() === false) {
         exitRef?.current?.present();
 
@@ -53,9 +53,9 @@ const NavigationWrapper = ({children}) => {
         modalRef={exitRef}
         index={0}
         onDismiss={() => exitRef?.current?.close()}
-        snapPoints={['20%']}
+        snapPoints={['30%']}
         backgroundStyle={{
-          backgroundColor: backgroundColor,
+          backgroundColor: colors.cardBackground,
         }}>
         <View style={styles.selectImageContainer}>
           <View>
@@ -94,7 +94,7 @@ const NavigationWrapper = ({children}) => {
 const styles = StyleSheet.create({
   selectImageContainer: {
     flexDirection: 'column',
-    height: '100%',
+    height: '80%',
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',

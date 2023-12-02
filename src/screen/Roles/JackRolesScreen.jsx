@@ -12,9 +12,11 @@ import {useStore} from '../../constants/useStore';
 import {DWidth} from '../../constants/Constants';
 import {Icon} from '../../components/Icon';
 import Text from '../../components/Text';
+import {spacing} from '../../theme';
 
 const JackRolesScreen = observer(() => {
   const {
+    langStore: {language},
     roleStore: {jackRoles},
     gameStore,
   } = useStore();
@@ -28,6 +30,7 @@ const JackRolesScreen = observer(() => {
   }, [jackRoles]);
 
   const addRole = item => {
+    gameStore.setGameType('jack');
     const existItem = roles.findIndex(el => el === item);
     if (existItem === -1) {
       gameStore.addRoles(item);
@@ -155,9 +158,7 @@ const JackRolesScreen = observer(() => {
                       }}>
                       <Icon name="plus" color="black" size={18} />
                     </Pressable>
-                    <Text style={{color: 'black', fontSize: 18}}>
-                      {citizen}
-                    </Text>
+                    <Text style={{fontSize: 18}}>{citizen}</Text>
                     <Pressable
                       onPress={() => {
                         if (citizen > 1) {
@@ -175,7 +176,10 @@ const JackRolesScreen = observer(() => {
                 style={{width: '100%', height: '100%', borderRadius: 10}}
               />
             </View>
-            <Text style={{fontSize: 16, color: 'white'}}>{item.title}</Text>
+            <Text
+              style={{fontSize: language === 'fa' ? spacing.lg : 14}}>
+              {item.title}
+            </Text>
           </Pressable>
         );
       }}

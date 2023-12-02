@@ -18,13 +18,17 @@
 // }
 import './src/i18n';
 import './src/utils/ignoreWarnings';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {AppNavigator, useNavigationPersistence} from './src/navigation';
 
 import * as storage from './src/utils/storage';
 import {changeLang} from './src/i18n';
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {AnimatedBootSplash} from './src/screen/Splash/AnimatedSplash';
+import I18n from 'i18n-js';
+import {useStore} from './src/constants/useStore';
+import {setColorMode} from './src/theme';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
@@ -42,16 +46,59 @@ interface AppProps {
  * This is the root component of our app.
  */
 function App(props: AppProps) {
+  const {langStore, themeStore, roleStore, gameStore} = useStore();
+  const [isLoading, setLoading] = useState(true);
   const {initialNavigationState, onNavigationStateChange} =
     useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
 
   useEffect(() => {
-    const setLanguage = async () => {
-      const language = await storage.load('language');
-      changeLang(language as string);
-    };
-    setLanguage();
+    simulateTasks().then(() => {
+      setLoading(false);
+    });
   }, []);
+
+  const simulateTasks = async () => {
+    // Simulate fetching data or any other background tasks
+
+    await new Promise(resolve =>
+      setTimeout(() => {
+        storage.load('theme').then(res => {
+          if (res) {
+            themeStore.setTheme(res === 'dark' ? true : false);
+            setColorMode(res === 'dark' ? true : false);
+            resolve(res);
+          } else {
+            storage.save('theme', 'light');
+            themeStore.setTheme(false);
+            setColorMode(false);
+          }
+        });
+      }, 2000),
+    );
+    // Update progress
+
+    // Simulate additional tasks
+    await new Promise(resolve =>
+      setTimeout(() => {
+        storage.load('language').then(res => {
+          if (res) {
+            I18n.locale = res as string;
+            changeLang(res as string);
+            langStore.changeLanguage(res === 'en-IR' ? 'fa' : 'en');
+            resolve(res);
+          } else {
+            I18n.locale = 'en-IR';
+            changeLang('en-IR');
+            langStore.changeLanguage('fa');
+            storage.save('language', 'en-IR');
+          }
+          roleStore.resetRoles();
+          gameStore.resetLastMoves();
+        });
+      }, 2000),
+    );
+    // Update progress
+  };
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.
@@ -66,7 +113,16 @@ function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider>
-      <AppNavigator />
+      {isLoading ? (
+        <AnimatedBootSplash
+          // timing={5000}
+          onAnimationEnd={() => {
+            // setVisible(false);
+          }}
+        />
+      ) : (
+        <AppNavigator />
+      )}
     </SafeAreaProvider>
   );
 }

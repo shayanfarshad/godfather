@@ -73,7 +73,7 @@ const RoleUpScreen = () => {
       {rolePlayer.length ? (
         <FlatList
           data={rolePlayer}
-          keyExtractor={item => item.id + Date.now()}
+          keyExtractor={item => item?.player?.id || item?.id}
           numColumns={3}
           contentContainerStyle={{
             justifyContent: 'space-around',
@@ -92,11 +92,12 @@ const RoleUpScreen = () => {
               </View>
             );
           }}
-          renderItem={({item, index}) => {
+          renderItem={({item}) => {
+            console.log({ids: item});
             return (
               <Pressable
                 style={styles.playerIcon}
-                key={index}
+                key={item?.player?.id || item?.id}
                 onPress={() => {}}>
                 <Image
                   source={
@@ -106,9 +107,7 @@ const RoleUpScreen = () => {
                   }
                   style={{width: 100, height: 140, borderRadius: 10}}
                 />
-                <Text style={{color: 'white'}}>
-                  {item?.player?.name ? item.player.name : item.name}
-                </Text>
+                <Text>{item?.player?.name ? item.player.name : item.name}</Text>
               </Pressable>
             );
           }}
@@ -118,7 +117,7 @@ const RoleUpScreen = () => {
         style={[
           styles.addBtn,
           {
-            backgroundColor: colors.cardBackground,
+            backgroundColor: colors.modalBackground,
           },
         ]}>
         <Pressable

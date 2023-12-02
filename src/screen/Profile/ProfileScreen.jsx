@@ -8,9 +8,7 @@ const ProfileScreen = observer(() => {
   const {
     themeStore: {isDark},
   } = useStore();
-  useEffect(() => {
-    console.log({back: colors.background});
-  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: colors.background}}>
       <Text>خوش اومدید</Text>

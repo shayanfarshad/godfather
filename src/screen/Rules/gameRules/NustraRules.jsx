@@ -9,7 +9,7 @@ const NustraRules = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Text style={{fontSize: spacing.lg}}>
+      <Text style={{fontSize: spacing.lg, marginBottom: 10}}>
         {translate('game.description')}
       </Text>
       <Text
@@ -25,17 +25,19 @@ const NustraRules = () => {
         style={{fontSize: 16}}>
         {translate('game.nustraDescription')}
       </Text>
-      <Text style={{fontSize: spacing.lg}}>{translate('game.gameRules')}</Text>
-      <Text type="iran" style={{fontSize: 16}}>
+      <Text style={{fontSize: spacing.lg, marginVertical: 20}}>
+        {translate('game.gameRules')}
+      </Text>
+      <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
         1 - {translate('game.nustraRules.first')}
       </Text>
-      <Text type="iran" style={{fontSize: 16}}>
+      <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
         2 - {translate('game.nustraRules.second')}
       </Text>
-      <Text type="iran" style={{fontSize: 16}}>
+      <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
         3 - {translate('game.nustraRules.third')}
       </Text>
-      <Text type="iran" style={{fontSize: 16}}>
+      <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
         4 - {translate('game.nustraRules.fourth')}
       </Text>
     </ScrollView>

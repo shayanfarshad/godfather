@@ -11,7 +11,7 @@ import Text from '../../components/Text';
 import {useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {observer} from 'mobx-react';
-import {colors} from '../../theme';
+import {colors, spacing} from '../../theme';
 import {translate} from '../../i18n';
 
 const HomeScreen = observer(() => {
@@ -19,6 +19,7 @@ const HomeScreen = observer(() => {
   const {
     playerStore,
     gameStore,
+    roleStore,
     langStore: {language},
   } = useStore();
   const players = playerStore.players;
@@ -33,7 +34,6 @@ const HomeScreen = observer(() => {
 
   useEffect(() => {
     if (rolePlayers.length) {
-      console.log({rolePlayers});
       if (rolePlayers[0]?.role?.title && rolePlayers[0]?.player?.name) {
         setStartDisable(false);
       }
@@ -43,240 +43,247 @@ const HomeScreen = observer(() => {
   }, [rolePlayers]);
 
   useEffect(() => {
-    console.log({Mafia});
-  }, [roles]);
-
-  useEffect(() => {
     return () => {
       playerStore.resetPlayers();
+      gameStore.gameReset();
+      roleStore.resetRoles();
     };
   }, []);
 
   return (
-    <SafeAreaView
+    // <SafeAreaView
+    //   style={{
+    //     flex: 1,
+    //     paddingHorizontal: 10,
+    //     backgroundColor: colors.background,
+    //   }}>
+    <View
       style={{
         flex: 1,
+        paddingVertical: 30,
         paddingHorizontal: 10,
         backgroundColor: colors.background,
+        justifyContent: 'space-around',
       }}>
       <View
         style={{
-          flex: 1,
-          paddingHorizontal: 10,
-          justifyContent: 'space-around',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 30,
         }}>
-        <View
-          style={{
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text type="bold" style={{fontSize: 30, color: 'white'}}>
-            {translate('game.godfather')}
-          </Text>
-        </View>
-        <View style={styles.viewCard}>
-          <ImageBackground
-            source={require('../../assets/images/bg1.jpeg')}
-            resizeMode="cover"
-            imageStyle={{width: '100%'}}
-            style={[styles.playersCard, {elevation: 3}]}>
-            <View
-              style={[
-                styles.playersCard,
-                {
-                  backgroundColor: colors.overlayBackground,
-                  elevation: 3,
-                  padding: 10,
-                  justifyContent: 'space-between',
-                },
-              ]}>
-              <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>
-                  {translate('game.players')}
-                </Text>
-                <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
-                  {players?.length} {translate('game.player')}
-                </Text>
-              </View>
-              <Pressable
-                style={[
-                  styles.addBtn,
-                  {
-                    backgroundColor: colors.modalBackground,
-                  },
-                ]}
-                onPress={() => {
-                  nav.navigate('players');
-                }}>
-                <Icon name="plus" size={20} color="white" />
-              </Pressable>
-            </View>
-          </ImageBackground>
-        </View>
-        <View style={styles.viewCard}>
-          <ImageBackground
-            source={require('../../assets/images/bg2.jpeg')}
-            resizeMode="cover"
-            imageStyle={{width: '100%'}}
-            style={[styles.playersCard, {elevation: 3}]}>
-            <View
-              style={[
-                styles.playersCard,
-                {
-                  backgroundColor: colors.overlayBackground,
-                  elevation: 3,
-                  padding: 10,
-                  justifyContent: 'space-between',
-                },
-              ]}>
-              <View style={styles.rightContent}>
-                <Text style={{fontSize: 25, lineHeight: 40}}>
-                  {translate('game.roles')}
-                </Text>
-                <Text style={{fontSize: 18, lineHeight: 40, marginRight: 10}}>
-                  {roles?.length} {translate('game.role')}
-                </Text>
-              </View>
-              <Pressable
-                style={[
-                  styles.addBtn,
-                  {
-                    backgroundColor: colors.modalBackground,
-                  },
-                ]}
-                onPress={() => nav.navigate('roles')}>
-                <Icon name="plus" size={20} color="white" />
-              </Pressable>
-            </View>
-          </ImageBackground>
-        </View>
-        <View
-          style={[styles.viewCard, {height: language === 'fa' ? 150 : 180}]}>
-          <ImageBackground
-            source={require('../../assets/images/bg4.webp')}
-            resizeMode="cover"
-            imageStyle={{width: '100%'}}
+        <Text style={{fontSize: 30, color: colors.text}}>
+          {translate('game.godfather')}
+        </Text>
+      </View>
+      <View style={styles.viewCard}>
+        <ImageBackground
+          source={require('../../assets/images/bg1.jpeg')}
+          resizeMode="cover"
+          imageStyle={{width: '100%'}}
+          style={[styles.playersCard, {elevation: 3}]}>
+          <View
             style={[
               styles.playersCard,
-              {elevation: 3, height: language === 'fa' ? 150 : 180},
+              {
+                backgroundColor: colors.overlayBackground,
+                elevation: 3,
+                padding: 10,
+                justifyContent: 'space-between',
+              },
+            ]}>
+            <View style={styles.rightContent}>
+              <Text style={{fontSize: 25}}>{translate('game.players')}</Text>
+              <Text style={{fontSize: 18, marginRight: 10, marginTop: 10}}>
+                {players?.length} {translate('game.player')}
+              </Text>
+            </View>
+            <Pressable
+              style={[
+                styles.addBtn,
+                {
+                  backgroundColor: colors.cardBackground,
+                },
+              ]}
+              onPress={() => {
+                nav.navigate('players');
+              }}>
+              <Icon name="plus" size={20} color="white" />
+            </Pressable>
+          </View>
+        </ImageBackground>
+      </View>
+      <View style={styles.viewCard}>
+        <ImageBackground
+          source={require('../../assets/images/bg2.jpeg')}
+          resizeMode="cover"
+          imageStyle={{width: '100%'}}
+          style={[styles.playersCard, {elevation: 3}]}>
+          <View
+            style={[
+              styles.playersCard,
+              {
+                backgroundColor: colors.overlayBackground,
+                elevation: 3,
+                padding: 10,
+                justifyContent: 'space-between',
+              },
+            ]}>
+            <View style={styles.rightContent}>
+              <Text style={{fontSize: 25}}>{translate('game.roles')}</Text>
+              <Text style={{fontSize: 18, marginRight: 10, marginTop: 10}}>
+                {roles?.length} {translate('game.role')}
+              </Text>
+            </View>
+            <Pressable
+              style={[
+                styles.addBtn,
+                {
+                  backgroundColor: colors.cardBackground,
+                },
+              ]}
+              onPress={() => nav.navigate('roles')}>
+              <Icon name="plus" size={20} color="white" />
+            </Pressable>
+          </View>
+        </ImageBackground>
+      </View>
+      <View style={[styles.viewCard, {height: language === 'fa' ? 150 : 180}]}>
+        <ImageBackground
+          source={require('../../assets/images/bg4.webp')}
+          resizeMode="cover"
+          imageStyle={{width: '100%'}}
+          style={[
+            styles.playersCard,
+            {elevation: 3, height: language === 'fa' ? 150 : 180},
+          ]}>
+          <View
+            style={[
+              styles.playersCard,
+              {
+                backgroundColor: colors.overlayBackground,
+                elevation: 3,
+                padding: 10,
+                height: '100%',
+                justifyContent: 'space-between',
+              },
             ]}>
             <View
-              style={[
-                styles.playersCard,
-                {
-                  backgroundColor: colors.overlayBackground,
-                  elevation: 3,
-                  padding: 10,
-                  height: '100%',
-                  justifyContent: 'space-between',
-                },
-              ]}>
+              style={{
+                width: '100%',
+                height: '100%',
+                flexDirection: 'row-reverse',
+              }}>
               <View
                 style={{
-                  width: '100%',
+                  width: '70%',
                   height: '100%',
-                  flexDirection: 'row-reverse',
+                  justifyContent: 'space-around',
+                  alignItems: 'flex-end',
                 }}>
+                <Text style={{fontSize: 20}}>
+                  {translate('game.chooseRoleForPlayers')}
+                </Text>
                 <View
                   style={{
-                    width: '70%',
-                    height: '100%',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-end',
+                    flexDirection: 'row-reverse',
+                    height: language === 'fa' ? 40 : 20,
+                    width: '100%',
+                    // justifyContent: 'flex-start',
+                    // borderWidth: 1,
                   }}>
-                  <Text style={{fontSize: 20, lineHeight: 40}}>
-                    {translate('game.chooseRoleForPlayers')}
+                  <Text style={{fontSize: spacing.lg}}>
+                    {translate('game.citizen')} :{' '}
                   </Text>
-                  <View style={{flexDirection: 'row-reverse', height: 40}}>
-                    <Text>{translate('game.citizen')} : </Text>
-                    <View
-                      style={[
-                        styles.roleCounter,
-                        {
-                          backgroundColor: colors.cardBackground,
-                        },
-                      ]}>
-                      <Text>
-                        {roles?.length - Mafia?.length - Free?.length}
-                      </Text>
-                    </View>
-                    <Text>{translate('game.mafia')} : </Text>
-                    <View
-                      style={[
-                        styles.roleCounter,
-                        {
-                          backgroundColor: colors.cardBackground,
-                        },
-                      ]}>
-                      <Text>{Mafia?.length}</Text>
-                    </View>
-                  </View>
                   <View
-                    style={{
-                      flexDirection: 'row-reverse',
-                      height: 40,
-                      marginTop: 30,
-                    }}>
-                    <Text>{translate('game.free')} : </Text>
-                    <View
-                      style={[
-                        styles.roleCounter,
-                        {
-                          backgroundColor: colors.cardBackground,
-                        },
-                      ]}>
-                      <Text>{Free?.length}</Text>
-                    </View>
+                    style={[
+                      styles.roleCounter,
+                      {
+                        backgroundColor: colors.cardBackground,
+                      },
+                    ]}>
+                    <Text style={{fontSize: spacing.lg}}>
+                      {roles?.length - Mafia?.length - Free?.length}
+                    </Text>
+                  </View>
+                  <Text style={{fontSize: spacing.lg, marginRight: 10}}>
+                    {translate('game.mafia')} :
+                  </Text>
+                  <View
+                    style={[
+                      styles.roleCounter,
+                      {
+                        backgroundColor: colors.cardBackground,
+                      },
+                    ]}>
+                    <Text style={{fontSize: spacing.lg}}>{Mafia?.length}</Text>
                   </View>
                 </View>
                 <View
                   style={{
-                    width: '30%',
-                    height: '100%',
-                    justifyContent: 'center',
+                    flexDirection: 'row-reverse',
+                    height: language === 'fa' ? 40 : 20,
+                    marginTop: 30,
                   }}>
-                  <Pressable
+                  <Text style={{fontSize: spacing.lg}}>
+                    {translate('game.free')} :{' '}
+                  </Text>
+                  <View
                     style={[
-                      styles.addBtn,
+                      styles.roleCounter,
                       {
-                        backgroundColor: colors.modalBackground,
+                        backgroundColor: colors.cardBackground,
                       },
-                    ]}
-                    onPress={() => nav.navigate('roleup')}>
-                    <Icon name="random" size={20} color="white" />
-                  </Pressable>
+                    ]}>
+                    <Text style={{fontSize: spacing.lg}}>{Free?.length}</Text>
+                  </View>
                 </View>
               </View>
+              <View
+                style={{
+                  width: '30%',
+                  height: '100%',
+                  justifyContent: 'center',
+                }}>
+                <Pressable
+                  style={[
+                    styles.addBtn,
+                    {
+                      backgroundColor: colors.cardBackground,
+                    },
+                  ]}
+                  onPress={() => nav.navigate('roleup')}>
+                  <Icon name="random" size={20} color="white" />
+                </Pressable>
+              </View>
             </View>
-          </ImageBackground>
-        </View>
-        <View
+          </View>
+        </ImageBackground>
+      </View>
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: colors.modalBackground,
+          borderRadius: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Pressable
+          disabled={startDisable}
+          onPress={() => {
+            nav.navigate('showcards');
+          }}
           style={{
             width: '100%',
-            height: 50,
-            backgroundColor: colors.modalBackground,
-            borderRadius: 10,
+            height: '100%',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Pressable
-            disabled={startDisable}
-            onPress={() => {
-              console.log({startDisable});
-              nav.navigate('showcards');
-            }}
-            style={{
-              width: '100%',
-              height: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{fontSize: 20}}>{translate('game.startGame')}</Text>
-          </Pressable>
-        </View>
+          <Text style={{fontSize: 20}}>{translate('game.startGame')}</Text>
+        </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
+    // </SafeAreaView>
   );
 });
 
@@ -309,10 +316,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   roleCounter: {
-    // width: 30,
+    width: 30,
     // height: 30,
     borderRadius: 5,
-    justifyContent: 'center',
+    marginHorizontal: 5,
     alignItems: 'center',
     // marginLeft: 10,
   },

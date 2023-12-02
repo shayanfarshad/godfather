@@ -3,8 +3,10 @@ import {Image, Pressable, StyleSheet, View} from 'react-native';
 import Text from '../../components/Text';
 import {DWidth} from '../../constants/Constants';
 import {colors, spacing} from '../../theme';
+import {observer} from 'mobx-react';
+import {translate} from '../../i18n';
 
-const CardItem = ({item, index}) => {
+const CardItem = observer(({item, index, type}) => {
   const [numberOfLines, setNumberOfLine] = useState(2);
 
   return (
@@ -12,15 +14,19 @@ const CardItem = ({item, index}) => {
       style={[styles.renderItem, {flexDirection: 'column'}]}
       key={item.id}
       onPress={() => {
-        console.log({index});
         //   returnPlayer(item);
       }}>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 20,
+        }}>
         {item?.image && (
           <Image
             source={item.image}
-            resizeMode="cover"
-            style={{width: 80, height: 130, borderRadius: 10}}
+            resizeMode="contain"
+            style={{width: 120, height: 170, borderRadius: 10}}
           />
         )}
         <Text style={{fontSize: spacing.lg}}>{item.title}</Text>
@@ -36,13 +42,13 @@ const CardItem = ({item, index}) => {
           }}
           type="iran"
           numberOfLines={numberOfLines}
-          style={{fontSize: 18}}>
+          style={{fontSize: 16}}>
           {item.description}
         </Text>
       </View>
     </Pressable>
   );
-};
+});
 export {CardItem};
 const styles = StyleSheet.create({
   emptyList: {

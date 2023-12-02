@@ -19,14 +19,11 @@ const NustraCards = () => {
         data={nustraRoles}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={
-          {
-            // width: DWidth,
-            // marginHorizontal: DWidth * 0.05,
-          }
-        }
+        contentContainerStyle={{
+          width: DWidth * 0.95,
+          marginHorizontal: DWidth * 0.025,
+        }}
         renderItem={({item, index}) => {
-          console.log({item});
           return <CardItem item={item} index={index} key={item.id} />;
         }}
       />

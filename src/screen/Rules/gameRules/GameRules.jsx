@@ -70,6 +70,7 @@ const GameRules = observer(() => {
                 return (
                   <TouchableOpacity
                     style={styles.tabItem}
+                    key={route.key}
                     onPress={() => setIndex(i)}>
                     <Animated.Text
                       style={{

@@ -44,7 +44,6 @@ const GameNightPlay = () => {
   useEffect(() => {
     if (nightStory && nightWord) {
       const t = nightStory.filter(el => el.name.includes(nightWord));
-      // console.log({toNight});
       setToNight(t);
     }
   }, [nightStory, nightWord]);

@@ -70,6 +70,7 @@ const LastMoves = observer(() => {
 
                 return (
                   <TouchableOpacity
+                    key={route.key}
                     style={styles.tabItem}
                     onPress={() => setIndex(i)}>
                     <Animated.Text

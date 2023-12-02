@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Pressable, View} from 'react-native';
+import {Platform, Pressable, View, useColorScheme} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Text from './Text';
 import {colors, spacing} from '../theme';
@@ -8,16 +8,17 @@ import {useStore} from '../constants/useStore';
 
 const Header = observer(({title, backPress}) => {
   const {
+    themeStore: {isDark},
     langStore: {language},
   } = useStore();
-
+  const colorScheme = useColorScheme() === 'dark';
   return (
     <View
       style={{
         flexDirection: 'row-reverse',
         height: 60,
-        backgroundColor: colors.background,
-        marginTop: 40,
+        backgroundColor: colorScheme ? colors.background : colors.background,
+        marginTop: Platform.OS === 'ios' ? 40 : 20,
         marginBottom: 15,
         width: '100%',
         justifyContent: !backPress ? 'center' : 'space-between',
@@ -25,7 +26,13 @@ const Header = observer(({title, backPress}) => {
         alignItems: 'center',
       }}>
       <View>
-        <Text style={{fontSize: spacing.xl, color: colors.text}}>{title}</Text>
+        <Text
+          style={{
+            fontSize: spacing.xl,
+            color: colors.text,
+          }}>
+          {title}
+        </Text>
       </View>
       {backPress && (
         <View
