@@ -25,6 +25,10 @@ const fa: Translations = {
     active: 'فعال',
     deactive: 'غیر فعال',
   },
+  players: {
+    addPlayerSucceed: '{player} به لیست اضافه شد',
+    shouldWritePlayerName: 'نام بازیکن رو وارد کن',
+  },
   learn: {
     title: 'آموزش',
   },
@@ -178,6 +182,10 @@ const fa: Translations = {
     silent: 'سکوت',
     speak: 'حرف بزن',
     disability: 'بی خاصیت',
+    playerRemovedFromGame:
+      ' {player} از بازی حذف شد و می تواند توسط کنستانتین به بازی برگردانده شود',
+    addPlayerAndRoleAndGiveRole:
+      'بازیکن ها و نقش ها رو انتخاب کن و به بازیکن ها نقش بده تا بتونی بازی روشروع کنی',
   },
 };
 

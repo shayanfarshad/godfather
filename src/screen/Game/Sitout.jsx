@@ -4,6 +4,7 @@ import Text from '../../components/Text';
 import {DHeight, DWidth} from '../../constants/Constants';
 import {translate} from '../../i18n';
 import {useStore} from '../../constants/useStore';
+import {colors} from '../../theme';
 
 const Sitout = () => {
   const {gameStore} = useStore();
@@ -11,6 +12,7 @@ const Sitout = () => {
   const gamers = gameStore.rolePlayers;
 
   const [removedPlayers, setRemovedPlayers] = useState([]);
+  // const [returnDisable, setReturnDisable] = useState(false);
   const returnPlayer = item => {
     const arr = [...gamers];
     arr.push(item);
@@ -20,6 +22,7 @@ const Sitout = () => {
     gameStore.updateRolePlayers(arr);
     setRemovedPlayers(removed);
     gameStore.updateRemovedPlayers(removed);
+    // setReturnDisable(true);
   };
   useEffect(() => {
     if (players) {
@@ -31,14 +34,12 @@ const Sitout = () => {
       data={removedPlayers}
       keyExtractor={(index, item) => item.id}
       numColumns={3}
-      contentContainerStyle={
-        {
-          // width: DWidth * 0.9,
-          // height: DHeight * 0.3,
-          // marginTop: 20,
-          // marginHorizontal: DWidth * 0.05,
-        }
-      }
+      contentContainerStyle={{
+        width: DWidth * 0.9,
+        // height: DHeight * 0.3,
+        // marginTop: 20,
+        marginHorizontal: DWidth * 0.05,
+      }}
       ListEmptyComponent={() => {
         return (
           <View style={[styles.emptyList, {justifyContent: 'flex-start'}]}>
@@ -55,7 +56,12 @@ const Sitout = () => {
       renderItem={({item, index}) => {
         return (
           <Pressable
-            style={[styles.renderItem, {flexDirection: 'column'}]}
+            style={[
+              styles.renderItem,
+              {
+                flexDirection: 'column',
+              },
+            ]}
             key={index}
             onPress={() => {
               returnPlayer(item);

@@ -12,6 +12,9 @@ const Header = observer(({title, backPress}) => {
     langStore: {language},
   } = useStore();
   const colorScheme = useColorScheme() === 'dark';
+  useEffect(() => {
+    console.log({colorScheme});
+  }, [colorScheme]);
   return (
     <View
       style={{
@@ -25,15 +28,17 @@ const Header = observer(({title, backPress}) => {
         paddingHorizontal: 15,
         alignItems: 'center',
       }}>
-      <View>
-        <Text
-          style={{
-            fontSize: spacing.xl,
-            color: colors.text,
-          }}>
-          {title}
-        </Text>
-      </View>
+      {/* <View> */}
+      <Text
+        style={{
+          fontSize: language === 'fa' ? spacing.xxl : spacing.xl,
+          color: colors.text,
+        }}>
+        {'  '}
+        {title}
+        {'  '}
+      </Text>
+      {/* </View> */}
       {backPress && (
         <View
           style={{

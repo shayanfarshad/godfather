@@ -17,6 +17,7 @@ import {
   StyleSheet,
   TextInput,
   View,
+  useColorScheme,
 } from 'react-native';
 import {DHeight, backgroundColor} from '../../constants/Constants';
 import Header from '../../components/Header';
@@ -27,9 +28,10 @@ import {Modal} from '../../components/Modal';
 import Text from '../../components/Text';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {colors, spacing} from '../../theme';
-import {translate} from '../../i18n';
+import {translate, translateWithOptions} from '../../i18n';
 import * as storage from '../../utils/storage';
 import I18n from 'i18n-js';
+import {showToast} from '../../utils/snackbar';
 
 // import player from '../../assets/images/player2.png';
 const AllPlayers = observer(() => {
@@ -41,6 +43,7 @@ const AllPlayers = observer(() => {
   const nav = useNavigation();
   const addRef = useRef<BottomSheetModal>(null);
   const cameraModal = useRef<BottomSheetModal>(null);
+  const colorScheme = useColorScheme() === 'dark';
 
   const [userPicture, setUserPicture] = useState('');
   const [playerName, setPlayerName] = useState('');
@@ -185,13 +188,25 @@ const AllPlayers = observer(() => {
   };
 
   const addPlayer = () => {
-    addRef?.current?.close();
-    const arr = [...players];
-    arr.push({id: Date.now(), name: playerName, avatar: userPicture});
-    storage.save('players', arr);
-    setPlayers(arr);
-    setPlayerName('');
-    setUserPicture('');
+    if (playerName) {
+      addRef?.current?.close();
+      const arr = [...players];
+      arr.push({id: Date.now(), name: playerName, avatar: userPicture});
+      storage.save('players', arr);
+      setPlayers(arr);
+      showToast({
+        text: translateWithOptions('players.addPlayerSucceed', {
+          player: playerName,
+        }),
+      });
+      setPlayerName('');
+      setUserPicture('');
+    } else {
+      showToast({
+        text: translate('players.shouldWritePlayerName'),
+        mode: 'danger',
+      });
+    }
   };
 
   const removeItem = id => {
@@ -205,7 +220,6 @@ const AllPlayers = observer(() => {
       style={{
         flex: 1,
         paddingTop: 20,
-        paddingBottom: 40,
         backgroundColor: colors.background,
       }}>
       <Header title={translate('game.myPlayers')} />
@@ -219,6 +233,19 @@ const AllPlayers = observer(() => {
             paddingBottom: 50,
             // marginBottom: 40,
           }}
+          ListEmptyComponent={() => {
+            return (
+              <View style={styles.emptyList}>
+                <Image
+                  source={require('../../assets/images/empty1.png')}
+                  style={{width: '50%', height: 200}}
+                />
+                <Text style={{fontSize: 20}}>
+                  {translate('game.anyPlayerExist')}
+                </Text>
+              </View>
+            );
+          }}
           renderItem={({item}) => {
             return (
               <PlayerRow
@@ -230,7 +257,15 @@ const AllPlayers = observer(() => {
           }}
         />
       ) : null}
-      <View style={[styles.addBtn, {backgroundColor: colors.modalBackground}]}>
+      <View
+        style={[
+          styles.addBtn,
+          {
+            backgroundColor: !colorScheme
+              ? colors.modalBackground
+              : colors.bottomCenterColor,
+          },
+        ]}>
         <Pressable
           onPress={() => {
             addRef?.current?.present();
@@ -345,11 +380,19 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    bottom: 20,
+    bottom: 40,
     right: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10,
     backgroundColor: 'white',
   },
   addBtnIcon: {
@@ -401,6 +444,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addImageBtnCard: {justifyContent: 'center', alignItems: 'center'},
+  emptyList: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    // marginTop: 80,
+  },
 });
 
 export {AllPlayers};

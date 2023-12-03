@@ -13,6 +13,7 @@ import {useStore} from '../../constants/useStore';
 import {observer} from 'mobx-react';
 import {colors, spacing} from '../../theme';
 import {translate} from '../../i18n';
+import {showToast} from '../../utils/snackbar';
 
 const HomeScreen = observer(() => {
   const nav = useNavigation();
@@ -269,9 +270,17 @@ const HomeScreen = observer(() => {
           alignItems: 'center',
         }}>
         <Pressable
-          disabled={startDisable}
+          // disabled={startDisable}
           onPress={() => {
-            nav.navigate('showcards');
+            if (startDisable) {
+              showToast({
+                text: translate('game.addPlayerAndRoleAndGiveRole'),
+                mode: 'warning',
+                duration: 3000,
+              });
+            } else {
+              nav.navigate('showcards');
+            }
           }}
           style={{
             width: '100%',

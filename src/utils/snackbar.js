@@ -1,12 +1,16 @@
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
+import React from 'react';
+import {Toast} from 'react-native-toast-notifications';
+
 import {useStore} from '../constants/useStore';
 import {colors} from '../theme';
+import {DWidth} from '../constants/Constants';
 
 const showToast = ({
   text,
   mode = 'success',
   actions,
-  duration = 12000,
+  duration = 3000,
   onPress = () => {},
   didFinished = () => {},
 }) => {
@@ -15,23 +19,40 @@ const showToast = ({
   } = useStore();
   switch (mode) {
     case 'success':
-      return Snackbar.show({
-        text: text,
-        textColor: colors.text,
-        backgroundColor: colors.modalBackground,
+      return Toast.show(text, {
+        placement: 'top',
         duration: duration,
-        fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
-        bottom: 50,
-        action: actions,
+        style: {
+          backgroundColor: colors.bottomCenterColor,
+
+          width: DWidth * 0.9,
+          borderRadius: 10,
+          marginHorizontal: DWidth * 0.05,
+          marginTop: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        textStyle: {
+          fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
+          fontSize: 20,
+          color: colors.text,
+        },
         rtl: true,
-        numberOfLines: 15,
       });
 
-    case 'warn':
-      return Snackbar.show({
+    case 'normal':
+      return Toast.show({
         text: text,
         textColor: colors.text,
-        backgroundColor: colors.modalBackground,
+        style: {
+          backgroundColor: colors.modalBackground,
+          width: DWidth * 0.9,
+          borderRadius: 10,
+          marginHorizontal: DWidth * 0.05,
+          marginTop: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
         duration: duration,
         fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
         action: actions,
@@ -39,27 +60,48 @@ const showToast = ({
         style: {position: 'absolute', top: 20},
       });
 
-    case 'info':
-      return Snackbar.show({
-        text: text,
-        textColor: colors.palette.primary300,
-        backgroundColor: colors.palette.neutral200,
+    case 'warning':
+      return Toast.show(text, {
+        placement: 'top',
         duration: duration,
-        fontFamily: language === 'fa' ? 'IRANSansXNoEn-Medium' : 'Wizard World',
-        action: actions,
-        rtl: language === 'fa' ? true : false,
-        numberOfLines: 15,
+        type: mode,
+        style: {
+          backgroundColor: colors.modalBackground,
+          width: DWidth * 0.9,
+          borderRadius: 10,
+          marginHorizontal: DWidth * 0.05,
+          marginTop: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        textStyle: {
+          fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
+          fontSize: 20,
+          color: colors.text,
+        },
+        rtl: true,
       });
 
-    case 'error':
-      return Snackbar.show({
-        text: text,
-        textColor: colors.text,
-        backgroundColor: colors.modalBackground,
+    case 'danger':
+      return Toast.show(text, {
+        placement: 'top',
         duration: duration,
-        action: actions,
-        fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
-        rtl: language === 'fa' ? true : false,
+        type: mode,
+        style: {
+          backgroundColor: 'rgb(194, 45, 72)',
+          width: DWidth * 0.9,
+          borderRadius: 10,
+          marginHorizontal: DWidth * 0.05,
+          marginTop: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        textStyle: {
+          fontFamily: language === 'fa' ? 'Digi Nofar Bold' : 'Wizard World',
+          fontSize: 20,
+          color: colors.text,
+        },
+        rtl: true,
       });
   }
 };

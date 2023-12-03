@@ -4,7 +4,7 @@ import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
 import Text from '../../components/Text';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
-import {DWidth, backgroundColor} from '../../constants/Constants';
+import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    height: DHeight * 0.7,
     // marginTop: 80,
   },
   playerIcon: {

@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import {
   Animated,
   FlatList,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -79,12 +80,16 @@ const LastMoves = observer(() => {
                         color: colors.text,
                         fontSize: language === 'fa' ? spacing.lg : spacing.md,
                         lineHeight: 32,
+                        paddingHorizontal: Platform.OS === 'ios' ? 12 : 5,
+                        paddingTop: Platform.OS === 'ios' ? 12 : 10,
                         fontFamily:
                           language === 'fa'
                             ? 'Digi Nofar Bold'
                             : 'Wizard World',
                       }}>
+                      {'  '}
                       {route.title}
+                      {'  '}
                     </Animated.Text>
                   </TouchableOpacity>
                 );
@@ -129,10 +134,11 @@ const styles = StyleSheet.create({
     // paddingTop: 50,
   },
   tabItem: {
-    flex: 1,
+    // flex: 1,
+    width: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 16,
+    // padding: 16,
   },
 });
 

@@ -52,7 +52,9 @@ const LearningScreen = observer(() => {
         ]}
         onPress={() => nav.navigate('lastMoves')}>
         <Text style={{fontSize: spacing.xl}}>
+          {'  '}
           {translate('game.lastMoveCards')}
+          {'  '}
         </Text>
       </Pressable>
       <Pressable

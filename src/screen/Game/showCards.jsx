@@ -114,15 +114,14 @@ const ShowCards = () => {
       </Pressable>
       <ReactNativeModal
         isVisible={showModal}
-        deviceWidth={DWidth}
-        deviceHeight={DHeight}
+        // deviceWidth={DWidth}
+        // deviceHeight={DHeight}
         onBackButtonPress={() => {
           endShowCard();
         }}
         onBackdropPress={() => {
           endShowCard();
-        }}
-        style={styles.modalContainer}>
+        }}>
         <View
           style={[
             styles.modalView,
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 10,
+    elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
     width: '50%',
@@ -219,10 +218,11 @@ const styles = StyleSheet.create({
   modalView: {
     width: DWidth / 1.5,
     height: DHeight / 2,
+    marginHorizontal: DWidth / 8.5,
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
-    elevation: 10,
+    elevation: 2,
   },
 });
 export {ShowCards};

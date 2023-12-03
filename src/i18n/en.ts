@@ -14,6 +14,10 @@ const en = {
     players: 'Players',
     settings: 'Settings',
   },
+  players: {
+    addPlayerSucceed: '{player} added successfully',
+    shouldWritePlayerName: 'Write the player name',
+  },
   settings: {
     title: 'Setting',
     language: 'Language',
@@ -178,6 +182,10 @@ const en = {
     silent: 'Silent',
     speak: 'Speak',
     disability: 'Disability',
+    playerRemovedFromGame:
+      '{player} removed from game and can get back by constantine',
+    addPlayerAndRoleAndGiveRole:
+      'Add players and roles, then give them roles to can play game',
   },
 };
 

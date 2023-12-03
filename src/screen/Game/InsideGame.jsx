@@ -7,6 +7,9 @@ import {colors} from '../../theme';
 import {useStore} from '../../constants/useStore';
 import ReactNativeModal from 'react-native-modal';
 import Text from '../../components/Text';
+import {showToast} from '../../utils/snackbar';
+import {translate, translateWithOptions} from '../../i18n';
+import {Modal} from '../../components/Modal';
 
 const InsideGame = observer(() => {
   const {gameStore} = useStore();
@@ -25,6 +28,13 @@ const InsideGame = observer(() => {
     gameStore.updateRolePlayers(arr);
     setRemovedPlayers(removed);
     gameStore.updateRemovedPlayers(removed);
+    showToast({
+      text: translateWithOptions('game.playerRemovedFromGame', {
+        player: p.player.name,
+      }),
+      duration: 5000,
+      mode: 'warning',
+    });
   };
   useEffect(() => {
     if (players) {
@@ -36,15 +46,13 @@ const InsideGame = observer(() => {
       <FlatList
         data={gamers}
         keyExtractor={item => item.player.id}
-        contentContainerStyle={
-          {
-              width: DWidth * 0.9,
-            //   marginTop: 20,
-            //   marginBottom: 50,
-            //   minHeight: DHeight * 0.6,
-              marginHorizontal: DWidth * 0.05,
-          }
-        }
+        contentContainerStyle={{
+          width: DWidth * 0.9,
+          //   marginTop: 20,
+          //   marginBottom: 50,
+          //   minHeight: DHeight * 0.6,
+          marginHorizontal: DWidth * 0.05,
+        }}
         renderItem={({item, index}) => {
           return (
             <PlayerDetail
@@ -59,6 +67,7 @@ const InsideGame = observer(() => {
           );
         }}
       />
+
       <ReactNativeModal
         isVisible={showModal}
         deviceWidth={DWidth}
@@ -69,7 +78,7 @@ const InsideGame = observer(() => {
         onBackdropPress={() => {
           setShowModal(!showModal);
         }}
-        style={styles.modalContainer}>
+        >
         <View
           style={[
             styles.modalView,
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 10,
+    elevation: 2,
     justifyContent: 'center',
     alignItems: 'center',
     width: '50%',
@@ -127,6 +136,7 @@ const styles = StyleSheet.create({
   modalView: {
     width: DWidth / 1.5,
     height: DHeight / 1.75,
+    marginHorizontal: DWidth / 8.5,
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,

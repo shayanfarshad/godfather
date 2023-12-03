@@ -37,6 +37,7 @@
 		E47E87C32B0F84910041977A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B32B0F84910041977A /* EvilIcons.ttf */; };
 		E47E87C42B0F84910041977A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B42B0F84910041977A /* SimpleLineIcons.ttf */; };
 		E47E87C52B0F84910041977A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B52B0F84910041977A /* MaterialIcons.ttf */; };
+		8FB3DEE9F8C243BBA447AFD1 /* hadye.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D32F4424EED4E719226E613 /* hadye.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		E47E87CB2B0F84AB0041977A /* IRANSansXNoEn-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANSansXNoEn-Medium.ttf"; path = "../../../src/assets/fonts/IRANSansXNoEn-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EEBF39C1F27C43EDB87F97CF /* IRANSansXNoEn-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Regular.ttf"; path = "../src/assets/fonts/IRANSansXNoEn-Regular.ttf"; sourceTree = "<group>"; };
+		9D32F4424EED4E719226E613 /* hadye.ttf */ = {isa = PBXFileReference; name = "hadye.ttf"; path = "../src/assets/fonts/hadye.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 				EEBF39C1F27C43EDB87F97CF /* IRANSansXNoEn-Regular.ttf */,
 				9FE4787DFA9D4C64B81CF21D /* Nofar.ttf */,
 				D3C1E681996F4A1291038163 /* wizard.ttf */,
+				9D32F4424EED4E719226E613 /* hadye.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				E47E87C42B0F84910041977A /* SimpleLineIcons.ttf in Resources */,
 				21D302936CA14565A5DD9D99 /* Nofar.ttf in Resources */,
 				B9ADF27174A84117B46D89C5 /* wizard.ttf in Resources */,
+				8FB3DEE9F8C243BBA447AFD1 /* hadye.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

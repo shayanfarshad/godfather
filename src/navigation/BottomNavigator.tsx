@@ -102,7 +102,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
       screenOptions={{
         unmountOnBlur: true,
         headerShown: false,
-        tabBarHideOnKeyboard: true,
+        tabBarHideOnKeyboard: false,
         tabBarStyle: [$tabBar(colors), {height: bottom + 65}],
         tabBarActiveTintColor: colorScheme
           ? colors.bottomActiveTint
@@ -139,7 +139,7 @@ export const BottomNavigator = observer(function BottomNavigator() {
         name="learning"
         component={LearningScreen}
         options={{
-          tabBarLabel: translate('bottomNavigator.learning'),
+          tabBarLabel: `  ${translate('bottomNavigator.learning')}  `,
           tabBarLabelStyle: {
             fontFamily: fontFamily,
             fontSize: language === 'fa' ? 16 : 12,

@@ -29,7 +29,7 @@ import {AnimatedBootSplash} from './src/screen/Splash/AnimatedSplash';
 import I18n from 'i18n-js';
 import {useStore} from './src/constants/useStore';
 import {setColorMode} from './src/theme';
-
+import {ToastProvider} from 'react-native-toast-notifications';
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 const config = {
@@ -53,50 +53,55 @@ function App(props: AppProps) {
 
   useEffect(() => {
     simulateTasks().then(() => {
+      console.log('bayad false mishod');
       setLoading(false);
     });
   }, []);
 
   const simulateTasks = async () => {
+    console.log('umad tu simulate');
     // Simulate fetching data or any other background tasks
 
     await new Promise(resolve =>
-      setTimeout(() => {
-        storage.load('theme').then(res => {
-          if (res) {
-            themeStore.setTheme(res === 'dark' ? true : false);
-            setColorMode(res === 'dark' ? true : false);
-            resolve(res);
-          } else {
-            storage.save('theme', 'light');
-            themeStore.setTheme(false);
-            setColorMode(false);
-          }
-        });
-      }, 2000),
+      storage.load('theme').then(res => {
+        console.log({resOftheme: res});
+        if (res) {
+          themeStore.setTheme(res === 'dark' ? true : false);
+          setColorMode(res === 'dark' ? true : false);
+        } else {
+          console.log({baadazkhalibudanres: 'umad tu else'});
+          storage.save('theme', 'light');
+          themeStore.setTheme(false);
+          setColorMode(false);
+        }
+        resolve(res);
+      }),
     );
     // Update progress
 
     // Simulate additional tasks
     await new Promise(resolve =>
-      setTimeout(() => {
-        storage.load('language').then(res => {
-          if (res) {
-            I18n.locale = res as string;
-            changeLang(res as string);
-            langStore.changeLanguage(res === 'en-IR' ? 'fa' : 'en');
-            resolve(res);
-          } else {
-            I18n.locale = 'en-IR';
-            changeLang('en-IR');
-            langStore.changeLanguage('fa');
-            storage.save('language', 'en-IR');
-          }
-          roleStore.resetRoles();
-          gameStore.resetLastMoves();
-        });
-      }, 2000),
+      storage.load('language').then(res => {
+        console.log({resOflang: res});
+
+        if (res) {
+          I18n.locale = res as string;
+          changeLang(res as string);
+          langStore.changeLanguage(res === 'en-IR' ? 'fa' : 'en');
+        } else {
+          console.log({baadazkhalibudanres2: 'umad tu else2'});
+          I18n.locale = 'en-IR';
+          changeLang('en-IR');
+          langStore.changeLanguage('fa');
+          storage.save('language', 'en-IR');
+        }
+        resolve(res);
+        roleStore.resetRoles();
+        gameStore.resetLastMoves();
+      }),
     );
+    console.log('simulate tamum shod');
+
     // Update progress
   };
   // Before we show the app, we have to wait for our state to be ready.
@@ -121,7 +126,9 @@ function App(props: AppProps) {
           }}
         />
       ) : (
-        <AppNavigator />
+        <ToastProvider>
+          <AppNavigator />
+        </ToastProvider>
       )}
     </SafeAreaProvider>
   );

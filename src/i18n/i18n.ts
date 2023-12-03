@@ -7,12 +7,35 @@ import {I18nManager} from 'react-native';
 import en, {Translations} from './en';
 import fa from './fa';
 import I18n from 'i18n-js';
+import {translate} from './translate';
 
 i18n.fallbacks = true;
 // i18next.init({
 //   fallbackLng: ['en', 'fa', 'en-IR', 'en-US'],
 // });
 
+function interpolateString(
+  template: string,
+  variables: Record<string, string>,
+): string {
+  return template.replace(/{([^{}]*)}/g, (match, group) => {
+    return variables[group] || match;
+  });
+}
+
+// Updated translation function
+export const translateWithOptions = (
+  key: TxKeyPath,
+  options?: Record<string, string>,
+): string => {
+  const translation = translate(key, options);
+
+  if (options) {
+    return interpolateString(translation, options);
+  }
+
+  return translation;
+};
 /**
  * we need always include "*-US" for some valid language codes because when you change the system language,
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),

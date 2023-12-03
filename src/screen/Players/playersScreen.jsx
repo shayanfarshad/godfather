@@ -25,11 +25,13 @@ import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BottomSheetModal, BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {translate} from '../../i18n';
+import {translate, translateWithOptions} from '../../i18n';
 import {colors} from '../../theme';
 import Header from '../../components/Header';
 import * as storage from '../../utils/storage';
 import I18n from 'i18n-js';
+import {showToast} from '../../utils/snackbar';
+import {Toast} from 'react-native-toast-notifications';
 
 const PlayersScreen = observer(() => {
   const player = require('../../assets/images/player2.png');
@@ -56,22 +58,36 @@ const PlayersScreen = observer(() => {
   // }, [allPlayers]);
 
   const addPlayer = async () => {
-    const newPlayer = {
-      id: Date.now(),
-      name: playerName,
-      avatar: userPicture,
-    };
-    await storage.load('players').then(players => {
-      const arr = players;
-      arr.push(newPlayer);
-      storage.save('players', arr);
-      playerStore.addPlayers(newPlayer);
-      // setPlayers();
-      setPlayerName('');
-      setUserPicture('');
-    });
+    if (playerName) {
+      const newPlayer = {
+        id: Date.now(),
+        name: playerName,
+        avatar: userPicture,
+      };
+      await storage.load('players').then(players => {
+        const arr = players || [];
+        arr.push(newPlayer);
+        storage.save('players', arr);
+        playerStore.addPlayers(newPlayer);
+        // setPlayers();
+        setPlayerName('');
+        setUserPicture('');
+      });
+      showToast({
+        text: translateWithOptions('players.addPlayerSucceed', {
+          player: playerName,
+        }),
+      });
 
-    setFormVisible(false);
+      // showToast({
+      //   text: translateWithOptions("players.addPlayerSucceed", {player: playerName}),
+      // });
+    } else {
+      showToast({
+        text: translate('players.shouldWritePlayerName'),
+        mode: 'danger',
+      });
+    }
   };
 
   const removePlayer = item => {
@@ -286,44 +302,51 @@ const PlayersScreen = observer(() => {
       />
       {isFabVisible ? (
         <View
-          style={{
-            width: 110,
-            height: 170,
-            position: 'absolute',
-            bottom: 50,
-            right: 20,
-          }}>
-          <Pressable
-            style={{
-              backgroundColor: colors.modalBackground,
-              height: 45,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              nav.navigate('playerList', {
-                gamePlayers: allPlayers,
-              });
-              setFabVisible(false);
-            }}>
-            <Text>{translate('game.oldPlayer')}</Text>
-          </Pressable>
-          <Pressable
-            style={{
-              marginTop: 20,
-              backgroundColor: colors.modalBackground,
-              height: 45,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 10,
-            }}
-            onPress={() => {
-              setFabVisible(false);
-              addPlayerRef?.current?.present();
-            }}>
-            <Text>{translate('game.newPlayer')}</Text>
-          </Pressable>
+        // style={{
+        //   width: 110,
+        //   height: 170,
+        //   position: 'absolute',
+        //   bottom: 50,
+        //   right: 20,
+        // }}
+        >
+          <View
+            style={{width: 110, position: 'absolute', bottom: 70, right: 110}}>
+            <Pressable
+              style={{
+                backgroundColor: colors.modalBackground,
+                height: 45,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                nav.navigate('playerList', {
+                  gamePlayers: allPlayers,
+                });
+                setFabVisible(false);
+              }}>
+              <Text>{translate('game.oldPlayer')}</Text>
+            </Pressable>
+          </View>
+          <View
+            style={{width: 110, position: 'absolute', bottom: 130, right: 20}}>
+            <Pressable
+              style={{
+                marginTop: 20,
+                backgroundColor: colors.modalBackground,
+                height: 45,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                setFabVisible(false);
+                addPlayerRef?.current?.present();
+              }}>
+              <Text>{translate('game.newPlayer')}</Text>
+            </Pressable>
+          </View>
         </View>
       ) : null}
       <View style={[styles.addBtn, {backgroundColor: colors.modalBackground}]}>
@@ -483,7 +506,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    bottom: 40,
+    bottom: 60,
     right: 40,
     justifyContent: 'center',
     alignItems: 'center',

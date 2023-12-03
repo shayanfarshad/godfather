@@ -257,7 +257,9 @@ const GamePlay = () => {
                         color: colors.text,
                         fontSize: language === 'fa' ? spacing.lg : spacing.md,
                         // lineHeight: 32,
-                        padding: 10,
+                        paddingHorizontal: Platform.OS === 'ios' ? 12 : 5,
+                        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+                        // padding: 10,
                         fontFamily:
                           language === 'fa'
                             ? 'Digi Nofar Bold'
@@ -373,9 +375,7 @@ const GamePlay = () => {
                   backgroundColor: colors.background,
                 },
               ]}>
-              <Text>
-                {translate('common.cancel')}
-              </Text>
+              <Text>{translate('common.cancel')}</Text>
             </Pressable>
           </View>
         </View>
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
     // paddingTop: 50,
   },
   tabItem: {
-    flex: 1,
+    width: '50%',
     alignItems: 'center',
     justifyContent: 'center',
     // padding: 16,

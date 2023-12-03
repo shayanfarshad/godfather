@@ -39,9 +39,11 @@ const Text = observer(
           {
             fontFamily: font(type, language),
             textAlign: 'right',
-            paddingTop: Platform.OS === 'ios' ? 12 : 0,
+            paddingTop: Platform.OS === 'ios' ? 12 : language === 'fa' ? 5 : 0,
             paddingBottom: Platform.OS === 'ios' ? 12 : 0,
-            paddingHorizontal: Platform.OS === 'ios' ? 12 : 0,
+            paddingHorizontal:
+              Platform.OS === 'ios' ? 12 : language === 'fa' ? 5 : 0,
+            ...(language === 'fa' && {lineHeight: 40}),
             // padding: Platform.OS === 'ios' ? 12 : 0,
           },
         ]}
