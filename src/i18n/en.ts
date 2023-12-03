@@ -118,6 +118,7 @@ const en = {
     deleted: 'Deleted Players',
     noBodyRemovedFromGame: 'No Body Removed From Game',
     doYouWantToCloseGame: 'Do You Want To Close Game?',
+    doYouWantToCloseApp: 'Do You Want To Close App?',
     closeIt: 'Close it!',
     gameTitle: 'Game',
     startGame: 'Start Game',

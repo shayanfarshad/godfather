@@ -11,6 +11,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {backgroundColor} from '../constants/Constants';
 import Text from '../components/Text';
 import {colors} from '../theme';
+import { translate } from '../i18n';
 
 const NavigationWrapper = ({children}) => {
   const [isBackHandled, setIsBackHandled] = useState(false);
@@ -59,9 +60,7 @@ const NavigationWrapper = ({children}) => {
         }}>
         <View style={styles.selectImageContainer}>
           <View>
-            <Text style={{color: 'white', fontSize: 20}}>
-              از بازی خارج می شوید؟
-            </Text>
+            <Text style={{fontSize: 20}}>{translate('game.doYouWantToCloseApp')}</Text>
           </View>
           <View
             style={{
@@ -74,7 +73,7 @@ const NavigationWrapper = ({children}) => {
                 BackHandler.exitApp();
               }}
               style={styles.addImageBtnCard}>
-              <Text style={{color: 'black'}}>خارج شو</Text>
+              <Text>{translate('common.ok')}</Text>
             </Pressable>
             <Pressable
               onPress={() => {
@@ -82,7 +81,7 @@ const NavigationWrapper = ({children}) => {
                 exitRef?.current?.close();
               }}
               style={styles.addImageBtnCard}>
-              <Text style={{color: 'black'}}>نه</Text>
+              <Text>{translate('common.cancel')}</Text>
             </Pressable>
           </View>
         </View>

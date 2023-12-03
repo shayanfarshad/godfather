@@ -120,6 +120,7 @@ const fa: Translations = {
     deleted: 'حذف شده ها',
     noBodyRemovedFromGame: 'هیچ بازیکنی از بازی خارج نشده',
     doYouWantToCloseGame: 'از بازی خارج می شوید ؟',
+    doYouWantToCloseApp: 'از برنامه خارج می شوید ؟',
     closeIt: 'خارج شو!',
     startGame: 'شروع بازی',
     chooseRoleForPlayers: 'تعیین نقش برای بازیکن ها',
