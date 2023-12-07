@@ -12,9 +12,9 @@ const Header = observer(({title, backPress}) => {
     langStore: {language},
   } = useStore();
   const colorScheme = useColorScheme() === 'dark';
-  useEffect(() => {
-    console.log({colorScheme});
-  }, [colorScheme]);
+  // useEffect(() => {
+  //   // console.log({colorScheme});
+  // }, [colorScheme]);
   return (
     <View
       style={{

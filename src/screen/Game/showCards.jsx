@@ -36,9 +36,7 @@ const ShowCards = () => {
     setDetailPlayer(null);
   };
 
-  useEffect(() => {
-    console.log('Image Source:', detailPlayer?.role?.image);
-  }, [detailPlayer]);
+
   return (
     <View
       style={{

@@ -52,8 +52,6 @@ const GamePlay = () => {
   const exitRef = useRef<BottomSheetModal>(null);
   // const [showPayment, setShowPayment] = useState(true);
 
-  const [gamers, setGamers] = useState([]);
-  const [removedPlayers, setRemovedPlayers] = useState([]);
   const [lastMoves, setLastMoves] = useState([]);
   const [showLastCard, setShowLastCard] = useState(false);
   const [clickedCard, setClickedCard] = useState();
@@ -75,11 +73,6 @@ const GamePlay = () => {
       setLastMoves(gameStore.nustraLastMove);
     }
   }, [gameStore]);
-  useEffect(() => {
-    if (players) {
-      setGamers(players);
-    }
-  }, [players]);
 
   useEffect(() => {
     const word = getDayWord(gameDay);
@@ -128,24 +121,6 @@ const GamePlay = () => {
       BackHandler.removeEventListener('hardwareBackPress', handleGoBack);
     };
   }, [isFocused]);
-
-  const removeDeadPlayer = p => {
-    const removed = [...removedPlayers];
-    removed.push(p);
-    const arr = gamers.filter(el => el?.player?.id !== p?.player?.id);
-    gameStore.updateRolePlayers(arr);
-    setRemovedPlayers(removed);
-  };
-
-  const returnPlayer = item => {
-    const arr = [...gamers];
-    arr.push(item);
-    const removed = removedPlayers.filter(
-      el => el?.player?.id !== item?.player?.id,
-    );
-    gameStore.updateRolePlayers(arr);
-    setRemovedPlayers(removed);
-  };
 
   const renderScene = SceneMap({
     inside: InsideGame,

@@ -243,6 +243,7 @@ class GameStore {
     ];
   }
   @action gameReset() {
+    this.removedPlayers = [];
     this.roles = [];
     this.players = [];
     this.gameType = '';

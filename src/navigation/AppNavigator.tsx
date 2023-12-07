@@ -187,7 +187,6 @@ export const AppNavigator = observer(function AppNavigator(
   const getAppTheme = async () => {
     await storage.load('theme').then(res => {
       if (res) {
-        console.log({res});
         Appearance.setColorScheme(res as ColorSchemeName);
         setTheme('dark' === res);
       }

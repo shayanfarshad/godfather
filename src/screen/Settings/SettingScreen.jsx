@@ -19,7 +19,6 @@ const SettingScreen = observer(() => {
   } = useStore();
   const getStoreTheme = async () => {
     await storage.load('theme').then(res => {
-      console.log({resOftheme: res});
       if (res === 'light') {
         setSelectedMode('deactive');
       } else {

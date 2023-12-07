@@ -93,7 +93,6 @@ const RoleUpScreen = () => {
             );
           }}
           renderItem={({item}) => {
-            console.log({ids: item});
             return (
               <Pressable
                 style={styles.playerIcon}
