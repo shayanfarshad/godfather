@@ -1,4 +1,4 @@
-package com.shayanApp.godfather.newarchitecture;
+package com.godfather.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.shayanApp.godfather.BuildConfig;
-import com.shayanApp.godfather.newarchitecture.components.MainComponentsRegistry;
-import com.shayanApp.godfather.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.godfather.BuildConfig;
+import com.godfather.newarchitecture.components.MainComponentsRegistry;
+import com.godfather.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

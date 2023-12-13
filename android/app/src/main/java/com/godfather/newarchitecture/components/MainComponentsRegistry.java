@@ -1,4 +1,4 @@
-package com.shayanApp.godfather.newarchitecture.components;
+package com.godfather.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
