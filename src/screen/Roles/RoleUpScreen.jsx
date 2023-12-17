@@ -63,6 +63,7 @@ const RoleUpScreen = () => {
         flex: 1,
         backgroundColor: colors.background,
         paddingHorizontal: 15,
+        paddingTop: 10,
       }}>
       <Header
         backPress={() => {
@@ -160,10 +161,19 @@ const styles = StyleSheet.create({
     height: 60,
     position: 'absolute',
     bottom: 40,
-    right: 40,
+    right: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10,
+    backgroundColor: 'white',
   },
   addBtnIcon: {
     width: '100%',

@@ -131,6 +131,7 @@ const RolesScreen = observer(() => {
       style={{
         flex: 1,
         backgroundColor: colors.background,
+        paddingTop: 10,
       }}>
       <Header
         title={translate('game.addRoletoThisGame')}

@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingBottom: 30,
   },
   shadow: {
     shadowColor: '#000',

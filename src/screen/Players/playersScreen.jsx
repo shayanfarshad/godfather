@@ -95,6 +95,7 @@ const PlayersScreen = observer(() => {
   };
 
   const addPicture = () => {
+    Keyboard.dismiss();
     cameraRef?.current?.present();
   };
   useEffect(() => {
@@ -245,7 +246,7 @@ const PlayersScreen = observer(() => {
       style={{
         flex: 1,
         backgroundColor: colors.background,
-        paddingTop: 20,
+        paddingTop: 10,
       }}>
       <Header
         backPress={() => nav.goBack()}
@@ -438,7 +439,8 @@ const PlayersScreen = observer(() => {
         modalRef={cameraRef}
         index={0}
         onDismiss={() => cameraRef?.current?.close()}
-        snapPoints={['20%']}
+        snapPoints={['30%']}
+        // vertical={20}
         backgroundStyle={{
           backgroundColor: backgroundColor,
         }}>

@@ -9,6 +9,18 @@ const fa: Translations = {
     camera: 'دوربین',
     gallery: 'گالری',
   },
+  numbers: {
+    one: '۱',
+    two: '۲',
+    three: '۳',
+    four: '۴',
+    five: '۵',
+    six: '۶',
+    seven: '۷',
+    eight: '۸',
+    nine: '۹',
+    ten: '۱۰',
+  },
   bottomNavigator: {
     profile: 'پروفایل',
     learning: ' آموزش ',

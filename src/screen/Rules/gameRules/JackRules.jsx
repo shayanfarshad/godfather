@@ -29,25 +29,25 @@ const JackRules = () => {
         {translate('game.gameRules')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        1 - {translate('game.jackRules.first')}
+        {translate('numbers.one')} - {translate('game.jackRules.first')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        2 - {translate('game.jackRules.second')}
+        {translate('numbers.two')} - {translate('game.jackRules.second')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        3 - {translate('game.jackRules.third')}
+        {translate('numbers.three')} - {translate('game.jackRules.third')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        4 - {translate('game.jackRules.fourth')}
+        {translate('numbers.four')} - {translate('game.jackRules.fourth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        5 - {translate('game.jackRules.fifth')}
+        {translate('numbers.five')} - {translate('game.jackRules.fifth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        6 - {translate('game.jackRules.sixth')}
+        {translate('numbers.six')} - {translate('game.jackRules.sixth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        7 - {translate('game.jackRules.seventh')}
+        {translate('numbers.seven')} - {translate('game.jackRules.seventh')}
       </Text>
     </ScrollView>
   );

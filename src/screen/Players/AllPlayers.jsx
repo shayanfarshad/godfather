@@ -65,9 +65,8 @@ const AllPlayers = observer(() => {
     });
   }, []);
 
-
-
   const addPicture = () => {
+    Keyboard.dismiss();
     cameraModal?.current?.present();
   };
   const takePhoto = () => {
@@ -84,7 +83,6 @@ const AllPlayers = observer(() => {
           }
         },
       );
-     
     } else {
       launchCamera(
         {
@@ -347,7 +345,8 @@ const AllPlayers = observer(() => {
         modalRef={cameraModal}
         index={0}
         onDismiss={() => cameraModal?.current?.close()}
-        snapPoints={['20%']}
+        snapPoints={['25%']}
+        vertical={30}
         backgroundStyle={{
           backgroundColor: colors.background,
         }}>

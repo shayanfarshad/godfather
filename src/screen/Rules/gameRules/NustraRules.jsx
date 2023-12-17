@@ -29,16 +29,16 @@ const NustraRules = () => {
         {translate('game.gameRules')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        1 - {translate('game.nustraRules.first')}
+        {translate('numbers.one')} - {translate('game.nustraRules.first')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        2 - {translate('game.nustraRules.second')}
+        {translate('numbers.two')} - {translate('game.nustraRules.second')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        3 - {translate('game.nustraRules.third')}
+        {translate('numbers.three')} - {translate('game.nustraRules.third')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        4 - {translate('game.nustraRules.fourth')}
+        {translate('numbers.four')} - {translate('game.nustraRules.fourth')}
       </Text>
     </ScrollView>
   );

@@ -21,15 +21,17 @@ const PlayerListScreen = observer(({route}) => {
     return await storage.load('players');
   };
   useEffect(() => {
-    getPlayers().then(res => {
-      const _players = res;
+    getPlayers()
+      .then(res => {
+        const _players = res;
 
-      const filteredArray = _players.filter(
-        item =>
-          !gamePlayers.some(s => JSON.stringify(s) === JSON.stringify(item)),
-      );
-      setPlayers(filteredArray);
-    });
+        const filteredArray = _players.filter(
+          item =>
+            !gamePlayers.some(s => JSON.stringify(s) === JSON.stringify(item)),
+        );
+        setPlayers(filteredArray);
+      })
+      .catch(err => {});
   }, []);
 
   const selectPlayer = item => {

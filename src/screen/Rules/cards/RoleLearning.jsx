@@ -46,6 +46,7 @@ const RoleLearning = observer(() => {
         flex: 1,
         paddingTop: 20,
         paddingBottom: 40,
+        paddingHorizontal: 20,
         backgroundColor: colors.background,
       }}>
       <Header

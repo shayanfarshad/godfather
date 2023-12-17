@@ -53,13 +53,13 @@ function App(props: AppProps) {
 
   useEffect(() => {
     simulateTasks().then(() => {
-      console.log('bayad false mishod');
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     });
   }, []);
 
   const simulateTasks = async () => {
-    console.log('umad tu simulate');
     // Simulate fetching data or any other background tasks
 
     await new Promise(resolve =>
@@ -68,13 +68,14 @@ function App(props: AppProps) {
         if (res) {
           themeStore.setTheme(res === 'dark' ? true : false);
           setColorMode(res === 'dark' ? true : false);
+          resolve(res);
         } else {
           console.log({baadazkhalibudanres: 'umad tu else'});
           storage.save('theme', 'light');
           themeStore.setTheme(false);
           setColorMode(false);
+          resolve(res);
         }
-        resolve(res);
       }),
     );
     // Update progress
@@ -82,26 +83,22 @@ function App(props: AppProps) {
     // Simulate additional tasks
     await new Promise(resolve =>
       storage.load('language').then(res => {
-        console.log({resOflang: res});
-
         if (res) {
           I18n.locale = res as string;
           changeLang(res as string);
           langStore.changeLanguage(res === 'en-IR' ? 'fa' : 'en');
+          resolve(res);
         } else {
-          console.log({baadazkhalibudanres2: 'umad tu else2'});
           I18n.locale = 'en-IR';
           changeLang('en-IR');
           langStore.changeLanguage('fa');
           storage.save('language', 'en-IR');
+          resolve(res);
         }
-        resolve(res);
         roleStore.resetRoles();
         gameStore.resetLastMoves();
       }),
     );
-    console.log('simulate tamum shod');
-
     // Update progress
   };
   // Before we show the app, we have to wait for our state to be ready.

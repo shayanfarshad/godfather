@@ -28,21 +28,27 @@ const Header = observer(({title, backPress}) => {
         paddingHorizontal: 15,
         alignItems: 'center',
       }}>
-      {/* <View> */}
-      <Text
+      <View
         style={{
-          fontSize: language === 'fa' ? spacing.xxl : spacing.xl,
-          color: colors.text,
+          width: '80%',
+          justifyContent: 'center',
+          height: language === 'fa' ? '80%' : '100%',
+          alignSelf: language === 'fa' ? 'flex-end' : 'center',
         }}>
-        {'  '}
-        {title}
-        {'  '}
-      </Text>
-      {/* </View> */}
+        <Text
+          style={{
+            fontSize: spacing.xl,
+            color: colors.text,
+          }}>
+          {'  '}
+          {title}
+          {'  '}
+        </Text>
+      </View>
       {backPress && (
         <View
           style={{
-            width: 50,
+            width: '20%',
             height: '100%',
             justifyContent: 'center',
             alignItems: 'center',

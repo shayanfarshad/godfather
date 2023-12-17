@@ -41,12 +41,12 @@ const SettingScreen = observer(() => {
       storage.save('language', 'en-IR');
       setSelectedLang('fa');
       changeLang('en-IR');
-      RNRestart.Restart();
+      RNRestart.restart();
     } else {
       storage.save('language', 'en-US');
       setSelectedLang('en');
       changeLang('en-US');
-      RNRestart.Restart();
+      RNRestart.restart();
     }
   };
 
@@ -70,7 +70,7 @@ const SettingScreen = observer(() => {
         flex: 1,
         paddingTop: 20,
         paddingBottom: 40,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         backgroundColor: colors.background,
       }}>
       <Header title={translate('settings.title')} />

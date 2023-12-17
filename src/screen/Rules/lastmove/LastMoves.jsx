@@ -44,6 +44,7 @@ const LastMoves = observer(() => {
         flex: 1,
         paddingTop: 20,
         paddingBottom: 40,
+        paddingHorizontal: 20,
         backgroundColor: colors.background,
       }}>
       <Header
@@ -80,16 +81,14 @@ const LastMoves = observer(() => {
                         color: colors.text,
                         fontSize: language === 'fa' ? spacing.lg : spacing.md,
                         lineHeight: 32,
-                        paddingHorizontal: Platform.OS === 'ios' ? 12 : 5,
-                        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+                        paddingHorizontal: language === 'fa' ? 12 : 5,
+                        paddingTop: language === 'fa' ? 12 : 10,
                         fontFamily:
                           language === 'fa'
                             ? 'Digi Nofar Bold'
                             : 'Wizard World',
                       }}>
-                      {'  '}
                       {route.title}
-                      {'  '}
                     </Animated.Text>
                   </TouchableOpacity>
                 );
