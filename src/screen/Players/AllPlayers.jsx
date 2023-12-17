@@ -9,9 +9,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useStore} from '../../constants/useStore';
 import {useNavigation} from '@react-navigation/native';
 import {
+  DeviceEventEmitter,
   FlatList,
   Image,
   Keyboard,
+  NativeEventEmitter,
+  NativeModules,
   PermissionsAndroid,
   Pressable,
   StyleSheet,
@@ -33,9 +36,13 @@ import * as storage from '../../utils/storage';
 import I18n from 'i18n-js';
 import {showToast} from '../../utils/snackbar';
 
+const {CameraModule} = NativeModules;
+const cameraEventEmitter = new NativeEventEmitter();
+
 // import player from '../../assets/images/player2.png';
 const AllPlayers = observer(() => {
   const player = require('../../assets/images/player2.png');
+
   const [players, setPlayers] = useState([]);
   const {
     langStore: {language},
@@ -58,38 +65,26 @@ const AllPlayers = observer(() => {
     });
   }, []);
 
+
+
   const addPicture = () => {
     cameraModal?.current?.present();
   };
   const takePhoto = () => {
     cameraModal.current.close();
     if (Platform.OS === 'android') {
-      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA).then(
-        () => {
-          launchCamera(
-            {
-              cameraType: 'back',
-              mediaType: 'photo',
-              maxHeight: 200,
-              maxWidth: 200,
-              quality: 0.3,
-              includeBase64: true,
-            },
-            response => {
-              if (response) {
-                if (!response.didCancel) {
-                  if (response?.assets[0]) {
-                    setUserPicture(response?.assets[0]?.uri);
-                    const file = {
-                      file: `data:image/jpeg;base64,${response.assets[0].base64}`,
-                    };
-                  }
-                }
-              }
-            },
-          );
+      CameraModule.startCamera();
+
+      const imageCapturedListener = cameraEventEmitter.addListener(
+        'imageCaptured',
+        imageUri => {
+          if (imageUri !== null) {
+            setUserPicture(imageUri);
+            imageCapturedListener.remove();
+          }
         },
       );
+     
     } else {
       launchCamera(
         {
