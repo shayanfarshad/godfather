@@ -1,16 +1,22 @@
-import React, {useEffect, useState} from 'react';
+/**
+ * @format
+ * @flow strict-local
+ */
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Alert,
+  Animated,
   BackHandler,
   FlatList,
   Image,
   Pressable,
   StyleSheet,
+  TouchableOpacity,
   View,
+  useWindowDimensions,
 } from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import ReactNativeModal from 'react-native-modal';
 import {
   DHeight,
@@ -21,34 +27,55 @@ import {
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useStore} from '../../constants/useStore';
 import {PlayerDetail} from './PlayerDetail';
+import {Modal} from '../../components/Modal';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {translate} from '../../i18n';
+import {colors, spacing} from '../../theme';
+import {SceneMap, TabView} from 'react-native-tab-view';
+import {InsideGame} from './InsideGame';
+import {Sitout} from './Sitout';
+import {Icon} from '../../components/Icon';
+// import ZarinPalCheckout from 'zarinpal-checkout';
 
 const GamePlay = () => {
   const nav = useNavigation();
   const isFocused = useIsFocused();
-  const {gameStore} = useStore();
+  const {
+    gameStore,
+    playerStore,
+    roleStore,
+    langStore: {language},
+  } = useStore();
   const players = gameStore.rolePlayers;
   const lastMoveCards = gameStore.lastMoveCards;
   const gameDay = gameStore.day;
+  const exitRef = useRef<BottomSheetModal>(null);
+  // const [showPayment, setShowPayment] = useState(true);
 
-  const [gamers, setGamers] = useState([]);
-  const [removedPlayers, setRemovedPlayers] = useState([]);
-  const [lastMoves, setLastMoves] = useState(lastMoveCards);
-  const [showModal, setShowModal] = useState(false);
+  const [lastMoves, setLastMoves] = useState([]);
   const [showLastCard, setShowLastCard] = useState(false);
-  const [showRole, setShowRole] = useState(false);
   const [clickedCard, setClickedCard] = useState();
-  const [isSilent, setSilent] = useState(false);
-  const [detailPlayer, setDetailPlayer] = useState();
   const [day, setDay] = useState('');
+  // const [hasToken, setToken] = useState(false);
+
+  // useEffect(() => {
+  //   if (!hasToken) {
+  //     setShowPayment(true);
+  //   } else {
+  //     setShowPayment(false);
+  //   }
+  // }, [hasToken]);
+
   useEffect(() => {
-    if (players) {
-      setGamers(players);
+    if (gameStore.gameType === 'jack') {
+      setLastMoves(gameStore.jackLastMove);
+    } else {
+      setLastMoves(gameStore.nustraLastMove);
     }
-  }, [players]);
+  }, [gameStore]);
 
   useEffect(() => {
     const word = getDayWord(gameDay);
-    console.log({word});
     setDay(word);
   }, [gameDay]);
 
@@ -70,7 +97,6 @@ const GamePlay = () => {
           arr[currentIndex],
         ];
       }
-      console.log({lastMove: arr[0]});
       setLastMoves(arr);
     }
   }, [lastMoveCards]);
@@ -96,53 +122,68 @@ const GamePlay = () => {
     };
   }, [isFocused]);
 
-  const removeDeadPlayer = p => {
-    const removed = [...removedPlayers];
-    removed.push(p);
-    const arr = gamers.filter(el => el?.player?.id !== p?.player?.id);
-    console.log({arr});
-    gameStore.updateRolePlayers(arr);
-    setRemovedPlayers(removed);
-  };
+  const renderScene = SceneMap({
+    inside: InsideGame,
+    outside: Sitout,
+  });
 
-  const returnPlayer = item => {
-    const arr = [...gamers];
-    arr.push(item);
-    const removed = removedPlayers.filter(
-      el => el?.player?.id !== item?.player?.id,
-    );
-    gameStore.updateRolePlayers(arr);
-    setRemovedPlayers(removed);
-  };
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'inside', title: translate('game.insideGame')},
+    {key: 'outside', title: translate('game.sitoutGame')},
+  ]);
+
+  // const payment = () => {
+  //   const zarinpal = ZarinPalCheckout.create(
+  //     '41a80d95-7a88-4fad-8ad8-40be0c654c62',
+  //     false,
+  //   );
+
+  //   zarinpal
+  //     .PaymentRequest({
+  //       Amount: '1000', // In Tomans
+  //       CallbackURL: 'https://your-safe-api/example/zarinpal/validate',
+  //       Description: 'A Payment from Godfather',
+  //       Email: 'farshad.shayan1996@gmail.com',
+  //       Mobile: '09190396649',
+  //     })
+  //     .then(response => {
+  //       if (response.status === 100) {
+  //         console.log(response.url);
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //     });
+  // };
 
   return (
-    <View style={{flex: 1, backgroundColor: backgroundColor}}>
+    <View style={{flex: 1, paddingTop: 10, backgroundColor: colors.background}}>
       <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          روز {day}
-        </Text>
+        <Text style={{fontSize: 20}}>{translate('game.day')}</Text>
         <View
           style={{
             flexDirection: 'row-reverse',
-            width: '60%',
+            width: '70%',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
           }}>
           <Pressable
             onPress={() => {
               setShowLastCard(true);
             }}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: colors.cardBackground,
               elevation: 2,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 8,
-              padding: 10,
+              width: 100,
+              // padding: 10,
             }}>
-            <Text type="light" style={{fontSize: 20, color: 'black'}}>
-              حرکت آخر
-            </Text>
+            <Text style={{fontSize: 20}}>{translate('game.lastMove')}</Text>
           </Pressable>
           <Pressable
             onPress={() => {
@@ -151,144 +192,65 @@ const GamePlay = () => {
             <IonIcon name="sunny-outline" size={30} color={'white'} />
           </Pressable>
           <Pressable
-            onPress={() =>
-              Alert.alert(
-                'از بازی خارج می شوید ؟',
-                'در صورت تایید بازی کلا از بین خواهد رفت',
-                [
-                  {
-                    text: 'نه',
-                    onPress: () => {},
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'بله',
-                    onPress: () => {
-                      nav.navigate('home');
-                    },
-                  },
-                ],
-              )
-            }>
-            <Icon name="long-arrow-left" size={30} color={'white'} />
+            style={{widht: 50}}
+            onPress={() => exitRef?.current?.present()}>
+            <Icon
+              name={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+              size={25}
+              color={colors.text}
+            />
           </Pressable>
         </View>
       </View>
-      <FlatList
-        data={gamers}
-        keyExtractor={(index, item) => index}
-        contentContainerStyle={{
-          width: DWidth * 0.9,
-          marginTop: 20,
-          minHeight: DHeight * 0.6,
-          marginHorizontal: DWidth * 0.05,
-        }}
-        renderItem={({item, index}) => {
+      <TabView
+        navigationState={{index, routes}}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        key={index}
+        renderTabBar={props => {
+          const inputRange = props.navigationState.routes.map((x, i) => i);
           return (
-            <PlayerDetail
-              item={item}
-              setRemovePlayer={p => removeDeadPlayer(p)}
-              index={index}
-              setDetailPlayer={setDetailPlayer}
-              setShowModal={setShowModal}
-              showRole={showRole}
-            />
-          );
-        }}
-      />
-      <Text
-        type="bold"
-        style={{
-          color: 'white',
-          fontSize: 20,
-          textAlign: 'right',
-          marginRight: 20,
-          marginTop: 20,
-        }}>
-        حذف شده ها
-      </Text>
-      <FlatList
-        data={removedPlayers}
-        keyExtractor={(index, item) => index}
-        numColumns={3}
-        contentContainerStyle={{
-          width: DWidth * 0.9,
-          height: DHeight * 0.2,
-          // marginTop: 20,
-          marginHorizontal: DWidth * 0.05,
-        }}
-        ListEmptyComponent={() => {
-          return (
-            <View style={[styles.emptyList, {justifyContent: 'flex-start'}]}>
-              <Image
-                source={require('../../assets/images/empty1.png')}
-                style={{width: '30%', height: 100}}
-              />
-              <Text style={{fontSize: 20, color: 'white'}}>
-                هیچ بازیکنی از بازی خارج نشده
-              </Text>
+            <View style={styles.tabBar}>
+              {props.navigationState.routes.map((route, i) => {
+                const opacity = props.position.interpolate({
+                  inputRange,
+                  outputRange: inputRange.map(inputIndex =>
+                    inputIndex === i ? 1 : 0.3,
+                  ),
+                });
+
+                return (
+                  <TouchableOpacity
+                    style={styles.tabItem}
+                    key={route.key}
+                    onPress={() => {
+                      setIndex(i);
+                    }}>
+                    <Animated.Text
+                      style={{
+                        opacity,
+                        color: colors.text,
+                        fontSize: language === 'fa' ? spacing.lg : spacing.md,
+                        // lineHeight: 32,
+                        paddingHorizontal: Platform.OS === 'ios' ? 12 : 5,
+                        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+                        // padding: 10,
+                        fontFamily:
+                          language === 'fa'
+                            ? 'Digi Nofar Bold'
+                            : 'Wizard World',
+                      }}>
+                      {route.title}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           );
         }}
-        renderItem={({item, index}) => {
-          return (
-            <Pressable
-              style={[styles.renderItem, {flexDirection: 'column'}]}
-              key={index}
-              onPress={() => {
-                returnPlayer(item);
-              }}>
-              <Image
-                source={require('../../assets/images/player2.png')}
-                style={{width: 60, height: 60, borderRadius: 10}}
-              />
-              <Text style={{color: 'white'}}>{item.player.name}</Text>
-            </Pressable>
-          );
-        }}
+        initialLayout={{width: layout.width}}
       />
 
-      <ReactNativeModal
-        isVisible={showModal}
-        deviceWidth={DWidth}
-        deviceHeight={DHeight}
-        onBackButtonPress={() => {
-          setShowModal(!showModal);
-        }}
-        onBackdropPress={() => {
-          setShowModal(!showModal);
-        }}
-        style={styles.modalContainer}>
-        <View style={styles.modalView}>
-          <View
-            style={{
-              width: DWidth / 2,
-              height: 230,
-              justifyContent: 'center',
-              alignItems: 'center',
-              overflow: 'hidden',
-              borderRadius: 10,
-            }}>
-            <Image
-              source={detailPlayer?.role.image}
-              style={{width: '100%', height: '100%'}}
-            />
-          </View>
-          <View
-            style={{
-              width: DWidth / 2,
-              justifyContent: 'space-around',
-              alignItems: 'center',
-            }}>
-            <Text type="bold" style={{fontSize: 26}}>
-              {detailPlayer?.role.title}
-            </Text>
-            <Text type="bold" style={{fontSize: 24}}>
-              {detailPlayer?.player.name}
-            </Text>
-          </View>
-        </View>
-      </ReactNativeModal>
       <ReactNativeModal
         isVisible={showLastCard}
         deviceWidth={DWidth}
@@ -304,7 +266,7 @@ const GamePlay = () => {
           style={[
             styles.modalView,
             {
-              backgroundColor: backgroundColor,
+              backgroundColor: colors.cardBackground,
               width: DWidth,
               height: DHeight * 0.9,
               padding: 10,
@@ -318,6 +280,7 @@ const GamePlay = () => {
                 width: 40,
                 height: 40,
                 borderRadius: 20,
+                marginBottom: 20,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
@@ -333,12 +296,65 @@ const GamePlay = () => {
                   item={item}
                   setClickedCard={setClickedCard}
                   index={index}
+                  key={item.id}
                 />
               );
             }}
           />
         </View>
       </ReactNativeModal>
+
+      <Modal
+        modalRef={exitRef}
+        index={0}
+        onDismiss={() => exitRef?.current?.close()}
+        snapPoints={['30%']}
+        backgroundStyle={{
+          backgroundColor: colors.cardBackground,
+        }}>
+        <View style={styles.selectImageContainer}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              {translate('game.doYouWantToCloseGame')}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: '80%',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Pressable
+              onPress={() => {
+                gameStore.gameReset();
+                playerStore.resetPlayers();
+                roleStore.resetRoles();
+                nav.navigate('RPM');
+              }}
+              style={[
+                styles.addImageBtnCard,
+                {
+                  backgroundColor: colors.background,
+                },
+              ]}>
+              <Text>{translate('game.closeIt')}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                exitRef?.current?.close();
+              }}
+              style={[
+                styles.addImageBtnCard,
+                {
+                  backgroundColor: colors.background,
+                },
+              ]}>
+              <Text>{translate('common.cancel')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -356,17 +372,17 @@ const CardList = ({item, setClickedCard, index}) => {
       style={{
         width: DWidth * 0.8,
         // marginLeft: 10,
-        height: 140,
+        // height: 140,
         paddingHorizontal: 20,
         marginBottom: 15,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: colors.background,
       }}>
       {isShowLastMove ? (
         <>
-          <Text style={{fontSize: 12, textAlign: 'center'}}>
+          <Text style={{fontSize: 22, textAlign: 'center'}}>
             {item.description}
           </Text>
           <Text style={{fontSize: 22}}>{item.title}</Text>
@@ -393,6 +409,7 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 50,
+    marginTop: 50,
     alignItems: 'center',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
@@ -433,11 +450,35 @@ const styles = StyleSheet.create({
   modalView: {
     width: DWidth / 1.5,
     height: DHeight / 2.2,
-    backgroundColor: 'white',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,
     elevation: 10,
+  },
+  selectImageContainer: {
+    flexDirection: 'column',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  addImageBtnCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '45%',
+    height: 50,
+    marginBottom: 15,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    // paddingTop: 50,
+  },
+  tabItem: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // padding: 16,
   },
 });
 

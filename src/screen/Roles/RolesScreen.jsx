@@ -1,57 +1,96 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+/**
+ * @format
+ * @flow strict-local
+ */
+
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  FlatList,
+  Image,
+  Platform,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import Text from '../../components/Text';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import {remove} from 'mobx';
+import {colors, spacing} from '../../theme';
+import Header from '../../components/Header';
+import {translate} from '../../i18n';
+import {SceneMap, TabView} from 'react-native-tab-view';
+import {JackRolesScreen} from './JackRolesScreen';
+import {NustraRolesScreen} from './NustraRolesScreen';
+import {Modal} from '../../components/Modal';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
 
 const RolesScreen = observer(() => {
-  const {roleStore, gameStore} = useStore();
+  const {
+    roleStore,
+    gameStore,
+    langStore: {language},
+  } = useStore();
+  const checkRef = useRef<BottomSheetModal>(null);
   const nav = useNavigation();
-  const Roles = roleStore.roles;
-  const playingRoles = gameStore.roles;
-  const [disableds, setDisableds] = useState([]);
+  const Roles = roleStore.nustraRoles;
+  const roles = gameStore.getRoles();
+  // const playingRoles = gameStore.roles;
   const [gameRoles, setGameRoles] = useState([]);
   const [citizen, setCitizen] = useState(1);
   //   const [roles, setRoles] = useState(playingRoles);
 
-  useEffect(() => {
-    setGameRoles(Roles);
-  }, [Roles]);
+  const renderScene = SceneMap({
+    jack: JackRolesScreen,
+    nustra: NustraRolesScreen,
+  });
 
-  const addRole = item => {
-    const existItem = playingRoles.findIndex(el => el === item);
-    if (existItem === -1) {
-      gameStore.addRoles(item);
-      const fakeRole = [...gameRoles];
-      const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
-      fakeRole[selectedIndex].active = false;
-      setGameRoles(fakeRole);
-    } else {
-      if (item.title === 'شهروند ساده') {
-        const fakeRole = [...playingRoles];
-        return fakeRole?.map(el => {
-          if (el.title === item.title) {
-            const ind = fakeRole.filter(item => item.title !== 'شهروند ساده');
-            const arr = [...Roles];
-            arr.map(item => {
-              if (item.title === 'شهروند ساده') item.active = true;
-            });
-            setGameRoles(arr);
-            gameStore.updateRoles(ind);
-          }
-        });
-      }
-      gameStore.removeRoles(item);
-      const fakeRole = [...gameRoles];
-      const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
-      fakeRole[selectedIndex].active = true;
-      setGameRoles(fakeRole);
-    }
-  };
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'jack', title: translate('game.jackRoles')},
+    {key: 'nustra', title: translate('game.nustraRoles')},
+  ]);
+  // useEffect(() => {
+  //   setGameRoles(Roles);
+  // }, [Roles]);
+
+  // const addRole = item => {
+  //   const existItem = roles.findIndex(el => el === item);
+  //   if (existItem === -1) {
+  //     gameStore.addRoles(item);
+  //     const fakeRole = [...gameRoles];
+  //     const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
+  //     fakeRole[selectedIndex].active = false;
+  //     setGameRoles(fakeRole);
+  //   } else {
+  //     if (item.title === 'شهروند ساده') {
+  //       const fakeRole = [...roles];
+  //       return fakeRole?.map(el => {
+  //         if (el.title === item.title) {
+  //           const ind = fakeRole.filter(item => item.title !== 'شهروند ساده');
+  //           const arr = [...Roles];
+  //           arr.map(item => {
+  //             if (item.title === 'شهروند ساده') item.active = true;
+  //           });
+  //           setGameRoles(arr);
+  //           gameStore.updateRoles(ind);
+  //         }
+  //       });
+  //     }
+  //     gameStore.removeRoles(item);
+  //     const fakeRole = [...gameRoles];
+  //     const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
+  //     fakeRole[selectedIndex].active = true;
+  //     setGameRoles(fakeRole);
+  //   }
+  // };
   const addCitizen = () => {
     const newCitizen = Roles[8];
     newCitizen.id = Date.now();
@@ -61,162 +100,162 @@ const RolesScreen = observer(() => {
   };
 
   const removeCitizen = () => {
-    const lastIndex = playingRoles.length - 1;
+    const lastIndex = roles.length - 1;
     setCitizen(citizen - 1);
     gameStore.roles.splice(lastIndex, 1);
   };
 
-  useEffect(() => {
-    if (playingRoles.length === 0) {
-      const arr = [...Roles];
-      arr.map(item => {
-        item.active = true;
-      });
+  // useEffect(() => {
+  //   if (roles.length === 0) {
+  //     const arr = [...Roles];
+  //     arr.map(item => {
+  //       item.active = true;
+  //     });
 
-      return setGameRoles(arr);
-    }
+  //     return setGameRoles(arr);
+  //   }
 
-    if (playingRoles) {
-      let len = 0;
+  //   if (roles) {
+  //     let len = 0;
 
-      playingRoles.map(item => {
-        if (item.title === 'شهروند ساده') {
-          len += 1;
-          setCitizen(len);
-        }
-      });
-    }
-  }, [playingRoles]);
+  //     roles.map(item => {
+  //       if (item?.title === 'شهروند ساده') {
+  //         len += 1;
+  //         setCitizen(len);
+  //       }
+  //     });
+  //   }
+  // }, [roles]);
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
+        paddingTop: 10,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          اضافه کردن نقش به این بازی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
-      <View
+      <Header
+        title={translate('game.addRoletoThisGame')}
+        // backIcon={isFarsi ? 'chevron-left' : 'chevron-right'}
+        backPress={() => {
+          nav.goBack();
+        }}
+      />
+      {/* <View
         style={{
           width: '100%',
           alignItems: 'flex-end',
-          marginVertical: 20,
           paddingHorizontal: 20,
         }}>
         <Text style={{fontSize: 22, color: 'white'}}>نقش های حاضر در بازی</Text>
-      </View>
-      {gameRoles?.length ? (
-        <FlatList
-          data={gameRoles}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.flatContainer}
-          numColumns={3}
-          renderItem={({item}) => {
-            return (
-              <Pressable
-                // disabled={!item.active}
-                onPress={() => {
-                  addRole(item);
-                }}
-                style={styles.renderItem}>
-                <View style={[styles.playerIcon]}>
-                  {item.title !== 'شهروند ساده' ? (
-                    !item.active ? (
-                      <View
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute',
-                          zIndex: 100,
-                          backgroundColor: 'rgba(256,256,256,0.4)',
-                        }}>
-                        <View
-                          style={{
-                            width: 30,
-                            height: 30,
-                            borderRadius: 15,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            position: 'absolute',
-                            zIndex: 100,
-                            backgroundColor: 'green',
-                          }}>
-                          <Icon name="check" color="white" size={18} />
-                        </View>
-                      </View>
-                    ) : null
-                  ) : !item.active ? (
-                    <View
+      </View> */}
+      <TabView
+        navigationState={{index, routes}}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        key={index}
+        renderTabBar={props => {
+          const inputRange = props.navigationState.routes.map((x, i) => i);
+          return (
+            <View style={styles.tabBar}>
+              {props.navigationState.routes.map((route, i) => {
+                const opacity = props.position.interpolate({
+                  inputRange,
+                  outputRange: inputRange.map(inputIndex =>
+                    inputIndex === i ? 1 : 0.3,
+                  ),
+                });
+
+                return (
+                  <TouchableOpacity
+                    style={styles.tabItem}
+                    key={route.key}
+                    onPress={() => {
+                      if (roles.length) {
+                        checkRef?.current?.present();
+                      } else {
+                        setIndex(i);
+                      }
+                    }}>
+                    <Animated.Text
                       style={{
-                        width: '100%',
-                        height: '100%',
-                        position: 'absolute',
-                        zIndex: 100,
-                        backgroundColor: 'rgba(256,256,256,0.1)',
+                        opacity,
+                        color: colors.text,
+                        fontSize: language === 'fa' ? spacing.lg : spacing.md,
+                        // lineHeight: 32,
+                        paddingHorizontal: Platform.OS === 'ios' ? 12 : 5,
+                        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+                        fontFamily:
+                          language === 'fa'
+                            ? 'Digi Nofar Bold'
+                            : 'Wizard World',
                       }}>
-                      <View
-                        style={{
-                          width: 30,
-                          height: 30,
-                          borderRadius: 15,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          position: 'absolute',
-                          zIndex: 100,
-                          backgroundColor: 'green',
-                        }}>
-                        <Icon name="check" color="white" size={18} />
-                      </View>
-                      <View
-                        style={{
-                          backgroundColor: 'white',
-                          borderRadius: 12,
-                          width: '60%',
-                          left: '20%',
-                          alignItems: 'center',
-                          justifyContent: 'space-around',
-                          height: 30,
-                          position: 'absolute',
-                          flexDirection: 'row',
-                          bottom: 40,
-                        }}>
-                        <Pressable
-                          onPress={() => {
-                            addCitizen();
-                          }}>
-                          <Icon name="plus" color="black" size={18} />
-                        </Pressable>
-                        <Text style={{color: 'black', fontSize: 18}}>
-                          {citizen}
-                        </Text>
-                        <Pressable
-                          onPress={() => {
-                            if (citizen > 1) {
-                              removeCitizen();
-                            }
-                          }}>
-                          <Icon name="minus" color="black" size={18} />
-                        </Pressable>
-                      </View>
-                    </View>
-                  ) : null}
-                  <Image
-                    source={item?.image}
-                    resizeMode="contain"
-                    style={{width: '100%', height: '100%', borderRadius: 10}}
-                  />
-                </View>
-                <Text style={{fontSize: 16, color: 'white'}}>{item.title}</Text>
-              </Pressable>
-            );
-          }}
-        />
-      ) : null}
+                      {route.title}
+                    </Animated.Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          );
+        }}
+        initialLayout={{width: layout.width}}
+      />
+      <Modal
+        modalRef={checkRef}
+        index={0}
+        onDismiss={() => {}}
+        snapPoints={[DHeight * 0.6]}
+        backgroundStyle={{backgroundColor: colors.modalBackground}}>
+        <View
+          style={{
+            height: '100%',
+            width: '100%',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}>
+          <Text>{translate('game.chooseRoleProblem')}</Text>
+          <Text>{translate('game.cardChoosingDescription')}</Text>
+          <Text>{translate('game.areYouAgree')}</Text>
+          <View
+            style={{
+              flexDirection: 'row-reverse',
+              width: '100%',
+              justifyContent: 'space-around',
+            }}>
+            <Pressable
+              onPress={() => {
+                // addPlayer();
+                gameStore.gameReset();
+                roleStore.resetRoles();
+                if (index === 0) {
+                  setIndex(1);
+                } else {
+                  setIndex(0);
+                }
+                checkRef?.current?.close();
+              }}
+              style={[
+                styles.modalBtn,
+                {
+                  backgroundColor: colors.background,
+                },
+              ]}>
+              <Text>{translate('common.ok')}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                checkRef?.current?.close();
+              }}
+              style={[
+                styles.modalBtn,
+                {
+                  backgroundColor: colors.background,
+                },
+              ]}>
+              <Text>{translate('common.cancel')}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 });
@@ -313,13 +352,23 @@ const styles = StyleSheet.create({
     fontFamily: 'IRANSansXNoEn-Medium',
   },
   modalBtn: {
-    width: '90%',
+    width: '40%',
     height: 50,
     marginTop: 10,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
-    backgroundColor: backgroundColor,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    // paddingTop: 50,
+  },
+  tabItem: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // padding: 16,
   },
 });
 
