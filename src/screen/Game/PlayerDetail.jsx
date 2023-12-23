@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, View} from 'react-native';
 import {DWidth} from '../../constants/Constants';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {colors} from '../../theme';
+import {translate} from '../../i18n';
+import {showToast} from '../../utils/snackbar';
 
 const PlayerDetail = ({
   index,
@@ -14,11 +17,18 @@ const PlayerDetail = ({
 }) => {
   const [isSilent, setSilent] = useState(false);
   const [isShot, setShot] = useState(false);
-  const [hasShield, setHasShield] = useState(item.role.shield);
+  // const [hasShield, setHasShield] = useState(item.role.shield);
   const [hasAbility, setHasAbility] = useState(true);
-  // const [isDead, setDead] = useState(false);
+
   return (
-    <View style={[styles.renderItem]} key={index}>
+    <View
+      style={[
+        styles.renderItem,
+        {
+          backgroundColor: colors.cardBackground,
+        },
+      ]}
+      key={index}>
       <Pressable
         onPress={() => {
           setDetailPlayer(item);
@@ -27,9 +37,23 @@ const PlayerDetail = ({
         style={{
           justifyContent: 'center',
           alignItems: 'flex-end',
-          width: '25%',
+          width: '28%',
           height: 60,
         }}>
+        {item?.role?.shield ? (
+          <View
+            style={{
+              position: 'absolute',
+              top: -30,
+              right: -10,
+              zIndex: 10,
+              backgroundColor: colors.special,
+              borderRadius: 10,
+              padding: 5,
+            }}>
+            <Icon name={'shield'} color={colors.text} size={20} />
+          </View>
+        ) : null}
         <Image
           source={
             showRole
@@ -37,9 +61,9 @@ const PlayerDetail = ({
               : require('../../assets/images/player2.png')
           }
           resizeMode="contain"
-          style={{width: 50, height: 50, borderRadius: 10}}
+          style={{width: 60, height: 60, borderRadius: 10}}
         />
-        <Text style={{color: 'white'}}>{item.player.name}</Text>
+        <Text style={{fontSize: 18}}>{item.player.name}</Text>
       </Pressable>
       <Pressable
         onPress={() => {
@@ -52,10 +76,12 @@ const PlayerDetail = ({
         }}>
         <Icon
           name={isSilent ? 'volume-off' : 'volume-up'}
-          color="white"
+          color={colors.text}
           size={30}
         />
-        <Text style={{color: 'white'}}>{isSilent ? 'سکوت' : 'صحبت کن'}</Text>
+        <Text>
+          {isSilent ? translate('game.silent') : translate('game.speak')}
+        </Text>
       </Pressable>
 
       <View
@@ -66,14 +92,7 @@ const PlayerDetail = ({
           justifyContent: 'center',
           alignItems: 'flex-end',
           height: 60,
-        }}>
-        {hasShield ? (
-          <>
-            <Icon name={'shield'} color="white" size={30} />
-            <Text style={{color: 'white'}}>شیلد</Text>
-          </>
-        ) : null}
-      </View>
+        }}></View>
 
       <Pressable
         onPress={() => {
@@ -84,13 +103,23 @@ const PlayerDetail = ({
           alignItems: 'flex-end',
           height: 60,
         }}>
-        <Icon name={'ban'} color={hasAbility ? '#6b6b6b' : 'white'} size={30} />
-        <Text style={{color: hasAbility ? '#6b6b6b' : 'white'}}>بی خاصیت</Text>
+        <Icon
+          name={'ban'}
+          color={hasAbility ? colors.textDim : colors.text}
+          size={30}
+        />
+        <Text style={{color: hasAbility ? colors.textDim : colors.text}}>
+          {translate('game.disability')}
+        </Text>
       </Pressable>
 
       <Pressable
         onPress={() => {
           setRemovePlayer(item);
+          showToast({
+            mode: 'info',
+            text: 'بازیکن از بازی خارج شد،در صورتی که کنستانتین نباشد و کنستانتین خارج هم نشده باشد می توانید بازیکن را به بازی برگردانید',
+          });
           // setDead(!isDead);
         }}
         style={{
@@ -98,7 +127,7 @@ const PlayerDetail = ({
           alignItems: 'flex-end',
           height: 60,
         }}>
-        <Icon name={'trash'} color="white" size={30} />
+        <Icon name={'trash'} color={colors.text} size={30} />
       </Pressable>
     </View>
   );
@@ -106,9 +135,11 @@ const PlayerDetail = ({
 
 const styles = StyleSheet.create({
   renderItem: {
-    width: DWidth * 0.9,
-    height: 80,
-    marginBottom: 15,
+    // width: DWidth * 0.9,
+    height: 120,
+    marginBottom: 10,
+    borderRadius: 15,
+    padding: 10,
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',

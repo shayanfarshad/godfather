@@ -1,18 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useStore} from '../../constants/useStore';
 import {DWidth, backgroundColor} from '../../constants/Constants';
 import {useNavigation} from '@react-navigation/native';
+import {colors} from '../../theme';
+import {translate} from '../../i18n';
+import Header from '../../components/Header';
 
 const RoleUpScreen = () => {
   const nav = useNavigation();
   const {playerStore, gameStore} = useStore();
   const [rolePlayer, setRolePlayer] = useState([]);
-
   const players = playerStore.getPlayers();
-
   const roles = gameStore.roles;
 
   useEffect(() => {
@@ -50,29 +51,30 @@ const RoleUpScreen = () => {
       }
       gameStore.updateRolePlayers(joinedArray);
       setRolePlayer(joinedArray);
+      playerStore.setPlayerRole(0);
     } else {
       setRolePlayer(players);
+      playerStore.setPlayerRole(0);
     }
   };
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
         paddingHorizontal: 15,
+        paddingTop: 10,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          تعیین نقش تصادفی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
+      <Header
+        backPress={() => {
+          nav.goBack();
+        }}
+        title={translate('game.roleAssignment')}
+      />
       {rolePlayer.length ? (
         <FlatList
           data={rolePlayer}
-          keyExtractor={(index, item) => index}
+          keyExtractor={item => item?.player?.id || item?.id}
           numColumns={3}
           contentContainerStyle={{
             justifyContent: 'space-around',
@@ -86,16 +88,16 @@ const RoleUpScreen = () => {
                   style={{width: '50%', height: 300}}
                 />
                 <Text style={{fontSize: 20, color: 'white'}}>
-                  هیج بازیکنی نداری!
+                  {translate('game.anyPlayerExist')}
                 </Text>
               </View>
             );
           }}
-          renderItem={({item, index}) => {
+          renderItem={({item}) => {
             return (
               <Pressable
                 style={styles.playerIcon}
-                key={index}
+                key={item?.player?.id || item?.id}
                 onPress={() => {}}>
                 <Image
                   source={
@@ -103,24 +105,28 @@ const RoleUpScreen = () => {
                       ? item.role.image
                       : require('../../assets/images/player2.png')
                   }
-                  style={{width: 100, height: 100, borderRadius: 10}}
+                  style={{width: 100, height: 140, borderRadius: 10}}
                 />
-                <Text style={{color: 'white'}}>
-                  {item?.player?.name ? item.player.name : item.name}
-                </Text>
+                <Text>{item?.player?.name ? item.player.name : item.name}</Text>
               </Pressable>
             );
           }}
         />
       ) : null}
-      <View style={styles.addBtn}>
+      <View
+        style={[
+          styles.addBtn,
+          {
+            backgroundColor: colors.modalBackground,
+          },
+        ]}>
         <Pressable
           onPress={() => {
             roleup();
             // setFabVisible(!isFabVisible);
           }}
           style={styles.addBtnIcon}>
-          <Icon name="random" size={20} color={'black'} />
+          <Icon name="random" size={20} color={colors.text} />
         </Pressable>
       </View>
     </View>
@@ -145,7 +151,7 @@ const styles = StyleSheet.create({
   },
   playerIcon: {
     width: DWidth / 3.2,
-    height: 135,
+    height: 160,
     marginBottom: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -154,11 +160,19 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     position: 'absolute',
-    bottom: 20,
+    bottom: 40,
     right: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10,
     backgroundColor: 'white',
   },
   addBtnIcon: {

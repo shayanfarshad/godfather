@@ -1,0 +1,33 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/IRANSansXNoEn-Bold.ttf",
+      "sha1": "6c176205bfe70262b8e38a72bc27fd864e7febdb"
+    },
+    {
+      "path": "src/assets/fonts/IRANSansXNoEn-Light.ttf",
+      "sha1": "71137eac899517e5f47eec7a2c5934ea3dcc09fe"
+    },
+    {
+      "path": "src/assets/fonts/IRANSansXNoEn-Medium.ttf",
+      "sha1": "9d8bf9522abb37593e4202e7fe888fb84e22b4b2"
+    },
+    {
+      "path": "src/assets/fonts/IRANSansXNoEn-Regular.ttf",
+      "sha1": "dc36bf6a0aa414b2d1dc7b4d3946ae747630143b"
+    },
+    {
+      "path": "src/assets/fonts/Nofar.ttf",
+      "sha1": "62bca55e00b9e9f8316e18d3efc72134c331600d"
+    },
+    {
+      "path": "src/assets/fonts/hadye.ttf",
+      "sha1": "11c53e6e85dc22e8e0fe7141c81365f364f058f7"
+    },
+    {
+      "path": "src/assets/fonts/wizard.ttf",
+      "sha1": "df36457771706f99d66c760c64096bc83478f743"
+    }
+  ]
+}

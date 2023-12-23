@@ -1,35 +1,37 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
-import {Text} from '../../components/Text';
+import Text from '../../components/Text';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
-import {DWidth, backgroundColor} from '../../constants/Constants';
+import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/Header';
+import {translate} from '../../i18n';
+import {colors} from '../../theme';
+import * as storage from '../../utils/storage';
 
-const PlayerListScreen = observer(() => {
+const PlayerListScreen = observer(({route}) => {
   const [players, setPlayers] = useState([]);
   const nav = useNavigation();
+  const gamePlayers = route.params.gamePlayers;
   const {playerStore} = useStore();
   const getPlayers = async () => {
-    return await AsyncStorage.getItem('players');
+    return await storage.load('players');
   };
   useEffect(() => {
-    getPlayers().then(res => {
-      const _players = JSON.parse(res);
-      const gamer = playerStore.getPlayers();
-      _players.map(item => {
-        if (gamer.some(el => el.name === item.name)) {
-          const arr = _players.filter(el => el.name !== item.name);
-          return setPlayers(arr);
-        } else {
-          if (_players) {
-            setPlayers(_players);
-          }
-        }
-      });
-    });
+    getPlayers()
+      .then(res => {
+        const _players = res;
+
+        const filteredArray = _players.filter(
+          item =>
+            !gamePlayers.some(s => JSON.stringify(s) === JSON.stringify(item)),
+        );
+        setPlayers(filteredArray);
+      })
+      .catch(err => {});
   }, []);
 
   const selectPlayer = item => {
@@ -43,16 +45,15 @@ const PlayerListScreen = observer(() => {
     <View
       style={{
         flex: 1,
-        backgroundColor: backgroundColor,
+        backgroundColor: colors.background,
+        paddingTop: 20,
+        // paddingBottom: 60,
       }}>
-      <View style={styles.header}>
-        <Text type="light" style={{fontSize: 20, color: 'white'}}>
-          اضافه کردن بازیکن به این بازی
-        </Text>
-        <Pressable onPress={() => nav.goBack()}>
-          <Icon name="long-arrow-left" size={30} color={'white'} />
-        </Pressable>
-      </View>
+      <Header
+        backPress={() => nav.goBack()}
+        title={translate('game.addPlayerToThisGame')}
+      />
+
       <FlatList
         data={players}
         keyExtractor={item => item.id}
@@ -63,10 +64,10 @@ const PlayerListScreen = observer(() => {
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 300}}
+                style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20, color: 'white'}}>
-                هیج بازیکنی نداری!
+              <Text style={{fontSize: 20}}>
+                {translate('game.anyPlayerExist')}
               </Text>
             </View>
           );
@@ -78,10 +79,14 @@ const PlayerListScreen = observer(() => {
               key={item.id}
               onPress={() => selectPlayer(item)}>
               <Image
-                source={require('../../assets/images/player2.png')}
+                source={
+                  item?.avatar
+                    ? {uri: item.avatar}
+                    : require('../../assets/images/player2.png')
+                }
                 style={{width: 80, height: 80, borderRadius: 10}}
               />
-              <Text style={{color: 'white'}}>{item.name}</Text>
+              <Text>{item.name}</Text>
             </Pressable>
           );
         }}
@@ -104,8 +109,8 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    marginTop: 80,
+    height: DHeight * 0.7,
+    // marginTop: 80,
   },
   playerIcon: {
     width: DWidth / 3,

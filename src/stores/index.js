@@ -1,9 +1,13 @@
 import gameStore from './gameStore';
-import playerStore from './playerStore';
+import langStore from './langStore';
+import PlayerStore from './playerStore';
 import roleStore from './roleStore';
+import themeStore from './themeStore';
 
 export default () => ({
-  playerStore: playerStore,
+  playerStore: PlayerStore,
   roleStore: roleStore,
-  gameStore: gameStore
+  gameStore: gameStore,
+  langStore: langStore,
+  themeStore: themeStore,
 });

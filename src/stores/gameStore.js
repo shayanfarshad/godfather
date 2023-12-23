@@ -1,11 +1,14 @@
 import {observable, action, makeAutoObservable} from 'mobx';
+import {translate} from '../i18n';
 
 class GameStore {
   @observable roles = [];
   @observable players = [];
   @observable rolePlayers = [];
+  @observable removedPlayers = [];
   @observable night = 0;
   @observable day = 0;
+  @observable gameType = '';
   @observable nightStory = [
     {
       id: 0,
@@ -49,41 +52,66 @@ class GameStore {
       ],
     },
   ];
-  @observable lastMoveCards = [
+  @observable nustraLastMove = [
     {
       id: 1,
-      title: 'سکوت بره ها',
-      description:
-        'بازیکن اخراجی با نشان کردن دو نفر٬ آنان را بمدت یک روز سایلنت کرده و افرادی که نشان شده باشند٬ فردا حتی در دفاع امکان صحبت کردن ندارند. اگر تعداد بازیکنان به نصف رسید٬ در سکوت بره ها یک نفر سایلنت خواهد شد',
+      title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+      description: translate('game.rolecards.lastMoveCards.lambDesc'),
     },
     {
       id: 2,
-      title: 'افشای هویت',
-      description:
-        'اگر بازیکن اخراجی این کارت را انتخاب کند٬ گرداننده بدون نیاز به استعالم جمعی نقش دقیق او را فاش میکند و او از بازی بیرون میرود. در این حالت امکان بازگشت به بازی توسط کنستانتین را ندارد',
+      title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+      description: translate('game.rolecards.lastMoveCards.identityDesc'),
     },
     {
       id: 3,
-      title: 'ذهن زیبا',
-      description:
-        'اگر صاحب این کارت بتواند فقط نوستراداموس را از بین بازیکنان داخل بازی شناسایی کند. به بازی برمیگردد و نوستراداموس بجای او از بازی خارج میشود. اگر نوستراداموس این کارت را انتخاب کند٬ بدون نیاز به استعالم به بازی باز میگردد اما سپر وی از بین رفته و با شلیک شب کشته خواهد شد',
+      title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+      description: translate(
+        'game.rolecards.lastMoveCards.beautifalNustraDesc',
+      ),
     },
     {
       id: 4,
-      title: 'دستبند',
-      description:
-        'بازیکن اخراجی با کارت دستبند هرکس را نشان کند٬ توانمندی های ان شب را از وی میگیرد. نکته: اگر تنها یک مافیا در بازی مانده باشد و کارت دسبتند دریافت کرده باشد٬ همچنان امکان شلیک خواهد داشت. )شات مختص به یک مافیا نیست٬ یک توانایی تیمی است(',
+      title: translate('game.rolecards.lastMoveCards.bracelet'),
+      description: translate('game.rolecards.lastMoveCards.braceletDesc'),
     },
     {
       id: 5,
-      title: 'تغییر چهره',
-      description:
-        'بازیکن قبل از خروج کارت نقش خود را با یکی از بازیکنان عوض می کند',
+      title: translate('game.rolecards.lastMoveCards.faceoff'),
+      description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
     },
   ];
 
+  @observable jackLastMove = [
+    {
+      id: 1,
+      title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+      description: translate('game.rolecards.lastMoveCards.lambDesc'),
+    },
+    {
+      id: 2,
+      title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+      description: translate('game.rolecards.lastMoveCards.identityDesc'),
+    },
+    {
+      id: 3,
+      title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+      description: translate('game.rolecards.lastMoveCards.beautifalJackDesc'),
+    },
+    {
+      id: 4,
+      title: translate('game.rolecards.lastMoveCards.bracelet'),
+      description: translate('game.rolecards.lastMoveCards.braceletDesc'),
+    },
+    {
+      id: 5,
+      title: translate('game.rolecards.lastMoveCards.faceoff'),
+      description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
+    },
+  ];
   constructor() {
     makeAutoObservable(this);
+    this.roles = [];
   }
   @action addDay() {
     this.day = this.day + 1;
@@ -106,10 +134,18 @@ class GameStore {
     this.rolePlayers = items;
     return this.rolePlayers;
   }
+  @action getRoles() {
+    return this.roles;
+  }
   @action addRoles(role) {
+    if (!this.roles) {
+      this.roles = []; // Initialize if undefined
+    }
     const newRoles = [...this.roles];
     newRoles.push(role);
     this.roles = newRoles;
+
+    // this.roles.push(role);
     return this.roles;
   }
   @action removeRoles(role) {
@@ -130,6 +166,90 @@ class GameStore {
     newPlayers.filter(item => item === player);
     this.players = newPlayers;
     return this.players;
+  }
+  @action getRemovedPlayers() {
+    return this.removedPlayers;
+  }
+
+  @action updateRemovedPlayers(newArr) {
+    this.removedPlayers = newArr;
+    return this.removedPlayers;
+  }
+
+  @action setGameType(type) {
+    this.gameType = type;
+    return this.gameType;
+  }
+
+  @action resetLastMoves() {
+    this.jackLastMove = [
+      {
+        id: 1,
+        title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+        description: translate('game.rolecards.lastMoveCards.lambDesc'),
+      },
+      {
+        id: 2,
+        title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+        description: translate('game.rolecards.lastMoveCards.identityDesc'),
+      },
+      {
+        id: 3,
+        title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+        description: translate(
+          'game.rolecards.lastMoveCards.beautifalJackDesc',
+        ),
+      },
+      {
+        id: 4,
+        title: translate('game.rolecards.lastMoveCards.bracelet'),
+        description: translate('game.rolecards.lastMoveCards.braceletDesc'),
+      },
+      {
+        id: 5,
+        title: translate('game.rolecards.lastMoveCards.faceoff'),
+        description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
+      },
+    ];
+
+    this.nustraLastMove = [
+      {
+        id: 1,
+        title: translate('game.rolecards.lastMoveCards.lambsSilence'),
+        description: translate('game.rolecards.lastMoveCards.lambDesc'),
+      },
+      {
+        id: 2,
+        title: translate('game.rolecards.lastMoveCards.IdentityDisclosure'),
+        description: translate('game.rolecards.lastMoveCards.identityDesc'),
+      },
+      {
+        id: 3,
+        title: translate('game.rolecards.lastMoveCards.beautifulMind'),
+        description: translate(
+          'game.rolecards.lastMoveCards.beautifalNustraDesc',
+        ),
+      },
+      {
+        id: 4,
+        title: translate('game.rolecards.lastMoveCards.bracelet'),
+        description: translate('game.rolecards.lastMoveCards.braceletDesc'),
+      },
+      {
+        id: 5,
+        title: translate('game.rolecards.lastMoveCards.faceoff'),
+        description: translate('game.rolecards.lastMoveCards.faceoffDesc'),
+      },
+    ];
+  }
+  @action gameReset() {
+    this.removedPlayers = [];
+    this.roles = [];
+    this.players = [];
+    this.gameType = '';
+    this.rolePlayers = [];
+    this.night = 0;
+    this.day = 0;
   }
 }
 export default new GameStore();
