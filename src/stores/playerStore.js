@@ -2,7 +2,8 @@ import {observable, action, makeAutoObservable} from 'mobx';
 
 class PlayerStore {
   @observable players = [];
-
+  @observable playersWithoutRole = 0;
+  @observable showNotice = true;
   constructor() {
     makeAutoObservable(this);
   }
@@ -22,6 +23,17 @@ class PlayerStore {
     const newList = newPlayers.filter(item => item !== player);
     this.players = newList;
     return this.players;
+  }
+
+  @action setPlayerRole(num) {
+    runInAction(() => (this.playersWithoutRole = num));
+  }
+  @action resetPlayers() {
+    return (this.players = []);
+  }
+
+  @action setNotice() {
+    return (this.showNotice = false);
   }
 }
 export default new PlayerStore();

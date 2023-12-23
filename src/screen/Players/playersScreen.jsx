@@ -4,7 +4,6 @@ import {
   Image,
   Pressable,
   StyleSheet,
-  TextInput,
   View,
 } from 'react-native';
 import {Text} from '../../components/Text';
@@ -14,25 +13,74 @@ import {useStore} from '../../constants/useStore';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {BottomSheetModal, BottomSheetTextInput} from '@gorhom/bottom-sheet';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {translate, translateWithOptions} from '../../i18n';
+import {colors} from '../../theme';
+import Header from '../../components/Header';
+import * as storage from '../../utils/storage';
+import I18n from 'i18n-js';
+import {showToast} from '../../utils/snackbar';
 
 const PlayersScreen = observer(() => {
-  const {playerStore} = useStore();
-  const allPlayers = playerStore.players;
+  const player = require('../../assets/images/player2.png');
+
+  const {
+    playerStore,
+    langStore: {language},
+  } = useStore();
+  const allPlayers = playerStore.getPlayers();
+  const showNotice = playerStore.showNotice;
   const nav = useNavigation();
   const [players, setPlayers] = useState(allPlayers);
   const [playerName, setPlayerName] = useState('');
   const [formVisible, setFormVisible] = useState(false);
+  const [notice, setNotice] = useState(true);
   const [isFabVisible, setFabVisible] = useState(false);
 
-  const addPlayer = () => {
-    setFormVisible(false);
-    const arr = [...players];
-    playerStore.addPlayers({id: Date.now(), name: playerName});
-    arr.push({id: Date.now(), name: playerName});
-    AsyncStorage.setItem('players', JSON.stringify(arr));
-    setPlayers(arr);
-    setPlayerName('');
+  useEffect(() => {
+    console.log(showNotice);
+    if (showNotice) {
+      showToast({
+        text: translate('players.deletePlayersWithHold'),
+        mode: 'warning',
+        duration: 4000,
+      });
+      playerStore.setNotice();
+    }
+  }, [showNotice]);
+
+  const addPlayer = async () => {
+    if (playerName) {
+      const newPlayer = {
+        id: Date.now(),
+        name: playerName,
+        avatar: userPicture,
+      };
+      await storage.load('players').then(players => {
+        const arr = players || [];
+        arr.push(newPlayer);
+        storage.save('players', arr);
+        playerStore.addPlayers(newPlayer);
+        // setPlayers();
+        setPlayerName('');
+        setUserPicture('');
+      });
+      showToast({
+        text: translateWithOptions('players.addPlayerSucceed', {
+          player: playerName,
+        }),
+      });
+
+      // showToast({
+      //   text: translateWithOptions("players.addPlayerSucceed", {player: playerName}),
+      // });
+    } else {
+      showToast({
+        text: translate('players.shouldWritePlayerName'),
+        mode: 'danger',
+      });
+    }
   };
 
   const removePlayer = item => {
