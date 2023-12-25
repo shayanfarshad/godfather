@@ -3,7 +3,7 @@ import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
 import Text from '../../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useStore} from '../../constants/useStore';
-import {DWidth, backgroundColor} from '../../constants/Constants';
+import {DWidth} from '../../constants/Constants';
 import {useNavigation} from '@react-navigation/native';
 import {colors} from '../../theme';
 import {translate} from '../../i18n';

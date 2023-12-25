@@ -1,11 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Pressable, StyleSheet, View} from 'react-native';
 import Text from '../../components/Text';
 import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {translate} from '../../i18n';

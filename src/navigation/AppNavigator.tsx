@@ -11,13 +11,10 @@ import {
   NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-// import {HomeScreen} from './src/screen/Home/HomeScreen';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {PlayersScreen} from '../screen/Players/playersScreen';
 import {RolesScreen} from '../screen/Roles/RolesScreen';
 import {PlayerListScreen} from '../screen/Players/PlayerListScreen';
 import {RoleUpScreen} from '../screen/Roles/RoleUpScreen';
-import {ShowCards} from '../screen/Game/ShowCards';
 import {GamePlay} from '../screen/Game/GamePlay';
 import {GameNightPlay} from '../screen/Game/GameNightPlay';
 import {MainScreen} from '../screen/Home/MainScreen';
@@ -28,7 +25,7 @@ import {GameRules} from '../screen/Rules/gameRules/GameRules';
 import {Appearance, ColorSchemeName, useColorScheme} from 'react-native';
 import {useStore} from '../constants/useStore';
 import {observer} from 'mobx-react';
-import {colors, setColorMode} from '../theme';
+import {colors} from '../theme';
 import {navigationRef, useBackButtonHandler} from './navigationUtilities';
 import Config from '../config';
 import {BottomNavigator, TabParamList} from './BottomNavigator';
@@ -37,6 +34,7 @@ import * as storage from '../utils/storage';
 import {LastMoves} from '../screen/Rules/lastmove/LastMoves';
 import BootSplash from 'react-native-bootsplash';
 import NavigationWrapper from './navigationWrapper';
+import { ShowCards } from '../screen/Game/ShowCards';
 
 // import {SafeAreaView} from 'react-native-safe-area-context';
 export type AppStackParamList = {
