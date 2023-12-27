@@ -20,15 +20,14 @@ import './src/i18n';
 import './src/utils/ignoreWarnings';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {AppNavigator, useNavigationPersistence} from './src/navigation';
+import {AppNavigator, useNavigationPersistence} from './navigation';
 
-import * as storage from './src/utils/storage';
-import {changeLang} from './src/i18n';
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
-import {AnimatedBootSplash} from './src/screen/Splash/AnimatedSplash';
+import * as storage from './utils/storage';
+import {changeLang} from './i18n';
+import {AnimatedBootSplash} from './screen/Splash/AnimatedSplash';
 import I18n from 'i18n-js';
-import {useStore} from './src/constants/useStore';
-import {setColorMode} from './src/theme';
+import {useStore} from './constants/useStore';
+import {setColorMode} from './theme';
 import {ToastProvider} from 'react-native-toast-notifications';
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 

@@ -6,7 +6,6 @@ module.exports = {
       'react-native-reanimated/plugin',
       {
         relativeSourceLocation: true,
-        runtime: 'automatic',
       },
     ],
   ],
