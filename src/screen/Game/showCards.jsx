@@ -35,11 +35,11 @@ const ShowCards = () => {
     setDetailPlayer(null);
   };
 
-
   return (
     <View
       style={{
         flex: 1,
+        width: '100%',
         paddingVertical: 20,
         marginBottom: 20,
         backgroundColor: colors.background,
@@ -49,17 +49,17 @@ const ShowCards = () => {
         data={gamers}
         keyExtractor={item => item.player.id}
         numColumns={3}
-        contentContainerStyle={{
-          // width: DWidth * 0.9,
-          marginTop: 20,
-          // marginHorizontal: DWidth * 0.05,
-        }}
+        // contentContainerStyle={{
+        //   // width: DWidth * 0.9,
+        //   marginTop: 20,
+        //   // marginHorizontal: DWidth * 0.05,
+        // }}
         ListEmptyComponent={() => {
           return (
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 200}}
+                style={{width: 100, height: 150}}
               />
               <Text style={{fontSize: 20, marginTop: 40}}>
                 {translate('game.allPlayersSeenTheirRoles')}
@@ -129,7 +129,7 @@ const ShowCards = () => {
           {detailPlayer && (
             <View
               style={{
-                width: DWidth / 2,
+                width: '50%',
                 height: 280,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     // marginTop: 80,
   },
   renderItem: {
-    width: DWidth / 3,
+    width: '33%',
     height: 105,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -213,9 +213,9 @@ const styles = StyleSheet.create({
     height: 300,
   },
   modalView: {
-    width: DWidth / 1.5,
+    width: '100%',
     height: DHeight / 2,
-    marginHorizontal: DWidth / 8.5,
+    // marginHorizontal: DWidth / 8.5,
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 10,

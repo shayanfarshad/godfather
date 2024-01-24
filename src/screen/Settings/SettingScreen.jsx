@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Appearance, View} from 'react-native';
+import {Appearance, Platform, View} from 'react-native';
 import {colors, spacing} from '../../theme';
 import {changeLang, translate} from '../../i18n';
 import {Radio} from '../../components/Radio';
@@ -11,7 +11,8 @@ import * as storage from '../../utils/storage';
 import RNRestart from 'react-native-restart';
 import Text from '../../components/Text';
 import {useStore} from '../../constants/useStore';
-
+// import * as Updates from 'expo-updates';
+import {Restart} from 'fiction-expo-restart';
 const SettingScreen = observer(() => {
   const nav = useNavigation();
   const {
@@ -36,31 +37,35 @@ const SettingScreen = observer(() => {
     isDark ? 'active' : 'deactive',
   );
 
-  const handlePress = option => {
+  const handlePress = async option => {
     if (option === 'Persian') {
       storage.save('language', 'en-IR');
       setSelectedLang('fa');
       changeLang('en-IR');
-      RNRestart.restart();
+      // RNRestart.Restart();
+      Restart();
     } else {
       storage.save('language', 'en-US');
       setSelectedLang('en');
       changeLang('en-US');
-      RNRestart.restart();
+      // RNRestart.Restart();
+      Restart();
     }
   };
 
   const handleNight = mode => {
     if (mode === 'active') {
       storage.save('theme', 'dark');
-      Appearance.setColorScheme('dark');
+      // Appearance.setColorScheme('dark');
       setTheme(true);
       setSelectedMode(mode);
+      Restart();
     } else {
       storage.save('theme', 'light');
-      Appearance.setColorScheme('light');
+      // Appearance.setColorScheme('light');
       setTheme(false);
       setSelectedMode(mode);
+      Restart();
     }
   };
 

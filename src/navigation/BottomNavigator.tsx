@@ -3,15 +3,9 @@ import React, {useEffect, useState} from 'react';
 import {
   BottomTabScreenProps,
   createBottomTabNavigator,
-  useBottomTabBarHeight,
 } from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps, useNavigation} from '@react-navigation/native';
 import {
-  CompositeScreenProps,
-  Route,
-  useNavigation,
-} from '@react-navigation/native';
-import {
-  AppState,
   I18nManager,
   Platform,
   Pressable,
@@ -32,11 +26,7 @@ import {Icon} from '../components/Icon';
 import {useStore} from '../constants/useStore';
 import {AllPlayers} from '../screen/Players/AllPlayers';
 import SettingScreen from '../screen/Settings/SettingScreen';
-import I18n from 'i18n-js';
 import * as storage from '../utils/storage';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Header from '../components/Header';
-import {navigate} from './navigationUtilities';
 
 // import { useStores } from "app/models"
 
@@ -112,30 +102,6 @@ export const BottomNavigator = observer(function BottomNavigator() {
         tabBarItemStyle: $tabBarItem,
       }}>
       <Tab.Screen
-        name="profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: translate('bottomNavigator.profile'),
-          tabBarLabelStyle: {
-            fontFamily: fontFamily,
-            fontSize: language === 'fa' ? 16 : 12,
-            lineHeight: 32,
-          },
-
-          tabBarButton: props => <Pressable aria-disabled />,
-          // tabBarIcon: ({focused}) => (
-          //   <Icon
-          //     name="user"
-          //     color={
-          //       focused ? colors.bottomActiveTint : colors.bottomInactiveTint
-          //     }
-          //     size={16}
-          //     style={undefined}
-          //   />
-          // ),
-        }}
-      />
-      <Tab.Screen
         name="learning"
         component={LearningScreen}
         options={{
@@ -192,7 +158,13 @@ export const BottomNavigator = observer(function BottomNavigator() {
                   });
                 }}>
                 <Icon
-                  name={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+                  name={
+                    language === 'fa'
+                      ? 'chevron-left'
+                      : Platform.OS === 'web'
+                      ? 'chevron-left'
+                      : 'chevron-right'
+                  }
                   size={25}
                   style={{}}
                   color={colors.text}

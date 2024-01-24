@@ -42,17 +42,17 @@ const InsideGame = observer(() => {
     }
   }, [players]);
   return (
-    <View style={{flex: 1, paddingBottom: 20}}>
+    <View style={{flex: 1, width: '100%', paddingBottom: 20}}>
       <FlatList
         data={gamers}
         keyExtractor={item => item.player.id}
-        contentContainerStyle={{
-          width: DWidth * 0.9,
-          //   marginTop: 20,
-          //   marginBottom: 50,
-          //   minHeight: DHeight * 0.6,
-          marginHorizontal: DWidth * 0.05,
-        }}
+        // contentContainerStyle={{
+        //   width: DWidth * 0.9,
+        //   //   marginTop: 20,
+        //   //   marginBottom: 50,
+        //   //   minHeight: DHeight * 0.6,
+        //   marginHorizontal: DWidth * 0.05,
+        // }}
         renderItem={({item, index}) => {
           return (
             <PlayerDetail
@@ -77,8 +77,7 @@ const InsideGame = observer(() => {
         }}
         onBackdropPress={() => {
           setShowModal(!showModal);
-        }}
-        >
+        }}>
         <View
           style={[
             styles.modalView,

@@ -130,6 +130,7 @@ const RolesScreen = observer(() => {
     <View
       style={{
         flex: 1,
+        width:'100%',
         backgroundColor: colors.background,
         paddingTop: 10,
       }}>
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   renderItem: {
-    width: DWidth / 3.2,
+    width: '33%',
     height: 200,
     marginBottom: 15,
     // justifyContent: 'space-between',

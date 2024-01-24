@@ -4,6 +4,7 @@ import {colors} from '../theme';
 import I18n from 'i18n-js';
 import {useStore} from '../constants/useStore';
 import {observer} from 'mobx-react';
+import { useFonts } from 'expo-font';
 
 // export const Text = ({type = 'medium', children, style, ...restProps}) => {
 //   return (
@@ -18,6 +19,7 @@ const Text = observer(
     const {
       langStore: {language},
     } = useStore();
+
     const colorScheme = useColorScheme() === 'dark';
     // Define your custom styles here, you can use style prop as well
     const customStyles = {
@@ -55,6 +57,11 @@ const Text = observer(
 );
 
 export const font = (type, language) => {
+  const [fontsLoaded] = useFonts({
+    'Digi Nofar Bold': require('../assets/fonts/Nofar.ttf'),
+    'IRANSansXNoEn-Medium': require('../assets/fonts/IRANSansXNoEn-Medium.ttf'),
+    'Wizard World': require('../assets/fonts/wizard.ttf'),
+  });
   if (language === 'en') {
     switch (type) {
       case 'bold':

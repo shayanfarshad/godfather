@@ -30,6 +30,11 @@ import I18n from 'i18n-js';
 import {useStore} from './src/constants/useStore';
 import {setColorMode} from './src/theme';
 import {ToastProvider} from 'react-native-toast-notifications';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {DWidth} from './src/constants/Constants';
+import {useWindowDimensions} from 'react-native';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {Appearance} from 'react-native';
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 const config = {
@@ -48,6 +53,7 @@ interface AppProps {
 function App(props: AppProps) {
   const {langStore, themeStore, roleStore, gameStore} = useStore();
   const [isLoading, setLoading] = useState(true);
+  const _width = useWindowDimensions().width;
   const {initialNavigationState, onNavigationStateChange} =
     useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
 
@@ -114,20 +120,30 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <SafeAreaProvider>
-      {isLoading ? (
-        <AnimatedBootSplash
-          // timing={5000}
-          onAnimationEnd={() => {
-            // setVisible(false);
-          }}
-        />
-      ) : (
-        <ToastProvider>
-          <AppNavigator />
-        </ToastProvider>
-      )}
-    </SafeAreaProvider>
+    <GestureHandlerRootView
+      style={{
+        // width: _width / 2,
+        flex: 1,
+        justifyContent: 'center',
+        // marginLeft: DWidth * 0.25,
+      }}>
+      <SafeAreaProvider>
+        <BottomSheetModalProvider>
+          {isLoading ? (
+            <AnimatedBootSplash
+              // timing={5000}
+              onAnimationEnd={() => {
+                // setVisible(false);
+              }}
+            />
+          ) : (
+            <ToastProvider>
+              <AppNavigator />
+            </ToastProvider>
+          )}
+        </BottomSheetModalProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

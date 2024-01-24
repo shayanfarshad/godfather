@@ -61,8 +61,9 @@ const RoleUpScreen = () => {
     <View
       style={{
         flex: 1,
+        width: '100%',
         backgroundColor: colors.background,
-        paddingHorizontal: 15,
+        // paddingHorizontal: 15,
         paddingTop: 10,
       }}>
       <Header
@@ -76,16 +77,16 @@ const RoleUpScreen = () => {
           data={rolePlayer}
           keyExtractor={item => item?.player?.id || item?.id}
           numColumns={3}
-          contentContainerStyle={{
-            justifyContent: 'space-around',
-            width: DWidth,
-          }}
+          // contentContainerStyle={{
+          //   justifyContent: 'space-around',
+          //   width: DWidth,
+          // }}
           ListEmptyComponent={() => {
             return (
               <View style={styles.emptyList}>
                 <Image
                   source={require('../../assets/images/empty1.png')}
-                  style={{width: '50%', height: 300}}
+                  style={{width: 100, height: 150}}
                 />
                 <Text style={{fontSize: 20, color: 'white'}}>
                   {translate('game.anyPlayerExist')}
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   playerIcon: {
-    width: DWidth / 3.2,
+    width: '33%',
     height: 160,
     marginBottom: 15,
     justifyContent: 'space-between',

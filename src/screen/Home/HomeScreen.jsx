@@ -61,6 +61,7 @@ const HomeScreen = observer(() => {
     <View
       style={{
         flex: 1,
+        width: '100%',
         paddingVertical: 30,
         paddingHorizontal: 10,
         backgroundColor: colors.background,

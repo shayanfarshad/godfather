@@ -245,6 +245,7 @@ const PlayersScreen = observer(() => {
       // onTouchStart={() => setFabVisible(false)}
       style={{
         flex: 1,
+        width: '100%',
         backgroundColor: colors.background,
         paddingTop: 10,
       }}>
@@ -266,14 +267,13 @@ const PlayersScreen = observer(() => {
       <FlatList
         data={players}
         keyExtractor={item => item.id}
-        contentContainerStyle={styles.flatContainer}
         numColumns={3}
         ListEmptyComponent={() => {
           return (
             <View style={styles.emptyList}>
               <Image
                 source={require('../../assets/images/empty1.png')}
-                style={{width: '50%', height: 200}}
+                style={{width: 100, height: 150}}
               />
               <Text style={{fontSize: 20}}>
                 {translate('game.anyPlayerExist')}
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
     // marginTop: 80,
   },
   renderItem: {
-    width: DWidth / 3.2,
+    width: '33%',
     height: 105,
     marginBottom: 15,
     justifyContent: 'space-between',

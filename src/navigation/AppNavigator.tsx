@@ -34,7 +34,7 @@ import * as storage from '../utils/storage';
 import {LastMoves} from '../screen/Rules/lastmove/LastMoves';
 import BootSplash from 'react-native-bootsplash';
 import NavigationWrapper from './navigationWrapper';
-import { ShowCards } from '../screen/Game/ShowCards';
+import {ShowCards} from '../screen/Game/showCards';
 
 // import {SafeAreaView} from 'react-native-safe-area-context';
 export type AppStackParamList = {

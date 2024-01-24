@@ -9,6 +9,7 @@ import {
   BackHandler,
   FlatList,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   TouchableOpacity,
@@ -160,7 +161,13 @@ const GamePlay = () => {
   // };
 
   return (
-    <View style={{flex: 1, paddingTop: 10, backgroundColor: colors.background}}>
+    <View
+      style={{
+        flex: 1,
+        width: '100%',
+        paddingTop: 10,
+        backgroundColor: colors.background,
+      }}>
       <View style={styles.header}>
         <Text style={{fontSize: 20}}>{translate('game.day')}</Text>
         <View
@@ -195,7 +202,13 @@ const GamePlay = () => {
             style={{widht: 50}}
             onPress={() => exitRef?.current?.present()}>
             <Icon
-              name={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+              name={
+                language === 'fa'
+                  ? 'chevron-left'
+                  : Platform.OS !== 'web'
+                  ? 'chevron-right'
+                  : 'chevron-left'
+              }
               size={25}
               color={colors.text}
             />
@@ -253,7 +266,7 @@ const GamePlay = () => {
 
       <ReactNativeModal
         isVisible={showLastCard}
-        deviceWidth={DWidth}
+        deviceWidth={'100%'}
         deviceHeight={DHeight}
         onBackButtonPress={() => {
           setShowLastCard(!showLastCard);

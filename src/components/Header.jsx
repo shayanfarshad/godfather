@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Platform, Pressable, View, useColorScheme} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Text from './Text';
 import {colors, spacing} from '../theme';
 import {observer} from 'mobx-react';
 import {useStore} from '../constants/useStore';
+import {Icon} from './Icon';
 
 const Header = observer(({title, backPress}) => {
   const {
@@ -62,7 +62,13 @@ const Header = observer(({title, backPress}) => {
             }}
             onPress={backPress}>
             <Icon
-              name={language === 'fa' ? 'chevron-left' : 'chevron-right'}
+              name={
+                language === 'fa'
+                  ? 'chevron-left'
+                  : Platform.OS !== 'web'
+                  ? 'chevron-right'
+                  : 'chevron-left'
+              }
               size={25}
               color={colors.text}
             />

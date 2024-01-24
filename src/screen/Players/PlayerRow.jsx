@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image, Pressable, View} from 'react-native';
 import Text from '../../components/Text';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import { colors } from '../../theme';
+import { Icon } from '../../components/Icon';
 
 const PlayerRow = ({item, removeItem}) => {
 

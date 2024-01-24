@@ -80,7 +80,7 @@ const NustraRolesScreen = observer(() => {
     <FlatList
       data={nustraRoles}
       keyExtractor={item => item.id}
-      contentContainerStyle={styles.flatContainer}
+      // contentContainerStyle={styles.flatContainer}
       numColumns={3}
       renderItem={({item}) => {
         return (
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   renderItem: {
-    width: DWidth / 3.2,
+    width: '30%',
     height: 200,
     marginBottom: 15,
     // justifyContent: 'space-between',

@@ -16,13 +16,14 @@ import {
   NativeEventEmitter,
   NativeModules,
   PermissionsAndroid,
+  Platform,
   Pressable,
   StyleSheet,
   TextInput,
   View,
   useColorScheme,
 } from 'react-native';
-import {DHeight, backgroundColor} from '../../constants/Constants';
+import {DHeight, DWidth, backgroundColor} from '../../constants/Constants';
 import Header from '../../components/Header';
 import {PlayerRow} from './PlayerRow';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -211,8 +212,9 @@ const AllPlayers = observer(() => {
   return (
     <View
       style={{
-        flex: 1,
+        width: '100%',
         paddingTop: 20,
+        height: '100%',
         backgroundColor: colors.background,
       }}>
       <Header title={translate('game.myPlayers')} />
@@ -220,7 +222,7 @@ const AllPlayers = observer(() => {
         <FlatList
           data={players}
           keyExtractor={item => item.id}
-          style={{flex: 0.7, maxHeight: DHeight * 0.8}}
+          // style={{flex: 0.7, maxHeight: DHeight * 0.8}}
           contentContainerStyle={{
             marginTop: 20,
             paddingBottom: 50,
@@ -231,7 +233,7 @@ const AllPlayers = observer(() => {
               <View style={styles.emptyList}>
                 <Image
                   source={require('../../assets/images/empty1.png')}
-                  style={{width: '50%', height: 200}}
+                  style={{width: 100, height: 150}}
                 />
                 <Text style={{fontSize: 20}}>
                   {translate('game.anyPlayerExist')}
@@ -270,9 +272,18 @@ const AllPlayers = observer(() => {
       <Modal
         modalRef={addRef}
         index={0}
-        onDismiss={() => {}}
-        snapPoints={[DHeight * 0.5]}
-        backgroundStyle={{backgroundColor: colors.modalBackground}}
+        onDismiss={() => {
+          console.log('dismiss called');
+          addRef.current.close();
+        }}
+        onBackdropPress={() => {
+          console.log('backdrop pressed ');
+          addRef.current.close();
+        }}
+        snapPoints={['70%']}
+        backgroundStyle={{
+          backgroundColor: colors.modalBackground,
+        }}
         onChange={e => {}}>
         <View
           style={{
@@ -313,6 +324,7 @@ const AllPlayers = observer(() => {
             onChangeText={text => {
               setPlayerName(text);
             }}
+            // autoFocus={true}
             style={[
               styles.modalInput,
               {
@@ -345,7 +357,7 @@ const AllPlayers = observer(() => {
         modalRef={cameraModal}
         index={0}
         onDismiss={() => cameraModal?.current?.close()}
-        snapPoints={['25%']}
+        snapPoints={['50%']}
         vertical={30}
         backgroundStyle={{
           backgroundColor: colors.background,

@@ -4,16 +4,14 @@ import {
   Animated,
   FlatList,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from 'react-native';
-import {DHeight, DWidth, backgroundColor} from '../../../constants/Constants';
 import {useStore} from '../../../constants/useStore';
-import Text from '../../../components/Text';
-import {CardItem} from '../CardItem';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../../components/Header';
 import {TabView, SceneMap} from 'react-native-tab-view';
@@ -51,7 +49,6 @@ const RoleLearning = observer(() => {
       }}>
       <Header
         title={translate('game.roles')}
-        // backIcon={language === 'fa' ? 'chevron-left' : 'chevron-right'}
         backPress={() => {
           nav.goBack();
         }}
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   renderItem: {
-    width: DWidth * 0.9,
+    width: '90%',
     // height: 80,
     flexDirection: 'row-reverse',
     justifyContent: 'flex-start',
