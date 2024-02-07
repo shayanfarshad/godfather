@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/static/js/main.27541459.js",
+    "main.js": "/static/js/main.d8dbd613.js",
     "static/js/51.ff6fb761.js": "/static/js/51.ff6fb761.js",
     "static/media/empty1.png": "/static/media/empty1.822d55adfdbdd88e88a3.png",
     "static/media/mafia4.jpeg": "/static/media/mafia4.c03a9c25f563a652d7f3.jpeg",
@@ -31,15 +31,16 @@
     "static/media/JMatador.webp": "/static/media/JMatador.bf429e93ec25fe63a01f.webp",
     "static/media/JLeon.webp": "/static/media/JLeon.8b1c0550535a435de7c6.webp",
     "static/media/bootsplash_logo.png": "/static/media/bootsplash_logo.7a8e8b5ba54fdf318cc8.png",
+    ".DS_Store": "/.DS_Store",
     "index.html": "/index.html",
-    "serve.json": "/serve.json",
     "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
     "static/media/javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/static/media/.1feff74faaf0efc6a044",
-    "main.27541459.js.map": "/static/js/main.27541459.js.map",
+    "main.d8dbd613.js.map": "/static/js/main.d8dbd613.js.map",
     "51.ff6fb761.js.map": "/static/js/51.ff6fb761.js.map"
   },
   "entrypoints": [
     "static/js/51.ff6fb761.js",
-    "static/js/main.27541459.js"
+    "static/js/main.d8dbd613.js"
   ]
 }

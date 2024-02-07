@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   renderItem: {
-    width: '30%',
+    width: '33%',
     height: 200,
     marginBottom: 15,
     // justifyContent: 'space-between',
