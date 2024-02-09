@@ -57,75 +57,7 @@ const RolesScreen = observer(() => {
     {key: 'jack', title: translate('game.jackRoles')},
     {key: 'nustra', title: translate('game.nustraRoles')},
   ]);
-  // useEffect(() => {
-  //   setGameRoles(Roles);
-  // }, [Roles]);
 
-  // const addRole = item => {
-  //   const existItem = roles.findIndex(el => el === item);
-  //   if (existItem === -1) {
-  //     gameStore.addRoles(item);
-  //     const fakeRole = [...gameRoles];
-  //     const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
-  //     fakeRole[selectedIndex].active = false;
-  //     setGameRoles(fakeRole);
-  //   } else {
-  //     if (item.title === 'شهروند ساده') {
-  //       const fakeRole = [...roles];
-  //       return fakeRole?.map(el => {
-  //         if (el.title === item.title) {
-  //           const ind = fakeRole.filter(item => item.title !== 'شهروند ساده');
-  //           const arr = [...Roles];
-  //           arr.map(item => {
-  //             if (item.title === 'شهروند ساده') item.active = true;
-  //           });
-  //           setGameRoles(arr);
-  //           gameStore.updateRoles(ind);
-  //         }
-  //       });
-  //     }
-  //     gameStore.removeRoles(item);
-  //     const fakeRole = [...gameRoles];
-  //     const selectedIndex = fakeRole.findIndex(el => el.id === item.id);
-  //     fakeRole[selectedIndex].active = true;
-  //     setGameRoles(fakeRole);
-  //   }
-  // };
-  const addCitizen = () => {
-    const newCitizen = Roles[8];
-    newCitizen.id = Date.now();
-    newCitizen.active = false;
-    setCitizen(citizen + 1);
-    gameStore.addRoles(newCitizen);
-  };
-
-  const removeCitizen = () => {
-    const lastIndex = roles.length - 1;
-    setCitizen(citizen - 1);
-    gameStore.roles.splice(lastIndex, 1);
-  };
-
-  // useEffect(() => {
-  //   if (roles.length === 0) {
-  //     const arr = [...Roles];
-  //     arr.map(item => {
-  //       item.active = true;
-  //     });
-
-  //     return setGameRoles(arr);
-  //   }
-
-  //   if (roles) {
-  //     let len = 0;
-
-  //     roles.map(item => {
-  //       if (item?.title === 'شهروند ساده') {
-  //         len += 1;
-  //         setCitizen(len);
-  //       }
-  //     });
-  //   }
-  // }, [roles]);
   return (
     <View
       style={{

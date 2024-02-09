@@ -75,7 +75,7 @@ const SettingScreen = observer(() => {
       }}>
       <Header title={translate('settings.title')} />
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: spacing.xl}}>
+        <Text style={{fontSize: spacing.md}}>
           {translate('settings.language')}
         </Text>
       </View>
@@ -93,7 +93,7 @@ const SettingScreen = observer(() => {
         />
       </View>
       <View style={{flexDirection: 'row-reverse'}}>
-        <Text style={{fontSize: spacing.xl}}>
+        <Text style={{fontSize: spacing.md}}>
           {translate('settings.nightMode')}
         </Text>
       </View>

@@ -20,9 +20,9 @@ const en = {
     ten: '10',
   },
   bottomNavigator: {
-    profile: 'Profile',
+    custom: 'Custom',
     learning: 'Learning',
-    playGame: 'Play Game',
+    playGame: 'Godfather',
     players: 'Players',
     settings: 'Settings',
   },

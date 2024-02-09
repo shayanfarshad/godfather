@@ -22,9 +22,9 @@ const fa: Translations = {
     ten: '۱۰',
   },
   bottomNavigator: {
-    profile: 'پروفایل',
+    custom: 'دلخواه',
     learning: ' آموزش ',
-    playGame: 'بازی',
+    playGame: 'پدرخوانده',
     players: 'بازیکن ها',
     settings: 'تنظیمات',
   },

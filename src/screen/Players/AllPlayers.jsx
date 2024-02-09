@@ -213,6 +213,7 @@ const AllPlayers = observer(() => {
       style={{
         flex: 1,
         paddingTop: 20,
+        // height: DHeight - 80,
         backgroundColor: colors.background,
       }}>
       <Header title={translate('game.myPlayers')} />
@@ -233,7 +234,7 @@ const AllPlayers = observer(() => {
                   source={require('../../assets/images/empty1.png')}
                   style={{width: '50%', height: 200}}
                 />
-                <Text style={{fontSize: 20}}>
+                <Text style={{fontSize: spacing.md}}>
                   {translate('game.anyPlayerExist')}
                 </Text>
               </View>

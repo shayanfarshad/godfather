@@ -12,7 +12,7 @@ import {useStore} from '../../constants/useStore';
 import {DWidth} from '../../constants/Constants';
 import {Icon} from '../../components/Icon';
 import Text from '../../components/Text';
-import {spacing} from '../../theme';
+import {colors, spacing} from '../../theme';
 
 const JackRolesScreen = observer(() => {
   const {
@@ -158,7 +158,7 @@ const JackRolesScreen = observer(() => {
                       }}>
                       <Icon name="plus" color="black" size={18} />
                     </Pressable>
-                    <Text style={{fontSize: 18}}>{citizen}</Text>
+                    <Text style={{fontSize: spacing.md,color: colors.bottomActiveTint}}>{citizen}</Text>
                     <Pressable
                       onPress={() => {
                         if (citizen > 1) {
@@ -177,7 +177,7 @@ const JackRolesScreen = observer(() => {
               />
             </View>
             <Text
-              style={{fontSize: language === 'fa' ? spacing.lg : 14}}>
+              style={{fontSize: language === 'fa' ? spacing.md : 14}}>
               {item.title}
             </Text>
           </Pressable>

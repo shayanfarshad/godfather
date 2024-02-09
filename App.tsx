@@ -99,6 +99,7 @@ function App(props: AppProps) {
         gameStore.resetLastMoves();
       }),
     );
+
     // Update progress
   };
   // Before we show the app, we have to wait for our state to be ready.

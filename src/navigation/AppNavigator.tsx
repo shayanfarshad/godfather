@@ -12,7 +12,6 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 // import {HomeScreen} from './src/screen/Home/HomeScreen';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {PlayersScreen} from '../screen/Players/playersScreen';
 import {RolesScreen} from '../screen/Roles/RolesScreen';
 import {PlayerListScreen} from '../screen/Players/PlayerListScreen';
@@ -95,7 +94,8 @@ const AppStack = observer(function AppStack() {
       initialRouteName="RPM"
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colorScheme ? colors.background : colors.background,
+        navigationBarHidden:true
+        // navigationBarColor: colorScheme ? colors.background : colors.background,
       }}>
       {/* <Stack.Screen name="splash" component={SplashScreen} /> */}
       <Stack.Screen name="RPM" component={BottomNavigator} />

@@ -3,10 +3,7 @@ import {observable, action, makeAutoObservable, toJS, runInAction} from 'mobx';
 class PlayerStore {
   @observable players = [];
   @observable playersWithoutRole = 0;
-<<<<<<< HEAD
   @observable showNotice = true;
-=======
->>>>>>> 882e0fa9ac2a049cfa7ccd0d827551ea7218ac11
   constructor() {
     makeAutoObservable(this);
   }

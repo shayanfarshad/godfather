@@ -39,7 +39,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('roleCards')}>
-        <Text type="bold" style={{fontSize: spacing.xl}}>
+        <Text type="bold" style={{fontSize: spacing.lg}}>
           {translate('game.roles')}
         </Text>
       </Pressable>
@@ -51,7 +51,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('lastMoves')}>
-        <Text style={{fontSize: spacing.xl}}>
+        <Text style={{fontSize: spacing.lg}}>
           {'  '}
           {translate('game.lastMoveCards')}
           {'  '}
@@ -65,7 +65,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('rules')}>
-        <Text style={{fontSize: spacing.xl}}>{translate('game.senario')}</Text>
+        <Text style={{fontSize: spacing.lg}}>{translate('game.senario')}</Text>
       </Pressable>
     </View>
   );

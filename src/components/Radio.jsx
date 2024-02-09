@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue', // Change the color when selected
   },
   radioLabel: {
-    fontSize: 20,
+    fontSize: 14,
   },
 });

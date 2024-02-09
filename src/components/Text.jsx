@@ -21,7 +21,7 @@ const Text = observer(
     const colorScheme = useColorScheme() === 'dark';
     // Define your custom styles here, you can use style prop as well
     const customStyles = {
-      fontSize: I18n.locale === 'en-IR' ? 20 : 16,
+      fontSize: I18n.locale === 'en-IR' ? 20 : 14,
       color: restProps?.color || colorScheme ? colors.text : colors.text,
       // color: 'blue',
       // Add any other custom styles you need
@@ -39,11 +39,11 @@ const Text = observer(
           {
             fontFamily: font(type, language),
             textAlign: 'right',
-            paddingTop: Platform.OS === 'ios' ? 12 : language === 'fa' ? 5 : 0,
+            paddingTop: Platform.OS === 'ios' ? 12 : language === 'fa' ? 0 : 0,
             paddingBottom: Platform.OS === 'ios' ? 12 : 0,
             paddingHorizontal:
-              Platform.OS === 'ios' ? 12 : language === 'fa' ? 5 : 0,
-            ...(language === 'fa' && {lineHeight: 40}),
+              Platform.OS === 'ios' ? 12 : language === 'fa' ? 0 : 0,
+            // ...(language === 'fa' && {lineHeight: 20}),
             // padding: Platform.OS === 'ios' ? 12 : 0,
           },
         ]}
@@ -67,13 +67,13 @@ export const font = (type, language) => {
   } else {
     switch (type) {
       case 'bold':
-        return 'Digi Nofar Bold';
+        return 'IRANSansXNoEn-Medium';
       case 'light':
-        return 'Digi Nofar Bold';
+        return 'IRANSansXNoEn-Medium';
       case 'iran':
         return 'IRANSansXNoEn-Medium';
       default:
-        return 'Digi Nofar Bold';
+        return 'IRANSansXNoEn-Medium';
     }
   }
 };

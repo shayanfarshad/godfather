@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {translate} from '../../i18n';
-import {colors} from '../../theme';
+import {colors, spacing} from '../../theme';
 import * as storage from '../../utils/storage';
 
 const PlayerListScreen = observer(({route}) => {
@@ -66,7 +66,7 @@ const PlayerListScreen = observer(({route}) => {
                 source={require('../../assets/images/empty1.png')}
                 style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20}}>
+              <Text style={{fontSize: spacing.md}}>
                 {translate('game.anyPlayerExist')}
               </Text>
             </View>

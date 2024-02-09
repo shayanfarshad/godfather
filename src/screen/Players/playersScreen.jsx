@@ -24,7 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 import {BottomSheetModal, BottomSheetTextInput} from '@gorhom/bottom-sheet';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {translate, translateWithOptions} from '../../i18n';
-import {colors} from '../../theme';
+import {colors, spacing} from '../../theme';
 import Header from '../../components/Header';
 import * as storage from '../../utils/storage';
 import I18n from 'i18n-js';
@@ -266,7 +266,7 @@ const PlayersScreen = observer(() => {
           marginBottom: 20,
           paddingHorizontal: 20,
         }}>
-        <Text style={{fontSize: 22}}>{translate('game.playersChoosen')}</Text>
+        <Text style={{fontSize: spacing.lg}}>{translate('game.playersChoosen')}</Text>
       </View>
       <FlatList
         data={players}
@@ -280,7 +280,7 @@ const PlayersScreen = observer(() => {
                 source={require('../../assets/images/empty1.png')}
                 style={{width: '50%', height: 200}}
               />
-              <Text style={{fontSize: 20}}>
+              <Text style={{fontSize: spacing.md}}>
                 {translate('game.anyPlayerExist')}
               </Text>
             </View>
@@ -332,7 +332,7 @@ const PlayersScreen = observer(() => {
                 });
                 setFabVisible(false);
               }}>
-              <Text>{translate('game.oldPlayer')}</Text>
+              <Text style={{fontSize:spacing.md}}>{translate('game.oldPlayer')}</Text>
             </Pressable>
           </View>
           <View
@@ -350,7 +350,7 @@ const PlayersScreen = observer(() => {
                 setFabVisible(false);
                 addPlayerRef?.current?.present();
               }}>
-              <Text>{translate('game.newPlayer')}</Text>
+              <Text style={{fontSize:spacing.md}}>{translate('game.newPlayer')}</Text>
             </Pressable>
           </View>
         </View>

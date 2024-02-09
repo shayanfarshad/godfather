@@ -37,7 +37,7 @@ const Header = observer(({title, backPress}) => {
         }}>
         <Text
           style={{
-            fontSize: spacing.xl,
+            fontSize: spacing.lg,
             color: colors.text,
           }}>
           {'  '}
