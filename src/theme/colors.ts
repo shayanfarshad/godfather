@@ -183,8 +183,8 @@ const darkColors = {
 
 let colors: typeof lightColors | typeof darkColors = lightColors;
 
-const setColorMode = (mode: boolean) => {
-  colors = mode === true ? darkColors : lightColors;
+const setColorMode = (mode: string) => {
+  colors = mode === "dark" ? darkColors : lightColors;
 };
 
 export {colors, setColorMode};

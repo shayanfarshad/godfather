@@ -20,16 +20,15 @@ import './src/i18n';
 import './src/utils/ignoreWarnings';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {AppNavigator, useNavigationPersistence} from './src/navigation';
-
-import * as storage from './src/utils/storage';
-import {changeLang} from './src/i18n';
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
-import {AnimatedBootSplash} from './src/screen/Splash/AnimatedSplash';
-import I18n from 'i18n-js';
-import {useStore} from './src/constants/useStore';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 import {setColorMode} from './src/theme';
 import {ToastProvider} from 'react-native-toast-notifications';
+import {useAppSelector} from './src/stores/hooks';
+import {shallowEqual} from 'react-redux';
+import i18n from './src/i18n/i18n';
+import {AppNavigator} from './src/navigation/AppNavigator';
+import {appStore, appStorePersistor} from './src/stores/store';
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 const config = {
@@ -46,88 +45,16 @@ interface AppProps {
  * This is the root component of our app.
  */
 function App(props: AppProps) {
-  const {langStore, themeStore, roleStore, gameStore} = useStore();
-  const [isLoading, setLoading] = useState(true);
-  const {initialNavigationState, onNavigationStateChange} =
-    useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
-
-  useEffect(() => {
-    simulateTasks().then(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
-    });
-  }, []);
-
-  const simulateTasks = async () => {
-    // Simulate fetching data or any other background tasks
-
-    await new Promise(resolve =>
-      storage.load('theme').then(res => {
-        console.log({resOftheme: res});
-        if (res) {
-          themeStore.setTheme(res === 'dark' ? true : false);
-          setColorMode(res === 'dark' ? true : false);
-          resolve(res);
-        } else {
-          console.log({baadazkhalibudanres: 'umad tu else'});
-          storage.save('theme', 'light');
-          themeStore.setTheme(false);
-          setColorMode(false);
-          resolve(res);
-        }
-      }),
-    );
-    // Update progress
-
-    // Simulate additional tasks
-    await new Promise(resolve =>
-      storage.load('language').then(res => {
-        if (res) {
-          I18n.locale = res as string;
-          changeLang(res as string);
-          langStore.changeLanguage(res === 'en-IR' ? 'fa' : 'en');
-          resolve(res);
-        } else {
-          I18n.locale = 'en-IR';
-          changeLang('en-IR');
-          langStore.changeLanguage('fa');
-          storage.save('language', 'en-IR');
-          resolve(res);
-        }
-        roleStore.resetRoles();
-        gameStore.resetLastMoves();
-      }),
-    );
-    // Update progress
-  };
-  // Before we show the app, we have to wait for our state to be ready.
-  // In the meantime, don't render anything. This will be the background
-  // color set in native by rootView's background color.
-  // In iOS: application:didFinishLaunchingWithOptions:
-  // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
-
-  const linking = {
-    config,
-  };
-
-  // otherwise, we're ready to render the app
   return (
-    <SafeAreaProvider>
-      {isLoading ? (
-        <AnimatedBootSplash
-          // timing={5000}
-          onAnimationEnd={() => {
-            // setVisible(false);
-          }}
-        />
-      ) : (
-        <ToastProvider>
-          <AppNavigator />
-        </ToastProvider>
-      )}
-    </SafeAreaProvider>
+    <Provider store={appStore}>
+      <PersistGate persistor={appStorePersistor}>
+        <SafeAreaProvider>
+          <ToastProvider>
+            <AppNavigator />
+          </ToastProvider>
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

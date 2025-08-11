@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import Text from '../../../components/Text';
-import {translate} from '../../../i18n';
 import {spacing} from '../../../theme';
+import { t } from 'i18next';
 
 const JackRules = () => {
   const [numberOfLines, setNumberOfLine] = useState(2);
@@ -10,7 +10,7 @@ const JackRules = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={{fontSize: spacing.lg, marginBottom: 20}}>
-        {translate('game.description')}
+        {t('game.description')}
       </Text>
       <Text
         onPress={e => {
@@ -23,31 +23,31 @@ const JackRules = () => {
         numberOfLines={numberOfLines}
         type="iran"
         style={{fontSize: 16}}>
-        {translate('game.jackDescription')}
+        {t('game.jackDescription')}
       </Text>
       <Text style={{fontSize: spacing.lg, marginVertical: 20}}>
-        {translate('game.gameRules')}
+        {t('game.gameRules')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.one')} - {translate('game.jackRules.first')}
+        {t('numbers.one')} - {t('game.jackRules.first')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.two')} - {translate('game.jackRules.second')}
+        {t('numbers.two')} - {t('game.jackRules.second')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.three')} - {translate('game.jackRules.third')}
+        {t('numbers.three')} - {t('game.jackRules.third')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.four')} - {translate('game.jackRules.fourth')}
+        {t('numbers.four')} - {t('game.jackRules.fourth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.five')} - {translate('game.jackRules.fifth')}
+        {t('numbers.five')} - {t('game.jackRules.fifth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.six')} - {translate('game.jackRules.sixth')}
+        {t('numbers.six')} - {t('game.jackRules.sixth')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.seven')} - {translate('game.jackRules.seventh')}
+        {t('numbers.seven')} - {t('game.jackRules.seventh')}
       </Text>
     </ScrollView>
   );

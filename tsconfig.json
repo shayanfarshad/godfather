@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+      "strict": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
+      "module": "es2020",
+      "target": "es2020",
+      "jsx": "react",
+      "allowJs": true,
+      "lib": ["DOM", "ESNext"],
+      "noEmit": true,
+
+      "baseUrl": "src", // Set the base URL to the root of your project
+    "paths": {
+      "src/*": ["*"],  // Map 'src/*' to the root of 'src'
+      "stores/*": ["stores/*"], // Map 'stores/*' to 'src/stores/*'
+      "components/*": ["components/*"] // Example: Add more mappings as needed/ Map 'src/*' to the 'src' folder
+    }
+    
+   
+    },
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "react-app-env.d.ts"  // Include the declaration file
+    ],
+    "exclude": ["node_modules"]
+  }

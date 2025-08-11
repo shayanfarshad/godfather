@@ -1,36 +1,18 @@
-import React, {useEffect} from 'react';
-import {observer} from 'mobx-react';
+import React from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
-import {DWidth} from '../../constants/Constants';
-import {useStore} from '../../constants/useStore';
+import {DWidth, hp} from '../../constants/Constants';
 import Text from '../../components/Text';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {colors, spacing} from '../../theme';
-import {translate} from '../../i18n';
+import {t} from 'i18next';
 
-const LearningScreen = observer(() => {
-  const {
-    themeStore: {isDark},
-    langStore: {language},
-  } = useStore();
+const LearningScreen = () => {
   const nav = useNavigation();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingTop: 20,
-        paddingBottom: 40,
-        backgroundColor: colors.background,
-      }}>
-      <Header
-        title={translate('learn.title')}
-        // backIcon={language === 'fa' ? 'chevron-left' : 'chevron-right'}
-        // backPress={() => {
-        //   nav.goBack();
-        // }}
-      />
+    <View style={styles.learnContainer}>
+      <Header title={t('learn.title')} />
       <Pressable
         style={[
           styles.card,
@@ -39,9 +21,7 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('roleCards')}>
-        <Text type="bold" style={{fontSize: spacing.xl}}>
-          {translate('game.roles')}
-        </Text>
+        <Text style={{fontSize: hp(2.5)}}>{t('game.roles')}</Text>
       </Pressable>
       <Pressable
         style={[
@@ -51,9 +31,9 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('lastMoves')}>
-        <Text style={{fontSize: spacing.xl}}>
+        <Text style={{fontSize: hp(2.5)}}>
           {'  '}
-          {translate('game.lastMoveCards')}
+          {t('game.lastMoveCards')}
           {'  '}
         </Text>
       </Pressable>
@@ -65,13 +45,18 @@ const LearningScreen = observer(() => {
           },
         ]}
         onPress={() => nav.navigate('rules')}>
-        <Text style={{fontSize: spacing.xl}}>{translate('game.senario')}</Text>
+        <Text style={{fontSize: hp(2.5)}}>{t('game.senario')}</Text>
       </Pressable>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
+  learnContainer: {
+    flex: 1,
+    paddingTop: hp(2),
+    backgroundColor: colors.background,
+  },
   emptyList: {
     width: '100%',
     justifyContent: 'center',

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import Text from '../../../components/Text';
-import {translate} from '../../../i18n';
 import {spacing} from '../../../theme';
+import { t } from 'i18next';
 
 const NustraRules = () => {
   const [numberOfLines, setNumberOfLine] = useState(2);
@@ -10,7 +10,7 @@ const NustraRules = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={{fontSize: spacing.lg, marginBottom: 10}}>
-        {translate('game.description')}
+        {t('game.description')}
       </Text>
       <Text
         onPress={e => {
@@ -23,22 +23,22 @@ const NustraRules = () => {
         numberOfLines={numberOfLines}
         type="iran"
         style={{fontSize: 16}}>
-        {translate('game.nustraDescription')}
+        {t('game.nustraDescription')}
       </Text>
       <Text style={{fontSize: spacing.lg, marginVertical: 20}}>
-        {translate('game.gameRules')}
+        {t('game.gameRules')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.one')} - {translate('game.nustraRules.first')}
+        {t('numbers.one')} - {t('game.nustraRules.first')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.two')} - {translate('game.nustraRules.second')}
+        {t('numbers.two')} - {t('game.nustraRules.second')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.three')} - {translate('game.nustraRules.third')}
+        {t('numbers.three')} - {t('game.nustraRules.third')}
       </Text>
       <Text type="iran" style={{fontSize: 16, marginBottom: 10}}>
-        {translate('numbers.four')} - {translate('game.nustraRules.fourth')}
+        {t('numbers.four')} - {t('game.nustraRules.fourth')}
       </Text>
     </ScrollView>
   );

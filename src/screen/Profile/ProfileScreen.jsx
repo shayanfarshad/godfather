@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {colors} from '../../theme';
-import {observer} from 'mobx-react';
 import {useStore} from '../../constants/useStore';
 
-const ProfileScreen = observer(() => {
+const ProfileScreen = () => {
   const {
     themeStore: {isDark},
   } = useStore();
@@ -14,6 +13,6 @@ const ProfileScreen = observer(() => {
       <Text>خوش اومدید</Text>
     </View>
   );
-});
+};
 
 export {ProfileScreen};
