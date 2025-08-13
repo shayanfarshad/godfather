@@ -26,11 +26,10 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	  <!-- Do not change NSAllowsArbitraryLoads to true, or you will risk app rejection! -->
-	  <key>NSAllowsArbitraryLoads</key>
-	  <false/>
-	  <key>NSAllowsLocalNetworking</key>
-	  <true/>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
@@ -59,9 +58,8 @@
 		<string>IRANSansXNoEn-Light.ttf</string>
 		<string>IRANSansXNoEn-Medium.ttf</string>
 		<string>IRANSansXNoEn-Regular.ttf</string>
-		<string>Nofar.ttf</string>
-		<string>wizard.ttf</string>
 		<string>hadye.ttf</string>
+		<string>wizard.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash.storyboard</string>
@@ -77,5 +75,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photos so you can add a player picture.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera so you can take a player picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to save taken photos.</string>
 </dict>
 </plist>

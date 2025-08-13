@@ -1,0 +1,625 @@
+{
+    "common": {
+        "ok": "OK",
+        "cancel": "Cancel",
+        "back": "Back",
+        "addBtn": "Add Player",
+        "camera": "Camera",
+        "gallery": "Gallery"
+    },
+    "numbers": {
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "ten": "10"
+    },
+    "bottomNavigator": {
+        "custom": "Custom",
+        "learning": "Learning",
+        "playGame": "Godfather",
+        "players": "Players",
+        "settings": "Settings"
+    },
+    "players": {
+        "title": "Players",
+        "add": "Add Player",
+        "edit": "Edit",
+        "delete": "Delete",
+        "name": "Player name",
+        "save": "Save",
+        "cancel": "Cancel",
+        "empty": "No players yet!",
+        "pickImage": "Pick Image"
+    },
+    "image": {
+        "modal": {
+            "title": "Choose an image",
+            "subtitle": "Pick one of the options",
+            "camera": "Take a photo",
+            "library": "Choose from library",
+            "cancel": "Cancel"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "theme": "Theme",
+        "theme.dark": "Dark",
+        "theme.light": "Light",
+        "language": "Language",
+        "language.fa": "Persian",
+        "language.en": "English",
+        "premium": "Premium",
+        "premium.desc": "Create custom scenarios & unlock extras",
+        "premium.manage": "Scenario Builder (Premium)",
+        "premium.activate": "Activate Premium",
+        "premium.later": "Maybe later",
+        "sound": "Sound",
+        "notifications": "Notifications",
+        "paywall": {
+            "title": "Premium",
+            "subtitle": "Custom scenarios & more tools",
+            "cta": "Activate (Mock)"
+        }
+    },
+    "custom": {
+        "title": "Custom Roles",
+        "newRoleAdded": "List Of Roles Added",
+        "addNewRole": "Add Role",
+        "anyRoleDoesentAdded": "Any New Role Not Added",
+        "shouldWriteRoleName": "Write the role Name",
+        "roleName": "Role Name",
+        "roleType": "Role Type",
+        "mafia": "Mafia",
+        "citizen": "Citizen",
+        "roleDes": "Role Description",
+        "hasShield": "Shield",
+        "notHasShield": "without shield"
+    },
+    "rules": {
+        "title": "Rules",
+        "tab.builtin": "Built-in",
+        "tab.custom": "My Scenarios",
+        "selectScenario": "Choose a scenario",
+        "description": "Scenario Description",
+        "roles": "Roles",
+        "empty.custom": "You have no custom scenarios yet!",
+        "make.custom": "Create Scenario (Premium)"
+    },
+    "auth": {
+        "login": {
+            "title": "Sign In",
+            "cta": "Log in",
+            "toRegister": "No account? Sign up"
+        },
+        "register": {
+            "title": "Sign Up",
+            "cta": "Create account",
+            "toLogin": "Already have an account? Sign in"
+        },
+        "fields": {
+            "name": "Name",
+            "email": "Email",
+            "password": "Password",
+            "confirm": "Confirm password"
+        },
+        "placeholders": {
+            "name": "Your name",
+            "email": "name@example.com",
+            "password": "••••••••",
+            "confirm": "Repeat password"
+        },
+        "errors": {
+            "name": "Please enter a valid name",
+            "email": "Invalid email address",
+            "password": "Password must be at least 6 characters",
+            "confirm": "Passwords do not match"
+        },
+        "server": {
+            "INVALID_CREDENTIALS": "Incorrect email or password",
+            "WEAK_PASSWORD": "Password is too weak",
+            "UNKNOWN": "Something went wrong"
+        }
+    },
+    "game": {
+        "scenarios": {
+            "jack": {
+                "name": "Godfather(jack)",
+                "description": "Mafia and Town with Neutral Role Jack Sparrow"
+            },
+            "nustradamus": {
+                "name": "Godfather(nustradamus)",
+                "description": "Mafia and Town with Neutral Role Nustradamus"
+            },
+            "zodiac": {
+                "name": "Mafia Zodiac",
+                "description": "Mafia and Town with Neutral Role Zodiac"
+            },
+            "elclasico": {
+                "name": "Mafia Elclasico",
+                "description": "Mafia and Town with Neutral Role Cherchil"
+            }
+        },
+        "zodiac": {
+            "roles": {
+                "al_capone": {
+                    "name": "Al Capone",
+                    "description": "Mafia leader similar to the Godfather, but without a shield.",
+                    "duties": [
+                        "Final night shot is decided by Al Capone.",
+                        "Detective's investigation on Al Capone always returns negative."
+                    ]
+                },
+                "bomber": {
+                    "name": "Bomber",
+                    "description": "Mafia control role with the ability to plant bombs and create daytime crises.",
+                    "duties": [
+                        "Can plant a bomb once per game (4 wires: 3 explode, 1 defuses).",
+                        "Defusal code is set by the Bomber and given to the moderator."
+                    ]
+                },
+                "magician": {
+                    "name": "Magician",
+                    "description": "Mafia support role for disrupting key town roles.",
+                    "duties": [
+                        "Can neutralize the ability of one town member for 24 hours."
+                    ]
+                },
+                "doctor": {
+                    "name": "Doctor",
+                    "description": "Town savior with repeatable saves and one self-save.",
+                    "duties": [
+                        "Can save others multiple times; can save themselves once per game.",
+                        "Can save targets from professional, mafia, or Zodiac shots."
+                    ]
+                },
+                "detective": {
+                    "name": "Detective",
+                    "description": "Town investigative role with limited but critical checks.",
+                    "duties": [
+                        "Can investigate one player each night.",
+                        "Positive results only on the Bomber and Magician.",
+                        "All town members, Al Capone, and Zodiac return negative results."
+                    ]
+                },
+                "professional": {
+                    "name": "Professional",
+                    "description": "Town sniper with high risk and strong impact.",
+                    "duties": [
+                        "Two shots per game; if they hit a town member, they are eliminated.",
+                        "If they shoot the Zodiac, no one is eliminated."
+                    ]
+                },
+                "gunsmith": {
+                    "name": "Gunsmith",
+                    "description": "Distributes guns; controls day tempo with out-of-turn shots.",
+                    "duties": [
+                        "Gives out 3 guns: 2 blanks, 1 live.",
+                        "Gun holders can shoot during the day.",
+                        "If the live gun is unused, the bullet returns to its owner."
+                    ]
+                },
+                "bodyguard": {
+                    "name": "Bodyguard",
+                    "description": "Daytime bomb crisis protector; only true shield against the Zodiac.",
+                    "duties": [
+                        "Only activates during the 'Midday Nap' bomb event.",
+                        "Can sacrifice themselves to save the bomb target.",
+                        "If Zodiac shoots the Bodyguard, the Zodiac is eliminated."
+                    ]
+                },
+                "mason": {
+                    "name": "Ocean (George Clooney)",
+                    "description": "Leader of the town's secret Freemason group for hidden coordination.",
+                    "duties": [
+                        "Can recruit two players into the group twice per game.",
+                        "If they wake a mafia or Zodiac, they are eliminated.",
+                        "Mason allies cannot reveal their roles."
+                    ]
+                },
+                "citizen": {
+                    "name": "Citizen",
+                    "description": "Town's voting and reasoning core; no night ability.",
+                    "duties": [
+                        "Has no night ability.",
+                        "In the 12-player version, usually two Citizens are present."
+                    ]
+                },
+                "zodiac": {
+                    "name": "Zodiac",
+                    "description": "Independent villain with solo win condition; mutual threat to both town and mafia.",
+                    "duties": [
+                        "Goal: Be the last remaining player.",
+                        "Shoots on even nights or every other night depending on the version.",
+                        "If they shoot the Bodyguard, they are eliminated.",
+                        "Against the Professional's shot, no one is eliminated."
+                    ]
+                }
+            }
+        },
+        "nustradamus": {
+            "roles": {
+                "godfather": {
+                    "name": "Godfather",
+                    "description": "Mafia leader with night shot authority and a sixth sense ability.",
+                    "duties": [
+                        "Decides the mafia team's night shot.",
+                        "Has a 'sixth sense'; if successful, it's announced in the morning by the moderator.",
+                        "Has one vest and is immune to one shot from Leon at night."
+                    ]
+                },
+                "saul_goodman": {
+                    "name": "Saul Goodman",
+                    "description": "One-time recruiter to strengthen mafia composition.",
+                    "duties": [
+                        "Once per game, can 'buy' a Citizen and turn them into a simple mafia member.",
+                        "On the night of the buy, the moderator announces that a buy is in progress.",
+                        "Each night, the mafia must choose one: shoot / Godfather's sixth sense / Saul's buy."
+                    ]
+                },
+                "matador": {
+                    "name": "Matador",
+                    "description": "Mafia control sub-role to disable key town roles.",
+                    "duties": [
+                        "Each night, removes the target's night ability for that night."
+                    ]
+                },
+                "nostradamus": {
+                    "name": "Nostradamus",
+                    "description": "Independent role with win condition based on a start-of-game prediction.",
+                    "duties": [
+                        "On the introduction night, selects 3 players; moderator tells how many are mafia.",
+                        "Predicts whether town or mafia will win and plays for that side thereafter.",
+                        "Cannot be killed at night except by Godfather's sixth sense; can be eliminated by vote."
+                    ]
+                },
+                "dr_watson": {
+                    "name": "Dr. Watson",
+                    "description": "Can save players with the restriction of one self-save.",
+                    "duties": [
+                        "Each night can save one player (town or mafia).",
+                        "Self-save only once per game."
+                    ]
+                },
+                "leon": {
+                    "name": "Leon the Professional",
+                    "description": "Mafia hunter with risk of elimination on error.",
+                    "duties": [
+                        "Can shoot a suspected mafia member on any chosen night.",
+                        "If they hit a Citizen, they are eliminated and cannot be saved by the Doctor.",
+                        "Has one vest and survives one shot."
+                    ]
+                },
+                "citizen_kane": {
+                    "name": "Citizen Kane",
+                    "description": "Single-use mafia side revealer at the cost of their own life.",
+                    "duties": [
+                        "One night, points to a player at moderator's request.",
+                        "If the target is mafia, their side is revealed the next morning and Citizen Kane is eliminated."
+                    ]
+                },
+                "constantine": {
+                    "name": "Constantine",
+                    "description": "One-time summoner to return an eliminated player.",
+                    "duties": [
+                        "Once per game, can bring back an eliminated player (town/mafia/independent).",
+                        "Cannot return revealed roles; abilities are restored."
+                    ]
+                },
+                "citizen": {
+                    "name": "Citizen",
+                    "description": "No night power; analytical and voting role in the day.",
+                    "duties": [
+                        "Has no night ability; focuses on analysis and voting."
+                    ]
+                }
+            },
+            "cards": {
+                "silenceOfTheLambs": {
+                    "name": "Silence of the Lambs",
+                    "description": "Eliminated player marks two people, silencing them for one day. Marked players cannot speak even in defense the next day. If player count reaches half, only one person will be silenced."
+                },
+                "identityReveal": {
+                    "name": "Identity Reveal",
+                    "description": "If chosen, the moderator reveals the eliminated player's exact role without collective investigation, and they are out of the game. Cannot be revived by Constantine."
+                },
+                "beautifulMind": {
+                    "name": "Beautiful Mind",
+                    "description": "If the holder identifies only Nostradamus among the players, they return to the game and Nostradamus is eliminated instead. If Nostradamus picks this card, they return without investigation but lose their shield and will die from a night shot."
+                },
+                "handcuffs": {
+                    "name": "Handcuffs",
+                    "description": "Eliminated player marks someone, removing their night ability. If only one mafia remains and receives handcuffs, they can still shoot (mafia shot is a team ability)."
+                },
+                "faceChange": {
+                    "name": "Face Change",
+                    "description": "Before elimination, swaps their role card with another player."
+                }
+            }
+        },
+        "jack": {
+            "roles": {
+                "godfather": {
+                    "name": "Godfather",
+                    "description": "Mafia leader; decides night shot and special interaction with Jack.",
+                    "duties": [
+                        "Each night, mafia's shot is decided by the Godfather.",
+                        "In some versions, can target Jack before reveal using 'sixth sense'."
+                    ]
+                },
+                "matador": {
+                    "name": "Matador",
+                    "description": "Mafia control role to disable target's night ability.",
+                    "duties": [
+                        "Each night, disables one player's night action for that night."
+                    ]
+                },
+                "dr_watson": {
+                    "name": "Dr. Watson",
+                    "description": "Night save with one self-save limit.",
+                    "duties": [
+                        "Can save one player each night.",
+                        "Self-save only once per game."
+                    ]
+                },
+                "leon": {
+                    "name": "Leon the Professional",
+                    "description": "Mafia hunter with elimination risk on wrong shot.",
+                    "duties": [
+                        "Can shoot a suspected mafia at night.",
+                        "If they hit a Citizen, they are eliminated and cannot be saved.",
+                        "Has one vest and survives one shot."
+                    ]
+                },
+                "citizen_kane": {
+                    "name": "Citizen Kane",
+                    "description": "Single-use revealer at cost of self-elimination.",
+                    "duties": [
+                        "Points to a player one night on moderator's request.",
+                        "If mafia, they are revealed next morning and Citizen Kane is eliminated."
+                    ]
+                },
+                "constantine": {
+                    "name": "Constantine",
+                    "description": "One-time revival of an eliminated player.",
+                    "duties": [
+                        "Once per game, can return a player to the game.",
+                        "Revealed roles cannot be returned; abilities are restored."
+                    ]
+                },
+                "citizen": {
+                    "name": "Citizen",
+                    "description": "No night ability; voting and analysis role.",
+                    "duties": [
+                        "Has no night ability."
+                    ]
+                },
+                "jack_sparrow": {
+                    "name": "Jack Sparrow",
+                    "description": "Immortal independent with nightly 'curse' and solo win condition.",
+                    "duties": [
+                        "Must curse a player each night (cannot repeat until all have been cursed).",
+                        "Immortal: cannot be killed by night shot or vote; if voted, their role is revealed.",
+                        "Jack can be eliminated by removing/guessing the curse, 'Beautiful Mind' card, or Godfather's pre-reveal action.",
+                        "Win condition: Be among the last three players, or remain after the last mafia is eliminated."
+                    ]
+                }
+            },
+            "cards": {
+                "silenceOfTheLambs": {
+                    "name": "Silence of the Lambs",
+                    "description": "Eliminated player marks two people, silencing them for one day. Marked players cannot speak even in defense the next day. If player count reaches half, only one person will be silenced."
+                },
+                "identityReveal": {
+                    "name": "Identity Reveal",
+                    "description": "If chosen, the moderator reveals the eliminated player's exact role without collective investigation, and they are out of the game. Cannot be revived by Constantine."
+                },
+                "beautifulMind": {
+                    "name": "Beautiful Mind",
+                    "description": "If the holder identifies only Nostradamus among the players, they return to the game and Nostradamus is eliminated instead. If Nostradamus picks this card, they return without investigation but lose their shield and will die from a night shot."
+                },
+                "handcuffs": {
+                    "name": "Handcuffs",
+                    "description": "Eliminated player marks someone, removing their night ability. If only one mafia remains and receives handcuffs, they can still shoot (mafia shot is a team ability)."
+                },
+                "faceChange": {
+                    "name": "Face Change",
+                    "description": "Before elimination, swaps their role card with another player."
+                }
+            }
+        },
+        "elclasico": {
+            "roles": {
+                "pablo_escobar": {
+                    "name": "Pablo Escobar",
+                    "description": "Mafia boss; night shot and 'slaughter' ability (elimination by guessing role). Immortal until role is correctly guessed.",
+                    "duties": [
+                        "Night shot decided by Pablo.",
+                        "Can slaughter: eliminate a player by guessing their role.",
+                        "Slaughter is not limited; can be done every night."
+                    ]
+                },
+                "juan": {
+                    "name": "Juan",
+                    "description": "Removes a Citizen's night ability; cannot target same player two consecutive nights.",
+                    "duties": [
+                        "Each night removes one Citizen's ability for that night (not two nights in a row)."
+                    ]
+                },
+                "blanco": {
+                    "name": "Blanco",
+                    "description": "Buys Citizen/Chaplin to mafia team (requires one mafia to be eliminated).",
+                    "duties": [
+                        "Can buy a Citizen or Chaplin for mafia if one mafia is out.",
+                        "If Blanco is eliminated, Pablo gets an extra night shot and slaughter that night."
+                    ]
+                },
+                "churchill": {
+                    "name": "Churchill",
+                    "description": "Independent with nightly predictions and special win conditions; armored night one, becomes immortal if prediction is correct.",
+                    "duties": [
+                        "From night/day 2, predicts who will be eliminated the next day; if correct, becomes immortal.",
+                        "Has no shot but can slaughter or gather votes in the day.",
+                        "Wins if last three include one mafia and one Citizen; with two Citizens, must persuade one to join; loses with two mafia.",
+                        "Has armor on night one."
+                    ]
+                },
+                "dr_bridget": {
+                    "name": "Dr. Bridget",
+                    "description": "Night save with special self-save pattern.",
+                    "duties": [
+                        "Can save one player from a shot each night.",
+                        "Can self-save twice total; if self-saves night one, cannot self-save night two; if self-saves night two, can self-save night three."
+                    ]
+                },
+                "moreno": {
+                    "name": "Moreno",
+                    "description": "Distributes 1 live and 1 blank gun; manages return/burn of unused bullets.",
+                    "duties": [
+                        "At night, gives two players guns: one live, one blank.",
+                        "Can only give the blank gun to themselves.",
+                        "If live gun owner is eliminated, bullet returns to Moreno; unused bullets are lost."
+                    ]
+                },
+                "bonaparte": {
+                    "name": "Bonaparte",
+                    "description": "Code system and waking target; risk of death if waking mafia/Churchill.",
+                    "duties": [
+                        "Each night sets a code; moderator wakes the target, gives the code, and introduces you.",
+                        "If both survive to the next day, you know you gave the code to a Citizen. Use the code signal in the day to indicate next target.",
+                        "If you wake mafia or Churchill, you die ('general's death') and the code holder learns why."
+                    ]
+                },
+                "martinez": {
+                    "name": "Martinez",
+                    "description": "Night sniper with exceptions + slaughter even when disabled.",
+                    "duties": [
+                        "Has one night shot; hitting Escobar or Churchill has no effect.",
+                        "If hitting mafia (not Escobar), they are eliminated.",
+                        "If hitting Citizen, Martinez is eliminated.",
+                        "Can slaughter even if ability is disabled."
+                    ]
+                },
+                "chaplin": {
+                    "name": "Chaplin",
+                    "description": "Protects a Citizen from mafia purchase.",
+                    "duties": [
+                        "Night one, chooses a Citizen to protect from mafia buy."
+                    ]
+                },
+                "citizen": {
+                    "name": "Citizen",
+                    "description": "No night ability; analytical/voting role.",
+                    "duties": [
+                        "Has no night ability."
+                    ]
+                }
+            },
+            "cards": {
+                "guess_role": {
+                    "name": "Guess Role",
+                    "description": "If you guess a player's role correctly, you remain in the game."
+                },
+                "vertigo": {
+                    "name": "Vertigo",
+                    "description": "For 24 hours, you neither wake at night nor speak/vote during the day."
+                },
+                "dal": {
+                    "name": "Dal",
+                    "description": "For 24 hours, you cannot be shot at night or voted out during the day (immune to elimination)."
+                },
+                "manisa": {
+                    "name": "Manisa",
+                    "description": "Doubles the targeted player's night abilities."
+                },
+                "mirror": {
+                    "name": "Mirror",
+                    "description": "Completely swaps your identity/side with the targeted player."
+                }
+            }
+        }
+    },
+    "roles": "Roles",
+    "lastMoveCards": "Last Move Cards",
+    "senario": "Senario",
+    "myPlayers": "My Players",
+    "playerName": "Player Name",
+    "oldPlayer": "Players List",
+    "newPlayer": "New Player",
+    "lastMove": "Last Move",
+    "day": "Day",
+    "night": "Night",
+    "mafia": "Mafia",
+    "citizen": "Citizen",
+    "showRoles": "Show Roles",
+    "deleted": "Deleted Players",
+    "noBodyRemovedFromGame": "No Body Removed From Game",
+    "doYouWantToCloseGame": "Do You Want To Close Game?",
+    "doYouWantToCloseApp": "Do You Want To Close App?",
+    "closeIt": "Close it!",
+    "gameTitle": "Game",
+    "startGame": "Start Game",
+    "chooseRoleForPlayers": "Random role assignment",
+    "addPlayerToThisGame": "Add Player",
+    "playersChoosen": "Players Present In Game",
+    "anyPlayerExist": "Dont Have Any Player",
+    "role": "Role",
+    "player": "Player",
+    "godfather": "GodFather",
+    "jackLastCards": "Jack Sparrow Cards",
+    "nustraLastCards": "Nustradamus Cards",
+    "jackLast": "Jack Sparrow Cards",
+    "nustraLast": "Nustradamus Cards",
+    "jackSenario": "Jack Sparrow Scenario",
+    "nustraSenario": "Nustradamus Scenario",
+    "description": "Game Description",
+    "jackDescription": "The Godfather of Jack Sparrow game is a secret role-playing game based on reasoning and inference. In the game, players are divided into three groups: the majority of citizens, the mafia team, and a single independent role. Roles that no one knows about from the beginning except the owner of the role and the director. The goal of the citizens is to take over the city and clean it from the mafias, and the victory of the mafias depends on the number of citizens, except for Jack.\n The game is played in two parts, consecutive nights and days. On induction day, everyone knows their roles, but mafia members don't know their teammates. The players have 30 seconds to talk and introduce themselves. There is no challenge on the introduction day. Then on the night of the introduction, the manager wakes up the mafia team to get to know each other. From the beginning of each day, the manager gives players a turn at his discretion, up to a maximum of 40 Talk for a second. For days, everyone plays the role of a citizen and in the process of accusing, challenging, defending and voting, they try to discover the members of the mafia and remove them from the city with the majority of votes. During the conversation, other players can show their approval or disapproval with hand signs in complete silence.\n In the conversation, anyone can accuse others of being a mafia or accuse them of being citizens, but no one has the right to Directly or indirectly mention his role and abilities of the night, or bluff about his role - it is forbidden to refer to the roles and events of the night \nEvery day after the conversation with the first round of voting, the players with the most votes of half minus one received, they go to the defense and defend themselves against the accusations. With the second stage voting, which is carried out on the day and in front of all the players (with a relative majority, the person who gets the most votes is expelled from the city), if only one person reaches the defense, he will leave with the quorum mentioned above. . If two or more people come to the defense, whoever gets more votes will leave the game (if everyone gets zero votes, they will sit in the game) and the number of people voting is free even in the second round, even the people who are in the defense can vote. If the number of votes in the second round of two people is the same, the draw determines the death of the expelled player. The defense time is 40 seconds.",
+    "gameRules": "Game Rules",
+    "nustraDescription": "The godfather game is a secret role-playing game based on reasoning and deduction. In the godfather game; The players are divided into three categories, the majority of the citizens, the mafia team, and the single independent role. The goal of the citizens is to take over the city and clean it from the mafias, and the victory of the mafias depends on the number of citizens. The independent role chooses which team to play with and tries to win the desired side. \nThe game is played in two parts, consecutive nights and days. On induction day, everyone knows their roles, but mafia members don't know their teammates. Players have 30 seconds to talk and introduce themselves (introduction day does not have a challenge). Then in the night of introduction, the moderator wakes up the mafia team to get to know each other.\n From the beginning of each day, the moderator randomly assigns players a turn to talk for a maximum of 40 seconds. For days, everyone plays the role of a citizen and in the process of accusing, challenging, defending and voting, they try to discover the members of the mafia and remove them from the city with the majority of votes. During the conversation, other players in Complete silence can show their approval or disapproval with a hand sign.\n In a conversation, anyone can accuse others of being a mafia or accuse them of being a citizen, but no one has the right to their role and abilities. Directly or indirectly hint or bluff about his role - it is forbidden to refer to the roles and events of the night \nEvery day after the conversation with the first round of voting, the players who received the most accusation votes of half minus one go to the defense. and they defend themselves against the accusations. With the second stage of voting, which is carried out on the day and in front of all the players (with a relative majority, the person who gets the most votes is expelled from the city), if only one person gets to the defense, with The quorum mentioned above will be removed. If two or more people come to the defense, whoever gets more votes will leave the game (if everyone gets zero votes, they will sit in the game) and the number of people voting is free even in the second round, even the people who are in the defense can vote. If the number of votes in the second round of two people is the same, the draw determines the death of the expelled player. The defense time is 40 seconds.\n At the end of each day's voting, the expelled player randomly chooses one card from the last six cards. Only by randomly picking the beautiful mind card and correctly guessing the role of Nostradamus, he returns to the game instead of Nostradamus without announcing his role. slow. Last move cards must be executed. (Act is mandatory) At the beginning of each day, the moderator votes to ask for roles outside the game. This voting is possible only 2 times in the whole game. According to the majority of the players, the moderator only The side reveals the dismissed players. Nostradamus' query will be independent\n In game 2, there is a status query that is done by the side's announcement. Nostradamus is announced by the independent side.",
+    "nustraRules": {
+        "first": "At night, the mafia must choose one of Saul's and Godfather's abilities; that's mean; 1- Or an arrow is fired; 2- Or the godfather uses his sixth sense; 3-Or Saul buys one of the simple citizens; And you can't use all the features in one night. Other players don't know what feature the mafia team used at night. Only if the godfather has used the sixth sense correctly, the players will find out in the morning that the godfather has used the sixth sense by announcing the exposed person by the host.",
+        "second": "On the night when Saul is going to buy Goodman, the manager announces that the purchase is going to be done by the mafia team.",
+        "third": "If Nostradamus takes 2 mafia out of 3 query choices, he/she must play on the mafia side.",
+        "fourth": "If Nostradamus draws a beautiful mind card, he guesses himself and returns to the game, but he/she no longer has the night armor."
+    },
+    "jackRules": {
+        "first": "At night, the mafia must choose one of the capabilities of Saul and the godfather; that's mean; 1- Or an arrow is fired; 2- Or the godfather uses his sixth sense; 3-Or Saul buys one of the simple citizens; And you can't use all the features in one night. Other players don't know what feature the mafia team used at night. Only if the godfather has used the sixth sense correctly, the players will find out in the morning that the godfather has used the sixth sense by announcing the revealed person by the moderator.",
+        "second": "On the night when Saul is going to buy Goodman, the manager announces that the purchase is going to be done by the mafia team.",
+        "third": "If Jack, two citizens and three mafias are in the game, the game is not over.",
+        "fourth": "If the character is jacked, in the beautiful mind, you have to guess the enchanted person.",
+        "fifth": "If Citizen Kane Shoted at night, his inquiry will not be announced.",
+        "sixth": "If the jack is out, the beautiful mind card is removed.",
+        "seventh": "If someone is slaughtered by the godfather, he cannot use the ability in the same night."
+    },
+    "matador": "Matador",
+    "saul": "Saul Goodman",
+    "ckane": "Citizen Kane",
+    "leon": "Leon",
+    "doctor": "Doctor Watson",
+    "constantine": "Constantine",
+    "nustradamus": "Nustradamus",
+    "jack": "Jack Sparrow",
+    "jackRoles": "Jack Sparrow Roles",
+    "nustraRoles": "Nustradamus Roles",
+    "customRoles": "Custom Roles",
+    "chooseRoleProblem": "You can just choose one of game types",
+    "cardChoosingDescription": "You only have to choose one type of card game. If you confirm this warning, you will be transferred to another game style to choose a card, and the choices of this game style will be deleted.",
+    "areYouAgree": "Are you agree ?",
+    "addRoletoThisGame": "Add Role",
+    "free": "Free",
+    "roleAssignment": "Role Assignment",
+    "allPlayersSeenTheirRoles": "All players see their cards",
+    "goToTheGame": "go to the game",
+    "insideGame": "Inside Players",
+    "sitoutGame": "Sitout Players",
+    "silent": "Silent",
+    "speak": "Speak",
+    "disability": "Disability",
+    "playerRemovedFromGame": "{player} removed from game and can get back by constantine",
+    "addPlayerAndRoleAndGiveRole": "Add players and roles, then give them roles to can play game"
+}

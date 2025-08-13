@@ -12,16 +12,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		21D302936CA14565A5DD9D99 /* Nofar.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FE4787DFA9D4C64B81CF21D /* Nofar.ttf */; };
-		22A80B8DEA8142858E1F3742 /* IRANSansXNoEn-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEBF39C1F27C43EDB87F97CF /* IRANSansXNoEn-Regular.ttf */; };
+		1B3EA79F0D8E41C2A894447F /* IRANSansXNoEn-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E37A840C88D44A3393E0CC37 /* IRANSansXNoEn-Medium.ttf */; };
+		2467BB79AFB5400A93A1FF87 /* IRANSansXNoEn-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 617CA230F6DF4A4DBC57DE89 /* IRANSansXNoEn-Light.ttf */; };
 		5D6EDDA934745FD681EF6801 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = EA3371EAC644C926419B6B5E /* PrivacyInfo.xcprivacy */; };
+		65E7A672404D40FA90550510 /* hadye.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A8889C40120496D9A7A3173 /* hadye.ttf */; };
+		75CFA36E139E411FB789CA9C /* wizard.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B18187202564665A6047F58 /* wizard.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-GodFather-GodFatherTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-GodFather-GodFatherTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8FB3DEE9F8C243BBA447AFD1 /* hadye.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D32F4424EED4E719226E613 /* hadye.ttf */; };
-		B947463E60CB4DC39107B16F /* IRANSansXNoEn-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8FBC134F1E4496FB066EF02 /* IRANSansXNoEn-Bold.ttf */; };
-		B9ADF27174A84117B46D89C5 /* wizard.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3C1E681996F4A1291038163 /* wizard.ttf */; };
-		BF2EAD35681347F9A13ABA04 /* IRANSansXNoEn-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD41178341094C33ABBBDAE7 /* IRANSansXNoEn-Light.ttf */; };
-		C30CB586E8F4487F8FE47591 /* IRANSansXNoEn-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E4DE09E5B934969BF2554C0 /* IRANSansXNoEn-Medium.ttf */; };
+		9B7662A82E6D4C9B9DD9EE20 /* IRANSansXNoEn-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EF334EEA7694902BC29D9FF /* IRANSansXNoEn-Bold.ttf */; };
 		E47532E72B1B2B6F0077E85B /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E47532E62B1B2B6E0077E85B /* BootSplash.storyboard */; };
 		E47E87B62B0F84910041977A /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87A62B0F84910041977A /* Fontisto.ttf */; };
 		E47E87B72B0F84910041977A /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87A72B0F84910041977A /* Octicons.ttf */; };
@@ -39,6 +37,7 @@
 		E47E87C32B0F84910041977A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B32B0F84910041977A /* EvilIcons.ttf */; };
 		E47E87C42B0F84910041977A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B42B0F84910041977A /* SimpleLineIcons.ttf */; };
 		E47E87C52B0F84910041977A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47E87B52B0F84910041977A /* MaterialIcons.ttf */; };
+		FBDDF5DF692146B68ADC9DAF /* IRANSansXNoEn-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6564DFCCF0A94A3392310413 /* IRANSansXNoEn-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +54,7 @@
 		00E356EE1AD99517003FC87E /* GodFatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GodFatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* GodFatherTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GodFatherTests.m; sourceTree = "<group>"; };
+		0EF334EEA7694902BC29D9FF /* IRANSansXNoEn-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Bold.ttf"; path = "../assets/fonts/IRANSansXNoEn-Bold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* GodFather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GodFather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GodFather/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = GodFather/AppDelegate.mm; sourceTree = "<group>"; };
@@ -62,18 +62,17 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GodFather/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GodFather/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-GodFather-GodFatherTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GodFather-GodFatherTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B18187202564665A6047F58 /* wizard.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = wizard.ttf; path = ../assets/fonts/wizard.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-GodFather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GodFather.debug.xcconfig"; path = "Target Support Files/Pods-GodFather/Pods-GodFather.debug.xcconfig"; sourceTree = "<group>"; };
-		4E4DE09E5B934969BF2554C0 /* IRANSansXNoEn-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Medium.ttf"; path = "../src/assets/fonts/IRANSansXNoEn-Medium.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-GodFather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GodFather.release.xcconfig"; path = "Target Support Files/Pods-GodFather/Pods-GodFather.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-GodFather-GodFatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GodFather-GodFatherTests.debug.xcconfig"; path = "Target Support Files/Pods-GodFather-GodFatherTests/Pods-GodFather-GodFatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-GodFather.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GodFather.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		617CA230F6DF4A4DBC57DE89 /* IRANSansXNoEn-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Light.ttf"; path = "../assets/fonts/IRANSansXNoEn-Light.ttf"; sourceTree = "<group>"; };
+		6564DFCCF0A94A3392310413 /* IRANSansXNoEn-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Regular.ttf"; path = "../assets/fonts/IRANSansXNoEn-Regular.ttf"; sourceTree = "<group>"; };
+		7A8889C40120496D9A7A3173 /* hadye.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = hadye.ttf; path = ../assets/fonts/hadye.ttf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GodFather/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-GodFather-GodFatherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GodFather-GodFatherTests.release.xcconfig"; path = "Target Support Files/Pods-GodFather-GodFatherTests/Pods-GodFather-GodFatherTests.release.xcconfig"; sourceTree = "<group>"; };
-		9D32F4424EED4E719226E613 /* hadye.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = hadye.ttf; path = ../src/assets/fonts/hadye.ttf; sourceTree = "<group>"; };
-		9FE4787DFA9D4C64B81CF21D /* Nofar.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Nofar.ttf; path = ../src/assets/fonts/Nofar.ttf; sourceTree = "<group>"; };
-		B8FBC134F1E4496FB066EF02 /* IRANSansXNoEn-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Bold.ttf"; path = "../src/assets/fonts/IRANSansXNoEn-Bold.ttf"; sourceTree = "<group>"; };
-		CD41178341094C33ABBBDAE7 /* IRANSansXNoEn-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Light.ttf"; path = "../src/assets/fonts/IRANSansXNoEn-Light.ttf"; sourceTree = "<group>"; };
-		D3C1E681996F4A1291038163 /* wizard.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = wizard.ttf; path = ../src/assets/fonts/wizard.ttf; sourceTree = "<group>"; };
+		E37A840C88D44A3393E0CC37 /* IRANSansXNoEn-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "IRANSansXNoEn-Medium.ttf"; path = "../assets/fonts/IRANSansXNoEn-Medium.ttf"; sourceTree = "<group>"; };
 		E47532E62B1B2B6E0077E85B /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = GodFather/BootSplash.storyboard; sourceTree = "<group>"; };
 		E47E87A62B0F84910041977A /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		E47E87A72B0F84910041977A /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -94,7 +93,6 @@
 		E47E87C62B0F84AB0041977A /* Nofar.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Nofar.ttf; path = ../../../src/assets/fonts/Nofar.ttf; sourceTree = "<group>"; };
 		E47E87C72B0F84AB0041977A /* IRANSansXNoEn-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANSansXNoEn-Bold.ttf"; path = "../../../src/assets/fonts/IRANSansXNoEn-Bold.ttf"; sourceTree = "<group>"; };
 		E47E87C82B0F84AB0041977A /* IRANSansXNoEn-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANSansXNoEn-Light.ttf"; path = "../../../src/assets/fonts/IRANSansXNoEn-Light.ttf"; sourceTree = "<group>"; };
-		E47E87C92B0F84AB0041977A /* IRANSansXNoEn-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANSansXNoEn-Regular.ttf"; path = "../../../src/assets/fonts/IRANSansXNoEn-Regular.ttf"; sourceTree = "<group>"; };
 		E47E87CA2B0F84AB0041977A /* wizard.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = wizard.ttf; path = ../../../src/assets/fonts/wizard.ttf; sourceTree = "<group>"; };
 		E47E87CB2B0F84AB0041977A /* IRANSansXNoEn-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "IRANSansXNoEn-Medium.ttf"; path = "../../../src/assets/fonts/IRANSansXNoEn-Medium.ttf"; sourceTree = "<group>"; };
 		EA3371EAC644C926419B6B5E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = GodFather/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -211,13 +209,13 @@
 		D6D6A7642C4E49D28B38119C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B8FBC134F1E4496FB066EF02 /* IRANSansXNoEn-Bold.ttf */,
-				CD41178341094C33ABBBDAE7 /* IRANSansXNoEn-Light.ttf */,
-				4E4DE09E5B934969BF2554C0 /* IRANSansXNoEn-Medium.ttf */,
 				EEBF39C1F27C43EDB87F97CF /* IRANSansXNoEn-Regular.ttf */,
-				9FE4787DFA9D4C64B81CF21D /* Nofar.ttf */,
-				D3C1E681996F4A1291038163 /* wizard.ttf */,
-				9D32F4424EED4E719226E613 /* hadye.ttf */,
+				0EF334EEA7694902BC29D9FF /* IRANSansXNoEn-Bold.ttf */,
+				617CA230F6DF4A4DBC57DE89 /* IRANSansXNoEn-Light.ttf */,
+				E37A840C88D44A3393E0CC37 /* IRANSansXNoEn-Medium.ttf */,
+				6564DFCCF0A94A3392310413 /* IRANSansXNoEn-Regular.ttf */,
+				7A8889C40120496D9A7A3173 /* hadye.ttf */,
+				3B18187202564665A6047F58 /* wizard.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -229,7 +227,6 @@
 				E47E87C72B0F84AB0041977A /* IRANSansXNoEn-Bold.ttf */,
 				E47E87C82B0F84AB0041977A /* IRANSansXNoEn-Light.ttf */,
 				E47E87CB2B0F84AB0041977A /* IRANSansXNoEn-Medium.ttf */,
-				E47E87C92B0F84AB0041977A /* IRANSansXNoEn-Regular.ttf */,
 				E47E87C62B0F84AB0041977A /* Nofar.ttf */,
 				E47E87CA2B0F84AB0041977A /* wizard.ttf */,
 				E47E87A72B0F84910041977A /* Octicons.ttf */,
@@ -356,21 +353,20 @@
 				E47E87BA2B0F84910041977A /* FontAwesome5_Brands.ttf in Resources */,
 				E47532E72B1B2B6F0077E85B /* BootSplash.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				B947463E60CB4DC39107B16F /* IRANSansXNoEn-Bold.ttf in Resources */,
 				E47E87C02B0F84910041977A /* FontAwesome5_Regular.ttf in Resources */,
 				E47E87C12B0F84910041977A /* FontAwesome.ttf in Resources */,
 				E47E87BB2B0F84910041977A /* MaterialCommunityIcons.ttf in Resources */,
 				E47E87C22B0F84910041977A /* Zocial.ttf in Resources */,
 				E47E87BC2B0F84910041977A /* AntDesign.ttf in Resources */,
-				BF2EAD35681347F9A13ABA04 /* IRANSansXNoEn-Light.ttf in Resources */,
-				C30CB586E8F4487F8FE47591 /* IRANSansXNoEn-Medium.ttf in Resources */,
-				22A80B8DEA8142858E1F3742 /* IRANSansXNoEn-Regular.ttf in Resources */,
 				E47E87BF2B0F84910041977A /* FontAwesome5_Solid.ttf in Resources */,
 				E47E87C42B0F84910041977A /* SimpleLineIcons.ttf in Resources */,
-				21D302936CA14565A5DD9D99 /* Nofar.ttf in Resources */,
-				B9ADF27174A84117B46D89C5 /* wizard.ttf in Resources */,
-				8FB3DEE9F8C243BBA447AFD1 /* hadye.ttf in Resources */,
 				5D6EDDA934745FD681EF6801 /* PrivacyInfo.xcprivacy in Resources */,
+				9B7662A82E6D4C9B9DD9EE20 /* IRANSansXNoEn-Bold.ttf in Resources */,
+				2467BB79AFB5400A93A1FF87 /* IRANSansXNoEn-Light.ttf in Resources */,
+				1B3EA79F0D8E41C2A894447F /* IRANSansXNoEn-Medium.ttf in Resources */,
+				FBDDF5DF692146B68ADC9DAF /* IRANSansXNoEn-Regular.ttf in Resources */,
+				65E7A672404D40FA90550510 /* hadye.ttf in Resources */,
+				75CFA36E139E411FB789CA9C /* wizard.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

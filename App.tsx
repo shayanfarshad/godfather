@@ -16,44 +16,30 @@
 //   // to only execute this in development.
 //   require('./devtools/ReactotronConfig.ts');
 // }
-import './src/i18n';
-import './src/utils/ignoreWarnings';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {setColorMode} from './src/theme';
-import {ToastProvider} from 'react-native-toast-notifications';
-import {useAppSelector} from './src/stores/hooks';
-import {shallowEqual} from 'react-redux';
-import i18n from './src/i18n/i18n';
-import {AppNavigator} from './src/navigation/AppNavigator';
-import {appStore, appStorePersistor} from './src/stores/store';
+import './src/app/i18n';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ThemeProvider } from "./src/app/theme"
+import RootNavigator from "./src/app/navigation/RootNavigator"
+import { appStore, appStorePersistor } from './src/app/store';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
-const config = {
-  screens: {
-    main: 'main',
-  },
-};
 
-interface AppProps {
-  hideSplashScreen: () => Promise<void>;
-}
 
 /**
  * This is the root component of our app.
  */
-function App(props: AppProps) {
+function App() {
   return (
     <Provider store={appStore}>
-      <PersistGate persistor={appStorePersistor}>
-        <SafeAreaProvider>
-          <ToastProvider>
-            <AppNavigator />
-          </ToastProvider>
-        </SafeAreaProvider>
-      </PersistGate>
+      <ThemeProvider>
+        <PersistGate persistor={appStorePersistor}>
+          <SafeAreaProvider>
+            <RootNavigator />
+          </SafeAreaProvider>
+        </PersistGate>
+      </ThemeProvider>
     </Provider>
   );
 }
