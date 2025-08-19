@@ -3,12 +3,6 @@ module.exports = {
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     [
-      'react-native-reanimated/plugin',
-      {
-        relativeSourceLocation: true,
-      },
-    ],
-    [
         'module-resolver',
         {
           root: ['./'],
@@ -23,6 +17,7 @@ module.exports = {
           },
           extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
         }
-      ]
+      ],
+      'react-native-reanimated/plugin',
   ],
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useHomeLogic } from './logic';
@@ -19,7 +18,7 @@ export default function Home() {
       <View style={styles.grid}>
         <HomeButton
           testID="HOME_PLAYERS"
-          label={t('home.players')}
+          label={t('players.title')}
           onPress={goPlayers}
           bg={colors.surface}
           fg={colors.text}
@@ -27,7 +26,7 @@ export default function Home() {
         />
         <HomeButton
           testID="HOME_RULES"
-          label={t('home.rules')}
+          label={t('rules.title')}
           onPress={goRules}
           bg={colors.surface}
           fg={colors.text}
@@ -35,7 +34,7 @@ export default function Home() {
         />
         <HomeButton
           testID="HOME_SETTINGS"
-          label={t('home.settings')}
+          label={t('settings.title')}
           onPress={goSettings}
           bg={colors.surface}
           fg={colors.text}
@@ -43,7 +42,7 @@ export default function Home() {
         />
         <HomeButton
           testID="HOME_PLAY"
-          label={t('home.play')}
+          label={t('gameplay.title')}
           onPress={goPlay}
           bg={colors.primary}
           fg="#ffffff"

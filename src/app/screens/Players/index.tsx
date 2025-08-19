@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import  {  useState } from 'react';
 import { View, Text, FlatList, Pressable, Image, Alert, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePlayersLogic } from './logic';
