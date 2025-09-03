@@ -44,11 +44,59 @@
     "paywall": {
       "title": "پریمیوم",
       "subtitle": "ساخت سناریوهای کاستوم و ابزارهای بیشتر",
-      "cta": "فعالسازی (Mock)"
+      "cta": "فعالسازی (Mock)",
+      "premiumRequired": "پریمیوم نیاز شدی",
+      "scenarioSelectNonPremiumDescription": "این سناریو فقط با اکانت پریمیوم در دسترس خواهد بود",
+      "activate": "فعال سازی",
+      "cancel": "انصراف"
     }
   },
   "gameplay": {
-    "title": "بازی"
+    "title": "بازی",
+    "players": "بازیکن ها",
+    "players.count": "تعداد بازیکن ها",
+    "roles.count": "تعداد نقش ها",
+    "choosenScenario": "سناریو انتخاب شده",
+    "selectScenario": "انتخاب سناریو",
+    "assignRoles": "تخصیص نقش ها",
+    "shuffle": "قرعه کشی",
+    "next": "بعد",
+    "prev": "قبل",
+    "continue": "ادامه",
+    "assign": {
+      "hint.scenario": "سناریو انتخاب نشده",
+      "hint.mismatch": "تعداد نقش ها و بازیکنان برابر نیست "
+    },
+    "cancel": "انصراف",
+    "confirm": "تایید",
+    "changeScenario": "تغییر سناریو",
+    "changeScenarioDescription": "تغییر سناریو باعث حذف نقش های انتخاب شده می شود. ادامه میدهید ؟",
+    "dialogs": {
+      "Introductionٔight": "شب معارفه",
+      "firstNight": "شب اول",
+      "secondNight": "شب دوم",
+      "thirdNight": "شب سوم",
+      "fourthNight": "شب چهارم",
+      "fifthNight": "شب پنجم",
+      "sixthNight": "شب ششم",
+      "seventhNight": "شب هفتم",
+      "eighthNight": "شب هشتم",
+      "ninthNight": "شب نهم",
+      "tenthNight": "شب دهم",
+      "firstDay": "روز اول",
+      "secondDay": "روز دوم",
+      "thirdDay": "روز سوم",
+      "fourthDay": "روز چهارم",
+      "fifthDay": "روز پنجم",
+      "sixthDay": "روز ششم",
+      "seventhDay": "روز هفتم",
+      "eighthDay": "روز هشتم",
+      "ninthDay": "روز نهم",
+      "tenthDay": "روز دهم"
+    }
+  },
+  "scenario": {
+    "title": "سناریو"
   },
   "custom": {
     "title": "نقش های دلخواه",
@@ -93,7 +141,7 @@
     "selectScenario": "انتخاب سناریو",
     "description": "توضیحات سناریو",
     "roles": "نقش‌ها",
-    "empty.custom": "هنوز سناریوی کاستوم نداری!",
+    "empty.custom": "هنوز سناریوی شخصی نداری!",
     "make.custom": "ساخت سناریو (پریمیوم)"
   },
   "auth": {
@@ -270,7 +318,9 @@
         "matador": {
           "name": "ماتادور",
           "description": "ساب‌نقش کنترلی مافیا برای خاموش‌کردن نقش‌های کلیدی شهر.",
-          "duties": ["هر شب توانایی شبِ هدف را برای همان شب می‌گیرد."]
+          "duties": [
+            "هر شب توانایی شبِ هدف را برای همان شب می‌گیرد."
+          ]
         },
         "nostradamus": {
           "name": "نوستراداموس",
@@ -317,7 +367,9 @@
         "citizen": {
           "name": "شهروند ساده",
           "description": "بازیکن بدون قدرت شبانه؛ ستون رأی و تحلیل شهر.",
-          "duties": ["توانایی شبانه ندارد؛ نقش تحلیلی و رأی‌محور در روز."]
+          "duties": [
+            "توانایی شبانه ندارد؛ نقش تحلیلی و رأی‌محور در روز."
+          ]
         }
       },
       "cards": {
@@ -396,7 +448,9 @@
         "citizen": {
           "name": "شهروند ساده",
           "description": "بدون قدرت شبانه؛ هستهٔ رأی و تحلیل در روز.",
-          "duties": ["توانایی شبانه ندارد."]
+          "duties": [
+            "توانایی شبانه ندارد."
+          ]
         },
         "jack_sparrow": {
           "name": "جک گنجشکه",
@@ -514,7 +568,9 @@
         "citizen": {
           "name": "شهروند ساده",
           "description": "قدرت شبانه ندارد؛ نقش تحلیلی/رأی‌محور.",
-          "duties": ["توانایی شبانه ندارد."]
+          "duties": [
+            "توانایی شبانه ندارد."
+          ]
         }
       },
       "cards": {

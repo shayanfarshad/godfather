@@ -1,8 +1,8 @@
 // src/screens/Settings/PaywallModal.tsx
-import React from 'react';
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+import { Modal, View, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'src/app/theme';
+import Text from 'src/components/common/Text';
 
 type Props = {
   visible: boolean;
@@ -19,8 +19,8 @@ export default function PaywallModal({ visible, onClose, onActivate }: Props) {
       <View style={styles.backdrop}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
         <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-          <Text style={[styles.title, { color: colors.text }]}>{t('paywall.title')}</Text>
-          <Text style={[styles.subtitle, { color: colors.subtext }]}>{t('paywall.subtitle')}</Text>
+          <Text style={ { color: colors.text }}>{t('paywall.title')}</Text>
+          <Text style={ { color: colors.subtext }}>{t('paywall.subtitle')}</Text>
 
           <Pressable onPress={onActivate}
             style={[styles.cta, { backgroundColor: colors.premium }]}>
@@ -28,7 +28,7 @@ export default function PaywallModal({ visible, onClose, onActivate }: Props) {
           </Pressable>
 
           <Pressable onPress={onClose} style={[styles.cancel, { borderColor: colors.border }]}>
-            <Text style={[styles.cancelText, { color: colors.text }]}>{t('settings.premium.later')}</Text>
+            <Text style={{ color: colors.text }}>{t('settings.premium.later')}</Text>
           </Pressable>
         </View>
       </View>

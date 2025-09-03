@@ -1,15 +1,16 @@
-import  {  useState } from 'react';
-import { View, Text, FlatList, Pressable, Image, Alert, StyleSheet } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { View, FlatList, Pressable, Image, Alert, StyleSheet } from 'react-native';
 import { usePlayersLogic } from './logic';
 import AddEditPlayer from './AddEditPlayer';
 import { useTheme } from 'src/app/theme';
 import { Player } from 'src/app/store/slices';
-import { tokens } from 'src/app/theme/tokens';
+import { hp, tokens, wp } from 'src/app/theme/tokens';
+import { useTranslation } from 'react-i18next';
+import Text from 'src/components/common/Text';
 
 export default function Players() {
+    const { t } = useTranslation()
     const { colors } = useTheme();
-    const { t } = useTranslation('common');
     const { loading, players, create, edit, remove, pickFromCamera, pickFromLibrary } = usePlayersLogic();
 
     const [sheetOpen, setSheetOpen] = useState(false);
@@ -21,9 +22,9 @@ export default function Players() {
     const openEdit = (p: Player) => { setEditing(p); setSheetOpen(true); };
 
     const renderItem = ({ item }: { item: Player }) => (
-        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View style={[styles.card, { backgroundColor: colors.bgAlt }]}>
             <View style={styles.row}>
-                <View style={[styles.avatarWrap, { backgroundColor: colors.bgAlt, borderColor: colors.border }]}>
+                <View style={[styles.avatarWrap, { backgroundColor: colors.bg }]}>
                     {item.avatarUri ? (
                         <Image source={{ uri: item.avatarUri }} style={styles.avatar} />
                     ) : (
@@ -31,31 +32,32 @@ export default function Players() {
                     )}
                 </View>
                 <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>{item.name}</Text>
+                <View style={styles.actions}>
+                    <Pressable onPress={() => openEdit(item)} style={[styles.actionBtn, { backgroundColor: colors.bg }]}>
+                        <Text style={{ color: colors.text }}>{t('players.edit')}</Text>
+                    </Pressable>
+                    <Pressable
+                        onPress={() => {
+                            Alert.alert(t('players.delete')!, `«${item.name}»؟`, [
+                                { text: 'Cancel', style: 'cancel' },
+                                { text: t('players.delete')!, style: 'destructive', onPress: () => remove(item.id) },
+                            ]);
+                        }}
+                        style={[styles.actionBtn, { backgroundColor: colors.bg }]}
+                    >
+                        <Text style={{ color: colors.text }}>{t('players.delete')}</Text>
+                    </Pressable>
+                </View>
             </View>
 
-            <View style={styles.actions}>
-                <Pressable onPress={() => openEdit(item)} style={[styles.actionBtn, { borderColor: colors.border }]}>
-                    <Text style={{ color: colors.text }}>{t('players.edit')}</Text>
-                </Pressable>
-                <Pressable
-                    onPress={() => {
-                        Alert.alert(t('players.delete')!, `«${item.name}»؟`, [
-                            { text: 'Cancel', style: 'cancel' },
-                            { text: t('players.delete')!, style: 'destructive', onPress: () => remove(item.id) },
-                        ]);
-                    }}
-                    style={[styles.actionBtn, { borderColor: colors.border }]}
-                >
-                    <Text style={{ color: colors.text }}>{t('players.delete')}</Text>
-                </Pressable>
-            </View>
+
         </View>
     );
 
     return (
         <View style={[styles.container, { backgroundColor: colors.bg }]}>
             <View style={styles.header}>
-                <Text style={[styles.title, { color: colors.text }]}>{t('players.title')}</Text>
+                <Text type='bold' style={[styles.title, { color: colors.text }]}>{t('players.title')}</Text>
             </View>
 
             {empty ? (
@@ -68,7 +70,6 @@ export default function Players() {
                     keyExtractor={(p) => p.id}
                     contentContainerStyle={{ paddingBottom: tokens.spacing(10) }}
                     renderItem={renderItem}
-                    style={{ paddingHorizontal: tokens.spacing(2) }}
                 />
             )}
 
@@ -99,17 +100,21 @@ export default function Players() {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     header: { paddingHorizontal: tokens.spacing(2), paddingTop: tokens.spacing(5), paddingBottom: tokens.spacing(2) },
-    title: { fontSize: 22, fontWeight: '800' },
+    title: { fontSize: hp(4) },
     empty: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     card: {
-        borderWidth: 1, borderRadius: 16, padding: 12, marginHorizontal: 8, marginVertical: 6,
+        width: wp(92), alignSelf: "center", borderRadius: 16, padding: 12, marginBottom: hp(1.5),
     },
-    row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-    avatarWrap: { width: 56, height: 56, borderRadius: 14, borderWidth: 1, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },
+    row: { flexDirection: 'row', alignItems: 'center', gap: 12,justifyContent:"space-around"},
+    avatarWrap: {
+        width: 56, height: 56, borderRadius: 14, justifyContent: 'center', alignItems: 'center',
+        shadowColor: "#000", shadowRadius: 6, shadowOpacity: 0.1, shadowOffset: { width: 3, height: 3 }
+
+    },
     avatar: { width: '100%', height: '100%' },
     name: { fontSize: 16, fontWeight: '700', flex: 1 },
-    actions: { flexDirection: 'row', gap: 8, marginTop: 10 },
-    actionBtn: { flex: 1, height: 40, borderWidth: 1, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+    actions: { flexDirection: 'row',width:"50%", gap: 8, marginTop: 10 ,justifyContent:'space-around'},
+    actionBtn: { flex: 0.4, height: hp(4.5), borderRadius: 12, alignItems: 'center', justifyContent: 'center', shadowColor: "#000", shadowOpacity: 0.1, shadowRadius: 6, shadowOffset: { width: 3, height: 3 } },
     fab: {
         position: 'absolute', right: 16, bottom: 24, width: 56, height: 56, borderRadius: 28,
         alignItems: 'center', justifyContent: 'center', elevation: 4,

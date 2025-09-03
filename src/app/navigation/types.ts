@@ -9,8 +9,15 @@ export type AppStackParamList = {
   Play: undefined;
   Rules: undefined;
   Settings: undefined;
+  GamePlay: undefined;
 };
 
+export type GamePlayStackParamList = {
+  GameplaySetup: undefined;
+  SelectPlayers: undefined;
+  SelectScenario: undefined;
+  AssignRoles: undefined;
+};
 export type RootStackParamList = {
   Splash: undefined;
   AppStack: undefined;

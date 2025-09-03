@@ -3,12 +3,12 @@ import { Dimensions, PixelRatio } from "react-native";
 export const DWidth = Dimensions.get('screen').width;
 export const DHeight = Dimensions.get('screen').height;
 
-const wp = (widthPercent: string | number) => {
+export const wp = (widthPercent: string | number) => {
   const elemWidth = typeof widthPercent === "number" ? widthPercent : parseFloat(widthPercent);
   return PixelRatio.roundToNearestPixel((DWidth * elemWidth) / 100);
 };
 
-const hp = (heightPercent: string | number) => {
+export const hp = (heightPercent: string | number) => {
   const elemHeight = typeof heightPercent === "number" ? heightPercent : parseFloat(heightPercent);
   return PixelRatio.roundToNearestPixel((DHeight * elemHeight) / 100);
 };

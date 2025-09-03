@@ -12,6 +12,7 @@ const persistConfig: PersistConfig<RootState> = {
     version: 1,
     whitelist: ["Auth", "Premium", "Settings","Players","Scenarios"],
     blacklist: [
+        "GameSetup",
     ],
 };
 const persistedRootReducer = persistReducer(persistConfig, RootReducer);

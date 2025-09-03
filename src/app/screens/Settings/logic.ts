@@ -1,13 +1,13 @@
 // src/screens/Settings/logic.ts
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AppStackParamList, RootStackParamList } from 'src/app/navigation/types';
+import { AppStackParamList } from 'src/app/navigation/types';
 import { useAppDispatch, useAppSelector } from 'src/app/store';
 import { shallowEqual } from 'react-redux';
 import { premiumAction, settingsAction } from 'src/app/store/slices';
-import i18n from 'src/app/i18n';
+import i18n from 'src/app/i18n/i18n';
 
 type Nav = NativeStackNavigationProp<AppStackParamList, 'Settings'>;
 
@@ -18,6 +18,9 @@ export function useSettingsLogic() {
     const lang = useAppSelector(s => s.Settings.lang, shallowEqual);   // 'fa' | 'en'
     const premiumActive = useAppSelector(s => s.Premium.active, shallowEqual);
 
+    useEffect(() => { console.log({ lang, i18: i18n.language }) }, [lang])
+
+
     const [paywallOpen, setPaywallOpen] = useState(false);
     const [sound, setSound] = useState(true);
     const [notifications, setNotifications] = useState(true);
@@ -27,13 +30,14 @@ export function useSettingsLogic() {
         dispatch(settingsAction.setTheme(next));
         await AsyncStorage.setItem('theme', next);
     }, [dispatch, theme]);
-
-    const changeLang = useCallback(async (next: 'fa' | 'en') => {
+    
+    const changeLang = useCallback((next: 'fa' | 'en') => {
         if (lang === next) return;
-        dispatch(settingsAction.setLang(next));
-        await i18n.changeLanguage(next);
-        await AsyncStorage.setItem('lang', next);
+        dispatch(settingsAction.setLang(next)); // فقط همین
+        // i18n/RTL/persist را LocaleBridge انجام می‌دهد
     }, [dispatch, lang]);
+
+
 
     const goScenarioBuilder = useCallback(() => {
         if (!premiumActive) {

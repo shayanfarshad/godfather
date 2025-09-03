@@ -1,9 +1,14 @@
-import React, { useMemo, useState } from 'react';
-import { Modal, View, Text, TextInput, Pressable, Image, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, TextInput, Pressable, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Player } from 'src/app/store/slices';
 import { useTheme } from 'src/app/theme';
 import ImageSourceModal from 'src/components/ImageSourceModal';
+import { Modal } from 'src/components/common/Modal';
+import Text from 'src/components/common/Text';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import i18n from 'src/app/i18n/i18n';
+import { hp, wp } from 'src/app/theme/tokens';
 
 type Props = {
   visible: boolean;
@@ -17,12 +22,15 @@ type Props = {
 export default function AddEditPlayer({
   visible, onClose, onSave, onPickLibrary, onPickCamera, player
 }: Props) {
+  const isRTL = i18n.language === 'fa';
+
   const { colors } = useTheme();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const [name, setName] = useState(player?.name ?? '');
   const [avatarUri, setAvatarUri] = useState<string | null>(player?.avatarUri ?? null);
   const [imageSheetOpen, setImageSheetOpen] = useState(false);
-
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => ["35%"], []);
   React.useEffect(() => {
     setName(player?.name ?? '');
     setAvatarUri(player?.avatarUri ?? null);
@@ -31,18 +39,37 @@ export default function AddEditPlayer({
   const isEditing = !!player;
   const canSave = useMemo(() => name.trim().length > 0, [name]);
 
+  useEffect(() => {
+    const m = sheetRef.current;
+    if (!m) return;
+    if (visible) m.present();
+    else m.dismiss();
+  }, [visible]);
+
+
+  const handleClose = useCallback(() => {
+    setName("")
+    onClose?.();
+  }, [onClose]);
   return (
-    <Modal visible={visible} animationType="slide" onRequestClose={onClose} transparent>
-      <View style={styles.backdrop} />
-      <View style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <Text style={[styles.title, { color: colors.text }]}>
+    <>
+      <Modal
+        modalRef={sheetRef}
+        onDismiss={handleClose}
+        snapPoints={snapPoints}
+    backgroundStyle={{ backgroundColor: colors.bg }}
+      >
+        <Text type="bold" style={[styles.title, { color: colors.text }]}>
           {isEditing ? t('players.edit') : t('players.add')}
         </Text>
 
         <Pressable
           testID="PLAYER_AVATAR_PICK"
           onPress={() => setImageSheetOpen(true)}
-          style={[styles.avatarBtn, { borderColor: colors.border, backgroundColor: colors.bgAlt }]}
+          style={[
+            styles.avatarBtn,
+            { borderColor: colors.border, backgroundColor: colors.bgAlt },
+          ]}
         >
           {avatarUri ? (
             <Image source={{ uri: avatarUri }} style={styles.avatar} />
@@ -51,37 +78,59 @@ export default function AddEditPlayer({
           )}
         </Pressable>
 
-        <View style={[styles.inputWrap, { borderColor: colors.border, backgroundColor: colors.bgAlt }]}>
+        <View
+          style={[
+            styles.inputWrap,
+            { borderColor: colors.border, backgroundColor: colors.bgAlt },
+          ]}
+        >
           <TextInput
             placeholder={t('players.name')!}
             placeholderTextColor={colors.subtext}
             value={name}
             onChangeText={setName}
-            style={[styles.input, { color: colors.text }]}
+            style={[
+              styles.input,
+              { color: colors.text, textAlign: isRTL ? 'right' : 'left', writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+            returnKeyType="done"
+            onSubmitEditing={() => {
+              if (canSave) {
+                onSave({ id: player?.id, name: name.trim(), avatarUri });
+                handleClose();
+              }
+            }}
           />
         </View>
 
-        <View style={styles.row}>
-          <Pressable onPress={onClose} style={[styles.btn, { backgroundColor: colors.bgAlt, borderColor: colors.border }]}>
+        <View style={[styles.row, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
+          <Pressable
+            onPress={handleClose}
+            style={[styles.btn, { backgroundColor: colors.bgAlt, borderColor: colors.border }]}
+          >
             <Text style={[styles.btnText, { color: colors.text }]}>{t('players.cancel')}</Text>
           </Pressable>
+
           <Pressable
             disabled={!canSave}
             onPress={() => {
               onSave({ id: player?.id, name: name.trim(), avatarUri });
-              onClose();
+              handleClose();
             }}
             style={[
               styles.btn,
-              { backgroundColor: canSave ? colors.primary : colors.border, borderColor: 'transparent' }
+              {
+                backgroundColor: canSave ? colors.primary : colors.border,
+                borderColor: 'transparent',
+                opacity: canSave ? 1 : 0.7,
+              },
             ]}
           >
-            <Text style={[styles.btnText, { color: '#fff' }]}>{t('players.save')}</Text>
+            <Text type="bold" style={[styles.btnText, { color: '#fff' }]}>{t('players.save')}</Text>
           </Pressable>
         </View>
-      </View>
+      </Modal >
 
-      {/* Image Source Bottom Sheet */}
       <ImageSourceModal
         visible={imageSheetOpen}
         onClose={() => setImageSheetOpen(false)}
@@ -95,19 +144,30 @@ export default function AddEditPlayer({
         }}
         testID="IMAGE_SOURCE"
       />
-    </Modal>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: '#0008' },
-  sheet: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: 16, borderTopLeftRadius: 24, borderTopRightRadius: 24, borderWidth: 1 },
-  title: { fontSize: 18, fontWeight: '800', marginBottom: 12 },
-  avatarBtn: { width: 96, height: 96, borderRadius: 20, borderWidth: 1, justifyContent: 'center', alignItems: 'center', overflow: 'hidden', alignSelf: 'center', marginBottom: 12 },
+
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#0008'
+  },
+  sheet: {
+    position: 'absolute',
+    left: 0, right: 0,
+    bottom: 0,
+    padding: 16, borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    borderWidth: 1
+  },
+  title: { fontSize: hp(2.2), marginVertical: hp(1) },
+  avatarBtn: { width: 96, height: 96, borderRadius: 20, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: 12, shadowColor: "#000", shadowRadius: 6, shadowOpacity: 0.2, shadowOffset: { width: 3, height: 3 } },
   avatar: { width: '100%', height: '100%' },
-  inputWrap: { borderWidth: 1, borderRadius: 16, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 12 },
-  input: { fontSize: 16 },
+  inputWrap: { borderRadius: 16, paddingHorizontal: wp(4), paddingVertical: hp(1), marginBottom: 12, shadowColor: "#000", shadowRadius: 6, shadowOpacity: 0.2, shadowOffset: { width: 3, height: 3 } },
+  input: { fontSize: 16, fontFamily: i18n.language === 'fa' ? 'IRANSansXNoEn-Light' : "WinkySans-Light", padding: 0, margin: 0 },
   row: { flexDirection: 'row', gap: 12, marginTop: 8 },
-  btn: { flex: 1, height: 48, borderRadius: 16, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  btnText: { fontSize: 16, fontWeight: '700' },
+  btn: { flex: 1, height: hp(5.5), borderRadius: 16, alignItems: 'center', justifyContent: 'center', shadowColor: "#000", shadowRadius: 6, shadowOpacity: 0.2, shadowOffset: { width: 3, height: 3 } },
+  btnText: { fontSize: hp(1.7), },
 });

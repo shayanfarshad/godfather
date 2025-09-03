@@ -64,11 +64,59 @@
     "paywall": {
       "title": "Premium",
       "subtitle": "Custom scenarios & more tools",
-      "cta": "Activate (Mock)"
+      "cta": "Activate (Mock)",
+      "premiumRequired": "Premium required",
+      "scenarioSelectNonPremiumDescription": "This scenario is available in Premium.",
+      "activate": "Activate",
+      "cancel": "Cancel"
     }
   },
   "gameplay": {
-    "title": "Play"
+    "title": "Play",
+    "players": "Players",
+    "players.count": "Number of Players",
+    "roles.count": "Number of Roles",
+    "choosenScenario": "Choosen Scenario",
+    "selectScenario": "Select Scenario",
+    "assignRoles": "Assign Roles",
+    "shuffle": "Shuffle",
+    "next": "Next",
+    "prev": "Previous",
+    "continue": "Continue",
+    "assign": {
+      "hint.scenario": "No scenario selected",
+      "hint.mismatch": "Number of roles and players do not match "
+    },
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "changeScenario": "Change Scenario",
+    "changeScenarioDescription": "Changing the scenario will clear selected roles. Continue?",
+    "dialogs": {
+      "Introductionٔight": "Introduction Night",
+      "firstNight": "First Night",
+      "secondNight": "Second Night",
+      "thirdNight": "Third Night",
+      "fourthNight": "Fourth Night",
+      "fifthNight": "Fifth Night",
+      "sixthNight": "Sixth Night",
+      "seventhNight": "Seventh Night",
+      "eighthNight": "Eighth Night",
+      "ninthNight": "Ninth Night",
+      "tenthNight": "Tenth Night",
+      "firstDay": "First Day",
+      "secondDay": "Second Day",
+      "thirdDay": "Third Day",
+      "fourthDay": "Fourth Day",
+      "fifthDay": "Fifth Day",
+      "sixthDay": "Sixth Day",
+      "seventhDay": "Seventh Day",
+      "eighthDay": "Eighth Day",
+      "ninthDay": "Ninth Day",
+      "tenthDay": "Tenth Day"
+    }
+  },
+  "scenario": {
+    "title": "Scenario"
   },
   "custom": {
     "title": "Custom Roles",
@@ -319,7 +367,9 @@
         "citizen": {
           "name": "Citizen",
           "description": "No night power; analytical and voting role in the day.",
-          "duties": ["Has no night ability; focuses on analysis and voting."]
+          "duties": [
+            "Has no night ability; focuses on analysis and voting."
+          ]
         }
       },
       "cards": {
@@ -398,7 +448,9 @@
         "citizen": {
           "name": "Citizen",
           "description": "No night ability; voting and analysis role.",
-          "duties": ["Has no night ability."]
+          "duties": [
+            "Has no night ability."
+          ]
         },
         "jack_sparrow": {
           "name": "Jack Sparrow",
@@ -509,12 +561,16 @@
         "chaplin": {
           "name": "Chaplin",
           "description": "Protects a Citizen from mafia purchase.",
-          "duties": ["Night one, chooses a Citizen to protect from mafia buy."]
+          "duties": [
+            "Night one, chooses a Citizen to protect from mafia buy."
+          ]
         },
         "citizen": {
           "name": "Citizen",
           "description": "No night ability; analytical/voting role.",
-          "duties": ["Has no night ability."]
+          "duties": [
+            "Has no night ability."
+          ]
         }
       },
       "cards": {

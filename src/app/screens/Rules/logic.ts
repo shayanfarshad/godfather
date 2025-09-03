@@ -1,11 +1,12 @@
 import { useCallback, useMemo } from 'react';
+import { shallowEqual } from 'react-redux';
 import { useAppDispatch, useAppSelector } from 'src/app/store';
 import { scenariosAction } from 'src/app/store/slices';
 
 export function useRulesLogic() {
   const dispatch = useAppDispatch();
   const premiumActive = useAppSelector(s => s.Premium.active);
-
+  const lang = useAppSelector(s => s.Settings.lang,shallowEqual);
   const source = useAppSelector(s => s.Scenarios.selectedSource);
   const builtins = useAppSelector(s => s.Scenarios.builtins);
   const customs = useAppSelector(s => s.Scenarios.customs);
@@ -26,5 +27,6 @@ export function useRulesLogic() {
     premiumActive,
     source, list, selected,
     onTab, onSelectScenario,
+    lang
   };
 }

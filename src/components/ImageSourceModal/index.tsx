@@ -1,7 +1,8 @@
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+import { Modal, View, Pressable, StyleSheet } from 'react-native';
 import { useTheme } from '../../app/theme';
 import { tokens } from '../../app/theme/tokens';
 import { useTranslation } from 'react-i18next';
+import Text from '../common/Text';
 
 type Props = {
   visible: boolean;
@@ -21,7 +22,7 @@ export default function ImageSourceModal({
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.backdrop} testID={testID ? `${testID}_BACKDROP` : undefined}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
-        <View style={[styles.sheet, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View style={[styles.sheet, { backgroundColor: colors.bg }]}>
           <View style={styles.header}>
             <Text style={[styles.title, { color: colors.text }]}>{t('image.modal.title')}</Text>
             <Text style={[styles.subtitle, { color: colors.subtext }]}>{t('image.modal.subtitle')}</Text>
@@ -69,7 +70,6 @@ function ActionButton({
         styles.actionBtn,
         {
           backgroundColor: primary ? colors.primary : colors.bgAlt,
-          borderColor: primary ? 'transparent' : colors.border,
           transform: [{ scale: pressed ? 0.98 : 1 }],
         },
       ]}
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 14, marginTop: 4 },
   row: { flexDirection: 'row', gap: tokens.spacing(1), marginBottom: tokens.spacing(1) },
   actionBtn: {
-    flex: 1, height: 52, borderRadius: 14, borderWidth: 1,
-    alignItems: 'center', justifyContent: 'center', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 4 },
+    flex: 1, height: 52, borderRadius: 14,
+    alignItems: 'center', justifyContent: 'center',shadowColor:"#000", shadowOpacity: 0.2, shadowRadius: 8, shadowOffset: { width: 0, height: 4 },
   },
   actionText: { fontSize: 16, fontWeight: '700' },
   cancelBtn: {
-    height: 48, borderRadius: 14, borderWidth: 1, alignItems: 'center', justifyContent: 'center',
-    marginTop: tokens.spacing(1),
+    height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center',
+    marginTop: tokens.spacing(1),shadowColor:"#000", shadowOpacity: 0.2, shadowRadius: 6, shadowOffset: { width: 0, height: 3 },
   },
   cancelText: { fontSize: 15, fontWeight: '700' },
 });

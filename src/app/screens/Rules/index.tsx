@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
-import { View, Text, Pressable, FlatList, StyleSheet, ScrollView } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { View, Pressable, FlatList, StyleSheet, ScrollView } from 'react-native';
 import { useRulesLogic } from './logic';
 import { useTheme } from 'src/app/theme';
-import { tokens } from 'src/app/theme/tokens';
-import { t } from 'i18next';
+import { hp, tokens } from 'src/app/theme/tokens';
+import Text from 'src/components/common/Text';
+import { useTranslation } from 'react-i18next';
 
 export default function Rules() {
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const { t } = useTranslation('common');
-  const { premiumActive, source, list, selected, onTab, onSelectScenario } = useRulesLogic();
+  const { premiumActive, source, list, selected, onTab, onSelectScenario, lang } = useRulesLogic();
 
   const isCustom = source === 'custom';
   const isEmptyCustom = isCustom && list.length === 0;
@@ -19,10 +19,13 @@ export default function Rules() {
     <>
       {/* Scenario picker or empty state */}
       {isEmptyCustom ? (
-        <View style={[styles.empty, { borderColor: colors.border, backgroundColor: colors.surface }]}>
-          <Text style={{ color: colors.subtext }}>{t('rules.empty.custom')}</Text>
-          <Pressable onPress={() => {}} style={[styles.cta, { backgroundColor: colors.premium }]}>
-            <Text style={{ color: '#1b1a1a', fontWeight: '800' }}>{t('rules.make.custom')}</Text>
+        <View style={[styles.empty, { backgroundColor: colors.bgAlt }]}>
+          <Text style={{ color: colors.text }}>{t('rules.empty.custom')}</Text>
+          <Pressable onPress={() => { }} style={[styles.cta, { backgroundColor: colors.premium }]}>
+            <Text type='bold' style={{
+              color: colors.bg
+
+            }}>{t('rules.make.custom')}</Text>
           </Pressable>
         </View>
       ) : (
@@ -30,51 +33,58 @@ export default function Rules() {
           {/* Scenario selector */}
           <ScrollView
             horizontal
+
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: tokens.spacing(2) }}
-            style={{ marginTop: tokens.spacing(1) }}
+            style={{ paddingVertical: tokens.spacing(1), direction: lang === "fa" ? "rtl" : "ltr" }}
+            contentInsetAdjustmentBehavior="automatic"
+
           >
-            {list.map((item, idx) => {
-              const active = selected?.id === item.id;
-              const locked = item.premiumOnly && !premiumActive;
-              return (
-                <Pressable
-                  key={item.id}
-                  onPress={() => !locked && onSelectScenario(item.id)}
-                  style={[
-                    styles.pill,
-                    {
-                      backgroundColor: active ? colors.primary : colors.surface,
-                      borderColor: active ? 'transparent' : colors.border,
-                      opacity: locked ? 0.5 : 1,
-                      marginRight: idx === list.length - 1 ? 0 : tokens.spacing(1),
-                    },
-                  ]}
-                >
-                  <Text style={{ color: active ? '#fff' : colors.text, fontWeight: '700' }}>
-                    {t(item.name)}
-                  </Text>
-                  {item.premiumOnly ? (
-                    <Text style={{ marginLeft: tokens.spacing(0.8), color: active ? '#fff' : colors.text }}>★</Text>
-                  ) : null}
-                </Pressable>
-              );
-            })}
+            {[...list]
+              .sort((a, b) => {
+                if (a.premiumOnly && !b.premiumOnly) return 1;
+                if (!a.premiumOnly && b.premiumOnly) return -1;
+                return 0;
+              })
+              .map((item, idx, arr) => {
+                const active = selected?.id === item.id;
+                return (
+                  <Pressable
+                    key={item.id}
+                    onPress={() => onSelectScenario(item.id)}
+                    style={[
+                      styles.pill,
+                      {
+                        backgroundColor: active ? colors.primary : colors.surface,
+
+                        marginRight: tokens.spacing(1),
+                      },
+                    ]}
+                  >
+                    <Text style={{ color: active ? '#fff' : colors.text, fontWeight: '700' }}>
+                      {t(item.name)}
+                    </Text>
+                    {item.premiumOnly && (
+                      <Text style={{ marginLeft: tokens.spacing(0.8), color: active ? '#fff' : colors.text }}>★</Text>
+                    )}
+                  </Pressable>
+                );
+              })}
           </ScrollView>
 
           {/* Scenario description */}
           {selected && (
             <View style={{ paddingHorizontal: tokens.spacing(2), marginTop: tokens.spacing(2) }}>
               <Block title={t('rules.description')}>
-                <Text style={{ color: colors.subtext, lineHeight: tokens.spacing(2.2) }}>
+                <Text style={{ color: colors.white }}>
                   {t(selected?.description || '') || '—'}
                 </Text>
-                <Text style={{ color: colors.subtext, marginTop: tokens.spacing(1) }}>
-                  {`(${selected.minPlayers}–${selected.maxPlayers} players)`}
+                <Text style={{ color: colors.bg, marginTop: tokens.spacing(1) }}>
+                  {`(${selected.minPlayers}–${selected.maxPlayers})`}{t("player")}
                 </Text>
               </Block>
 
-              <Text style={[styles.rolesTitle, { color: colors.text }]}>{t('rules.roles')}</Text>
+              <Text style={{ color: colors.text }}>{t('rules.roles')}</Text>
             </View>
           )}
         </>
@@ -85,10 +95,12 @@ export default function Rules() {
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
       {/* ثابت */}
-      <Text style={[styles.header, { color: colors.text }]}>{t('rules.title')}</Text>
+      <View style={styles.header}>
+        <Text type="bold" style={{ color: colors.text, fontSize: hp(4) }}>{t('rules.title')}</Text>
+      </View>
       <View style={styles.tabs}>
+        <Tab label={t('rules.tab.custom')} active={source === 'custom'} onPress={() => onTab('custom')} />
         <Tab label={t('rules.tab.builtin')} active={source === 'builtin'} onPress={() => onTab('builtin')} />
-        <Tab label={t('rules.tab.custom')}  active={source === 'custom'}  onPress={() => onTab('custom')} />
       </View>
 
       {/* اسکرول */}
@@ -117,7 +129,7 @@ function Tab({ label, active, onPress }: { label: string; active: boolean; onPre
       onPress={onPress}
       style={[
         styles.tab,
-        { backgroundColor: active ? colors.primary : colors.surface, borderColor: active ? 'transparent' : colors.border },
+        { backgroundColor: active ? colors.primary : colors.surface },
       ]}
     >
       <Text style={{ color: active ? '#fff' : colors.text, fontWeight: '800' }}>{label}</Text>
@@ -128,14 +140,15 @@ function Tab({ label, active, onPress }: { label: string; active: boolean; onPre
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   const { colors } = useTheme();
   return (
-    <View style={[styles.block, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Text style={[styles.blockTitle, { color: colors.text }]}>{title}</Text>
+    <View style={[styles.block, { backgroundColor: colors.surface }]}>
+      <Text style={{ color: colors.white }}>{title}</Text>
       <View style={{ marginTop: tokens.spacing(1) }}>{children}</View>
     </View>
   );
 }
 
 function RoleCard({ name, team, description }: { name: string; team: 'mafia' | 'town' | 'neutral'; description?: string }) {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const chipBg = team === 'mafia' ? '#ef4444' : team === 'town' ? '#22c55e' : '#eab308';
   const chipFg = '#111';
@@ -144,8 +157,8 @@ function RoleCard({ name, team, description }: { name: string; team: 'mafia' | '
       <View style={[styles.chip, { backgroundColor: chipBg }]}>
         <Text style={{ color: chipFg, fontWeight: '800' }}>{team.toUpperCase()}</Text>
       </View>
-      <Text style={[styles.roleName, { color: colors.text }]}>{t(name)}</Text>
-      {!!description && <Text style={[styles.roleDesc, { color: colors.subtext }]}>{t(description)}</Text>}
+      <Text style={{ color: colors.text }}>{t(name)}</Text>
+      {!!description && <Text style={{ color: colors.subtext }}>{t(description)}</Text>}
     </View>
   );
 }
@@ -153,14 +166,8 @@ function RoleCard({ name, team, description }: { name: string; team: 'mafia' | '
 /* ---------- styles ---------- */
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  header: { paddingHorizontal: tokens.spacing(2), paddingTop: tokens.spacing(5), paddingBottom: tokens.spacing(2) },
 
-  header: {
-    fontSize: tokens.font.h1,
-    fontWeight: '800',
-    paddingHorizontal: tokens.spacing(2),
-    paddingTop: tokens.spacing(3),
-    paddingBottom: tokens.spacing(1.2),
-  },
 
   tabs: {
     flexDirection: 'row',
@@ -174,7 +181,10 @@ const styles = StyleSheet.create({
     borderRadius: tokens.radius.lg,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    shadowColor: "#000",
+    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 3, height: 3 }
   },
 
   pill: {
@@ -183,15 +193,21 @@ const styles = StyleSheet.create({
     borderRadius: tokens.radius.xl,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
     flexDirection: 'row',
+    shadowColor: "#000",
+    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 3, height: 3 },
   },
 
   block: {
-    borderWidth: 1,
     borderRadius: tokens.radius.lg,
     padding: tokens.spacing(2),
     marginBottom: tokens.spacing(2),
+    shadowColor: "#000",
+    shadowRadius: 6,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 3, height: 3 },
   },
   blockTitle: {
     fontSize: tokens.font.h2,
@@ -205,9 +221,12 @@ const styles = StyleSheet.create({
   },
 
   roleCard: {
-    borderWidth: 1,
     borderRadius: tokens.radius.lg,
     padding: tokens.spacing(2),
+    shadowColor: "#000",
+    shadowRadius: 6,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 3, height: 3 },
   },
   chip: {
     alignSelf: 'flex-start',
@@ -228,12 +247,15 @@ const styles = StyleSheet.create({
 
   empty: {
     margin: tokens.spacing(2),
-    borderWidth: 1,
     borderRadius: tokens.radius.lg,
     padding: tokens.spacing(3),
     alignItems: 'center',
     justifyContent: 'center',
     gap: tokens.spacing(1.5),
+    shadowColor: "#000",
+    shadowRadius: 6,
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 3, height: 3 },
   },
   cta: {
     paddingHorizontal: tokens.spacing(2),

@@ -11,7 +11,7 @@ type AuthState = {
   bootstrapped: boolean; // اضافه شد
 };
 
-const initialState: AuthState = { status: 'idle', bootstrapped: false };
+const initialState: AuthState = { status: 'idle', bootstrapped: true };
 
 // --- Mock API thunks ---
 export const loginThunk = createAsyncThunk(

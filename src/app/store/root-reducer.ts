@@ -7,13 +7,15 @@ import {
     PlayersReducer,
     ScenariosReducer
 } from "./slices";
+import { GameSetupReducer } from "./slices/gameSetupSlice";
 
 export const RootReducer = combineReducers({
     Auth: AuthReducer,
     Settings: SettingsReducer,
     Premium: PremiumReducer,
     Players: PlayersReducer,
-    Scenarios:ScenariosReducer
+    Scenarios:ScenariosReducer,
+    GameSetup: GameSetupReducer,
 
 });
 

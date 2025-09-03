@@ -11,6 +11,7 @@ export interface ThemeColors {
   primary: string;
   premium: string;
   danger: string;
+  white: string;
 }
 
 export interface Theme {

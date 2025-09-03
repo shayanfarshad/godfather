@@ -18,12 +18,40 @@
       "sha1": "dc36bf6a0aa414b2d1dc7b4d3946ae747630143b"
     },
     {
-      "path": "assets/fonts/hadye.ttf",
-      "sha1": "11c53e6e85dc22e8e0fe7141c81365f364f058f7"
+      "path": "assets/fonts/ShantellSans-Bold.ttf",
+      "sha1": "01c373978879c1268c41691c2797d73b13b70049"
     },
     {
-      "path": "assets/fonts/wizard.ttf",
-      "sha1": "df36457771706f99d66c760c64096bc83478f743"
+      "path": "assets/fonts/ShantellSans-Light.ttf",
+      "sha1": "1f7ede38f5a5fe05b5dacc6d9a2abafe35b57b86"
+    },
+    {
+      "path": "assets/fonts/ShantellSans-Medium.ttf",
+      "sha1": "39d50803df211161d22f92ff0c8e5cf6ce6bff35"
+    },
+    {
+      "path": "assets/fonts/ShantellSans-Regular.ttf",
+      "sha1": "30a1ac8780fa24e236f8c152b5b7d583224ad7bc"
+    },
+    {
+      "path": "assets/fonts/WinkySans-Bold.ttf",
+      "sha1": "ec683c7b098b0f4c559d1204c1adbd66ade7e70d"
+    },
+    {
+      "path": "assets/fonts/WinkySans-Light.ttf",
+      "sha1": "0799aef4fe5dc09835c863c90fe56d6571c3f482"
+    },
+    {
+      "path": "assets/fonts/WinkySans-Medium.ttf",
+      "sha1": "928546601112dab40b0ffdf2e061cbae95a9905e"
+    },
+    {
+      "path": "assets/fonts/WinkySans-Regular.ttf",
+      "sha1": "daeeb910a0b69e2e7dabc33886cf27ebfd6c2515"
+    },
+    {
+      "path": "assets/fonts/hadye.ttf",
+      "sha1": "11c53e6e85dc22e8e0fe7141c81365f364f058f7"
     }
   ]
 }

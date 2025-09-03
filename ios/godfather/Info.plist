@@ -59,7 +59,15 @@
 		<string>IRANSansXNoEn-Medium.ttf</string>
 		<string>IRANSansXNoEn-Regular.ttf</string>
 		<string>hadye.ttf</string>
-		<string>wizard.ttf</string>
+		<string>xaaseno.ttf</string>
+		<string>ShantellSans-Bold.ttf</string>
+		<string>ShantellSans-Light.ttf</string>
+		<string>ShantellSans-Medium.ttf</string>
+		<string>ShantellSans-Regular.ttf</string>
+		<string>WinkySans-Bold.ttf</string>
+		<string>WinkySans-Light.ttf</string>
+		<string>WinkySans-Medium.ttf</string>
+		<string>WinkySans-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash.storyboard</string>
